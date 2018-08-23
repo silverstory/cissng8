@@ -17,15 +17,15 @@ import { ProfileService } from '../profile.service';
 export const homeTransition = trigger('homeTransition', [
   transition(':enter', [
     query('.column', style({ opacity: 0 }), { optional: true }),
-    query('.column', stagger(300, [
+    query('.column', stagger(100, [
       style({ transform: 'translateY(100px)' }),
-      animate('1s cubic-bezier(.75,-0.48,.26,1.52)', style({transform: 'translateY(0px)', opacity: 1})),
+      animate('0.33s cubic-bezier(.75,-0.48,.26,1.52)', style({transform: 'translateY(0px)', opacity: 1})),
     ]), { optional: true }),
   ]),
   transition(':leave', [
-    query('.column', stagger(300, [
+    query('.column', stagger(100, [
       style({ transform: 'translateY(0px)', opacity: 1 }),
-      animate('1s cubic-bezier(.75,-0.48,.26,1.52)', style({transform: 'translateY(100px)', opacity: 0})),
+      animate('0.33s cubic-bezier(.75,-0.48,.26,1.52)', style({transform: 'translateY(100px)', opacity: 0})),
     ]), { optional: true }),
   ])
 ]);
@@ -121,4 +121,16 @@ export class ResidentComponent implements OnInit, OnDestroy {
     this.profileService.getProfile(id)
       .subscribe(profile => this.profile = profile);
   }
+
+  getColor(status) {
+    switch (status) {
+      case 'ACTIVE':
+        return '#B9F6CA';
+      case 'INACTIVE':
+        return '#E91E63';
+      default:
+        return '#E8EAF6';
+    }
+  }
+
 }

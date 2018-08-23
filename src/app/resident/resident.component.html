@@ -1,4 +1,4 @@
-<div class="container" *ngIf="profile">
+<div class="container" [style.background-color]="getColor(profile.recordstatus)" *ngIf="profile">
   <mat-card class="parent-card" [@homeTransition]="profile">
     <div class="row">
       <div class="column">
@@ -44,7 +44,7 @@
             <mat-form-field class="full-width-input">
               <input matInput placeholder="Distinction" readonly [(ngModel)]="profile.distinction" style="width:100%;font-weight:bold;font-size:large;color: #424242;">
             </mat-form-field>
-          </div>      
+          </div>
           <div class="row">
             <mat-form-field class="full-width-input">
               <input matInput placeholder="Access Level" readonly [(ngModel)]="profile.personaccesslevel" style="width:100%;font-weight:bold;font-size:large;color: #424242;">
@@ -68,7 +68,7 @@
             <mat-form-field class="full-width-input">
               <input matInput placeholder="City" readonly [(ngModel)]="profile.resident.city" style="width:100%;font-weight:bold;font-size:large;color: #424242;">
             </mat-form-field>
-          </div>      
+          </div>
           <div class="row">
             <mat-form-field class="full-width-input">
               <input matInput placeholder="District" readonly [(ngModel)]="profile.resident.district" style="width:100%;font-weight:bold;font-size:large;color: #424242;">
@@ -117,7 +117,7 @@
               <mat-form-field class="full-width-input">
                 <input matInput placeholder="Distinction" readonly [(ngModel)]="profile.distinction" style="width:100%;font-weight:bold;font-size:large;color: #424242;">
               </mat-form-field>
-            </div>      
+            </div>
             <div class="column">
               <mat-form-field class="full-width-input">
                 <input matInput placeholder="Access Level" readonly [(ngModel)]="profile.personaccesslevel" style="width:100%;font-weight:bold;font-size:large;color: #424242;">
@@ -134,7 +134,7 @@
               <mat-form-field class="full-width-input">
                 <input matInput placeholder="City" readonly [(ngModel)]="profile.resident.city" style="width:100%;font-weight:bold;font-size:large;color: #424242;">
               </mat-form-field>
-            </div>      
+            </div>
             <div class="column">
               <mat-form-field class="full-width-input">
                 <input matInput placeholder="District" readonly [(ngModel)]="profile.resident.district" style="width:100%;font-weight:bold;font-size:large;color: #424242;">
@@ -150,6 +150,6 @@
       </div>
     </mat-card>
   </div> -->
-  
+
       <!-- <h2>{{ profile.name.first | uppercase }} Details</h2> -->
       <!-- <button (click)="save()">save</button>     -->

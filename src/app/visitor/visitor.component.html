@@ -1,4 +1,4 @@
-<div class="container" *ngIf="profile">
+<div class="container" [style.background-color]="getVisitorColor(profile.visitor.visitstatus)" *ngIf="profile">
   <mat-card class="parent-card" [@homeTransition]="profile">
     <div class="row">
       <div class="column">
@@ -44,7 +44,7 @@
             <mat-form-field class="full-width-input">
               <input matInput placeholder="Distinction" readonly [(ngModel)]="profile.distinction" style="width:100%;font-weight:bold;font-size:large;color: #424242;">
             </mat-form-field>
-          </div>      
+          </div>
           <div class="row">
             <mat-form-field class="full-width-input">
               <input matInput placeholder="Company" readonly [(ngModel)]="profile.visitor.visitorcompany" style="width:100%;font-weight:bold;font-size:large;color: #424242;">
@@ -68,7 +68,7 @@
             <mat-form-field class="full-width-input">
               <input matInput placeholder="Destination" readonly [(ngModel)]="profile.visitor.visitordestination" style="width:100%;font-weight:bold;font-size:large;color: #424242;">
             </mat-form-field>
-          </div>      
+          </div>
           <div class="row">
             <mat-form-field class="full-width-input">
               <input matInput placeholder="Person to visit" readonly [(ngModel)]="profile.visitor.persontovisit" style="width:100%;font-weight:bold;font-size:large;color: #424242;">
@@ -118,7 +118,7 @@
               <mat-form-field class="full-width-input">
                 <input matInput placeholder="Distinction" readonly [(ngModel)]="profile.distinction" style="width:100%;font-weight:bold;font-size:large;color: #424242;">
               </mat-form-field>
-            </div>      
+            </div>
             <div class="column">
               <mat-form-field class="full-width-input">
                 <input matInput placeholder="Company" readonly [(ngModel)]="profile.personaccesslevel" style="width:100%;font-weight:bold;font-size:large;color: #424242;">
@@ -135,7 +135,7 @@
               <mat-form-field class="full-width-input">
                 <input matInput placeholder="Destination" readonly [(ngModel)]="profile.resident.city" style="width:100%;font-weight:bold;font-size:large;color: #424242;">
               </mat-form-field>
-            </div>      
+            </div>
             <div class="column">
               <mat-form-field class="full-width-input">
                 <input matInput placeholder="Person to visit" readonly [(ngModel)]="profile.resident.district" style="width:100%;font-weight:bold;font-size:large;color: #424242;">
@@ -151,6 +151,6 @@
       </div>
     </mat-card>
   </div> -->
-  
+
       <!-- <h2>{{ profile.name.first | uppercase }} Details</h2> -->
       <!-- <button (click)="save()">save</button>     -->

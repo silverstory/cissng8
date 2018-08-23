@@ -2,7 +2,7 @@ import { Observable } from 'rxjs';
 import { AuthService } from '../auth/auth.service';
 import { Router } from '@angular/router';
 // import { Component, OnInit, ViewEncapsulation, HostBinding } from '@angular/core';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Profile } from '../profile';
 import { ProfileService } from '../profile.service';
 // import { routerTransition } from '../router.animations';
@@ -20,6 +20,7 @@ export class SearchBarComponent implements OnInit {
 
   isLoggedIn$: Observable<boolean>;                  // {1}
   value = '';
+  @Input() color: String = '#E8EAF6';
 
   constructor(private authService: AuthService,
               private profileService: ProfileService,
@@ -42,7 +43,7 @@ export class SearchBarComponent implements OnInit {
 
     setTimeout(() => {
       this.value = '';
-    }, 15000);
+    }, 1000);
 
     // second find and retrieve the document from db
     try {
@@ -56,11 +57,14 @@ export class SearchBarComponent implements OnInit {
         if (profile) {
 
           // third determine the type of individual
-          if ( profile.distinction === 'OPEMPLOYEE' ) {
+          if (profile.distinction === 'OPEMPLOYEE') {
+            this.color = this.getColor(profile.recordstatus);
             component_page = '/employee';
-          } else if ( profile.distinction === 'OPVISITOR' ) {
+          } else if (profile.distinction === 'OPVISITOR') {
+            this.color = this.getVisitorColor(profile.visitor.visitstatus);
             component_page = '/visitor';
-          } else if ( profile.distinction === 'BRGYRESIDENT' ) {
+          } else if (profile.distinction === 'BRGYRESIDENT') {
+            this.color = this.getColor(profile.recordstatus);
             component_page = '/resident';
           } else {
             // employee page for now if not a known type
@@ -87,6 +91,28 @@ export class SearchBarComponent implements OnInit {
     } catch (error) {
       // navigate to profile not found page
       this.router.navigate( [ '/profilenotfound' ]);
+    }
+  }
+
+  getColor(status) {
+    switch (status) {
+      case 'ACTIVE':
+        return '#B9F6CA';
+      case 'INACTIVE':
+        return '#E91E63';
+      default:
+        return '#E8EAF6';
+    }
+  }
+
+  getVisitorColor(status) {
+    switch (status) {
+      case 'APPROVED':
+        return '#B9F6CA';
+      case 'DENIED':
+        return '#E91E63';
+      default:
+        return '#E8EAF6';
     }
   }
 

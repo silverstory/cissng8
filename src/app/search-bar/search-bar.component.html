@@ -1,5 +1,5 @@
-<div class="search-container" *ngIf="isLoggedIn$ | async as isLoggedIn">
-  <mat-card *ngIf="isLoggedIn">  
+<div class="search-container" [style.background-color]="color" *ngIf="isLoggedIn$ | async as isLoggedIn">
+  <mat-card *ngIf="isLoggedIn">
     <mat-form-field class="full-width-input" hintLabel="Set input focus here before scanning the QR Code">
 
       <input matInput placeholder="Scan QR Code or enter CISS Token"
