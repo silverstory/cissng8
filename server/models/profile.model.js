@@ -33,6 +33,7 @@ const ProfileSchema = new Schema({
   },
   personaccesslevel: {
     type: String,
+    default: 'BASIC',
     required: [true, 'Person Access Level is required']
   },
   recordstatus: {
@@ -108,6 +109,46 @@ const ProfileSchema = new Schema({
   two_factor_enabled: {
     type: Boolean,
     default: true
+  },
+  access: {
+    one: {
+      type: String,
+      default: 'notSelected'
+    },
+    two: {
+      type: String,
+      default: 'notSelected'
+    },
+    three: {
+      type: String,
+      default: 'notSelected'
+    },
+    four: {
+      type: String,
+      default: 'notSelected'
+    },
+  },
+  proviaccess: {
+    one: {
+      type: String,
+      default: 'notSelected'
+    },
+    two: {
+      type: String,
+      default: 'notSelected'
+    },
+    three: {
+      type: String,
+      default: 'notSelected'
+    },
+    four: {
+      type: String,
+      default: 'notSelected'
+    },
+  },
+  accessapproval: {
+    type: String,
+    default: 'New Record'
   }
 },
 {

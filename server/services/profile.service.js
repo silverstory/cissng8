@@ -21,6 +21,12 @@ const postProfile = async (req, res, next) => {
   } else {
   }
 
+  try {
+    if (_profile.accessapproval === 'Approved') {
+        _profile.access = _profile.proviaccess;
+    }
+  } catch (error) { }
+
   // if visitor, convert date field to
   // ISODate before saving document
   try {

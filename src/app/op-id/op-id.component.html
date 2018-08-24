@@ -1,4 +1,4 @@
-<h2 style="text-align: center;">IP Address: {{ client }}</h2>
+<h3 style="text-align: center;">IP Address: {{ client }}</h3>
 <div class="container" *ngIf="validate">
   <mat-card class="parent-card" [@homeTransition]="validate">
     <div class="row">
@@ -34,7 +34,7 @@
     </div>
   </mat-card>
 </div>
-<div class="container" *ngIf="profile">
+<div class="container" [style.background-color]="getColor(profile.recordstatus)" *ngIf="profile">
   <mat-card class="parent-card" [@homeTransition]="profile">
     <div class="row">
       <div class="column">

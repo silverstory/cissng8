@@ -98,8 +98,7 @@ export class OPIDComponent implements OnInit, OnDestroy {
       const phrase = this.route.snapshot.paramMap.get('text');
       const url = `${this.api}/opid/v/${phrase}`;
       this.profile = await this.http.get<Profile>(url).toPromise();
-    }
-    else {
+    } else {
       const phrase = this.route.snapshot.paramMap.get('text');
       this.tmpProfile = null;
       this.valid = false;
@@ -157,6 +156,17 @@ export class OPIDComponent implements OnInit, OnDestroy {
           duration: 5000,
         });
       }
+  }
+
+  getColor(status) {
+    switch (status) {
+      case 'ACTIVE':
+        return '#B9F6CA';
+      case 'INACTIVE':
+        return '#E91E63';
+      default:
+        return '#E8EAF6';
+    }
   }
 
   ngOnDestroy() {

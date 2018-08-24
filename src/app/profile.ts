@@ -38,4 +38,17 @@ export interface Profile {
   two_factor_secret: String;
   two_factor_enabled: Boolean;
   score: number;
+  access: {
+    one: String;
+    two: String;
+    three: String;
+    four: String;
+  };
+  proviaccess: {
+    one: String;
+    two: String;
+    three: String;
+    four: String;
+  };
+  accessapproval: String;
 }
