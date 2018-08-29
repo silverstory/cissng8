@@ -11,7 +11,9 @@ router.post('/register', async (req,res) => {
 
     let newUser = await new User({
         userName: req.body.userName,
-        password: req.body.password
+        password: req.body.password,
+        usertype: req.body.usertype,
+        mobileno: req.body.mobileno
     });
 
     try {
@@ -29,7 +31,7 @@ router.post('/authenticate', async (req,res) => {
 
     try {
         const user = await User.getUserByUserName(userName);
-        
+
         if(!user) {
             return res.json({success : false, msg: 'User not found!'});
         }
@@ -68,11 +70,11 @@ async function isLoggedIn(req, res, next) {
       return res.status(401).send({ message: 'unauthorized. please log in and try again' });
     }
   }
-  
+
   async function isValidAdmin(requestUser) {
     const validUsers = ['eprel', 'superhuman'];
     return await validUsers.find(async user => await requestUser.userName.toLowerCase() === user.toLowerCase());
   }
 // end nilagay lang galing sa ng azure
-  
+
 module.exports = router;

@@ -25,7 +25,9 @@ export class SignupComponent implements OnInit {
   ngOnInit() {
     this.form = this.fb.group({     // {5}
       userName: ['', Validators.required],
-      password: ['', Validators.required]
+      password: ['', Validators.required],
+      usertype: ['', Validators.required],
+      mobileno: ['', Validators.required]
     });
   }
 
@@ -38,15 +40,9 @@ export class SignupComponent implements OnInit {
 
   async onSubmit() {
     if (this.form.valid) {
-
-      // const user = {
-      //   username: this.username,
-      //   password: this.password
-      // }
-
       this.authService.registerUser(this.form.value) // {7}
       .subscribe( async _ => {
-        if ( _.success ) {
+        if (_.success) {
           await this.authService.log(`Your are registered and can log in.`);
           await this.router.navigate(['/login']);
         } else {
@@ -56,5 +52,4 @@ export class SignupComponent implements OnInit {
     }
     this.formSubmitAttempt = true;             // {8}
   }
-
 }

@@ -1,24 +1,38 @@
 <div class="signin-content">
   <mat-card>
     <mat-card-header>
-      <mat-card-title>Central Information System</mat-card-title>
+      <mat-card-title>OP - Central Information Security System</mat-card-title>
       <mat-card-subtitle>Sign Up</mat-card-subtitle>
-    </mat-card-header>       
+    </mat-card-header>
     <mat-card-content>
       <form [formGroup]="form" (ngSubmit)="onSubmit()">
         <p>Please fill up the fields</p>
         <mat-form-field class="full-width-input">
-          <input matInput placeholder="User" 
+          <input matInput placeholder="User"
                   formControlName="userName" required>
           <mat-error *ngIf="isFieldInvalid('userName')">
             Please inform your user name
           </mat-error>
         </mat-form-field>
         <mat-form-field class="full-width-input">
-          <input matInput type="password" placeholder="Password" 
+          <input matInput type="password" placeholder="Password"
                   formControlName="password" required>
           <mat-error *ngIf="isFieldInvalid('password')">
             Please inform your password
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="full-width-input">
+          <input matInput placeholder="User Type"
+                  formControlName="usertype" required>
+          <mat-error *ngIf="isFieldInvalid('usertype')">
+            Please inform your user type
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="full-width-input">
+          <input matInput placeholder="Mobile Number"
+                  formControlName="mobileno" required>
+          <mat-error *ngIf="isFieldInvalid('mobileno')">
+            Please inform your mobile number e.g. 09271234567
           </mat-error>
         </mat-form-field>
         <button mat-raised-button color="primary" type="submit">Submit</button>
