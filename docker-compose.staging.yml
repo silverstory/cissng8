@@ -17,7 +17,7 @@ services:
     networks:
       - webnet
   web:
-    image: iameprel/ciss:0.1.0
+    image: iameprel/ciss:0.1.1
     deploy:
       replicas: 3
       update_config:

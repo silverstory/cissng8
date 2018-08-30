@@ -2,7 +2,7 @@ version: '3.3'
 
 services:
   ng_toh_az_ssi_development:
-    image: iameprel/ciss:0.1.0
+    image: iameprel/ciss:0.1.1
     user: root
     working_dir: /usr/src/app
     build: .
