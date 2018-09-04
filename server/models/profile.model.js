@@ -1,3 +1,4 @@
+const MongoPaging = require('mongo-cursor-pagination');
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
@@ -149,6 +150,10 @@ const ProfileSchema = new Schema({
   accessapproval: {
     type: String,
     default: 'New Record'
+  },
+  accessdatetagged: {
+    type: Date,
+    default: Date.now
   }
 },
 {
@@ -156,7 +161,11 @@ const ProfileSchema = new Schema({
     read: 'nearest'
 });
 ProfileSchema.index( { cisscode: 'text', cisstoken: 'text', cissinqtext: 'text' }, { weights: { cisscode: 3, cisstoken: 2, cissinqtext: 1 }} );
-
+ProfileSchema.index({
+  accessdatetagged: 1,
+  accessapproval: 1,
+  _id: 1
+});
 // ProfileSchema.index( { cissinqtext: 'text', cisstoken: 'text' }, { weights: { cissinqtext: 3, cisstoken: 2, 'name.first': 1 }} );
 
 // To create an index to support text search on, say, cissinqtext and name.first:
@@ -164,6 +173,85 @@ ProfileSchema.index( { cisscode: 'text', cisstoken: 'text', cissinqtext: 'text' 
 // Or if you want to include all string fields in the index, use the '$**' wildcard:
 // schema.index({'$**': 'text'});
 
+// this will add paginate function.
+ProfileSchema.plugin(MongoPaging.mongoosePlugin);
+
 const Profile = mongoose.model('Profile', ProfileSchema);
 
-module.exports = Profile;
+// Pagination Options
+
+// Performs a find() query on a passed-in Mongo collection, using criteria you specify. The results
+// are ordered by the paginatedField.
+
+// @param {MongoCollection} collection A collection object returned from the MongoDB library's
+//    or the mongoist package's `db.collection(<collectionName>)` method.
+// @param {Object} params
+//    -query {Object} The find query.
+//    -limit {Number} The page size. Must be between 1 and `config.MAX_LIMIT`.
+//    -fields {Object} Fields to query in the Mongo object format, e.g. {_id: 1, timestamp :1}.
+//      The default is to query all fields.
+//    -paginatedField {String} The field name to query the range for. The field must be:
+//        1. Orderable. We must sort by this value. If duplicate values for paginatedField field
+//          exist, the results will be secondarily ordered by the _id.
+//        2. Indexed. For large collections, this should be indexed for query performance.
+//        3. Immutable. If the value changes between paged queries, it could appear twice.
+//        4. Complete. A value must exist for all documents.
+//      The default is to use the Mongo built-in '_id' field, which satisfies the above criteria.
+//      The only reason to NOT use the Mongo _id field is if you chose to implement your own ids.
+//    -sortAscending {Boolean} True to sort using paginatedField ascending (default is false - descending).
+//    -next {String} The value to start querying the page.
+//    -previous {String} The value to start querying previous page.
+// @param {Function} done Node errback style function.
+
+const paginateFirst = async (findText, limit, paginatedField, sortAscending = false) => {
+  try {
+    // default function is "paginate"
+    const result = await Profile.paginate({
+      query: {
+        accessapproval: findText
+      },
+      paginatedField: paginatedField,
+      limit: parseInt(limit),
+      sortAscending: sortAscending
+    });
+    // accessapproval: req.user._id
+    // paginate = async (..., previous)
+    // then in paginate function options
+    // previous: previous
+    console.log(result);
+    return result;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+}
+
+const paginateNext = async (findText, limit, paginatedField, next, sortAscending = false) => {
+  try {
+    // default function is "paginate"
+    const result = await Profile.paginate({
+      query: {
+        accessapproval: findText
+      },
+      paginatedField: paginatedField,
+      limit: parseInt(limit),
+      sortAscending: sortAscending,
+      next: next
+    });
+    // accessapproval: req.user._id
+    // paginate = async (..., previous)
+    // then in paginate function options
+    // previous: previous
+    console.log(result);
+    return result;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+}
+
+module.exports = {
+  Profile,
+  paginateFirst,
+  paginateNext
+};

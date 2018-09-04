@@ -3,9 +3,23 @@ const router = express.Router();
 const passport = require('passport');
 const profileService = require('../services/profile.service');
 
+// Access Approval
+router.get('/profile/accessapprovals/', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
+  switch (req.query.ordinal) {
+    case 'first':
+      profileService.getFirstAccessApprovals(req, res, next);
+    case 'next':
+      profileService.getNextAccessApprovals(req, res, next);
+    case 'previous':
+      // profileService.getPreviousAccessApprovals(req, res, next);
+    default:
+      profileService.getFirstAccessApprovals(req, res, next);
+  }
+});
+
 // GET http://localhost:3000/api/profile/270253d17070590077106fba4323188ea733c6aec1f2ed040c47476ef0202365
 router.get('/profile/:text', passport.authenticate('jwt',{session:false}), async (req, res, next) => {
-// router.get('/profile/:text', async (req, res, next) => {
+  // router.get('/profile/:text', async (req, res, next) => {
   profileService.findProfile(req, res, next);
 });
 
@@ -16,7 +30,7 @@ router.get('/opid/v/:text', async (req, res, next) => {
 
 // GET http://localhost:3000/api/profile/get/5adfe17eda216211f42bd88f
 router.get('/profile/get/:id', passport.authenticate('jwt',{session:false}), async (req, res, next) => {
-// router.get('/profile/get/:id', async (req, res, next) => {
+  // router.get('/profile/get/:id', async (req, res, next) => {
   profileService.getProfile(req, res, next);
 });
 

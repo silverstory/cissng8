@@ -6,6 +6,30 @@ const qrcode = require('../services/qrcode');
 const shortId = require('./shortid-generator');
 const twofactor = require('./twofactor.service');
 
+const getFirstAccessApprovals = async (req, res, next) => {
+  try {
+    const items = await
+      Profile
+        .paginateFirst(req.query.findtext, req.query.limit, req.query.paginatedfield);
+    return await res.json( items );
+  } catch (error) {
+    console.log("Error: " + error);
+    return await res.send( "Error: " + error );
+  }
+}
+
+const getNextAccessApprovals = async (req, res, next) => {
+  try {
+    const items = await
+      Profile
+        .paginateNext(req.query.findtext, req.query.limit, req.query.paginatedfield, req.query.next);
+    return await res.json( items );
+  } catch (error) {
+    console.log("Error: " + error);
+    return await res.send( "Error: " + error );
+  }
+}
+
 const postProfile = async (req, res, next) => {
 
   // determine the base_url to be used based from
@@ -169,5 +193,7 @@ module.exports = {
   getProfileByIdDist,
   findProfile,
   getProfile,
-  deleteProfileByIdDist
+  deleteProfileByIdDist,
+  getFirstAccessApprovals,
+  getNextAccessApprovals
 };

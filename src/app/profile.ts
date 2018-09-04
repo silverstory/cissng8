@@ -51,4 +51,5 @@ export interface Profile {
     four: String;
   };
   accessapproval: String;
+  accessdatetagged: Date;
 }
