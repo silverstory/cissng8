@@ -11,6 +11,7 @@ const getFirstAccessApprovals = async (req, res, next) => {
     const items = await
       Profile
         .paginateFirst(req.query.findtext, req.query.limit, req.query.paginatedfield);
+    // res.setHeader("Content-Type", "application/json");
     return await res.json( items );
   } catch (error) {
     console.log("Error: " + error);
@@ -23,7 +24,8 @@ const getNextAccessApprovals = async (req, res, next) => {
     const items = await
       Profile
         .paginateNext(req.query.findtext, req.query.limit, req.query.paginatedfield, req.query.next);
-    return await res.json( items );
+    // res.setHeader("Content-Type", "application/json");
+    return await res.json(items);
   } catch (error) {
     console.log("Error: " + error);
     return await res.send( "Error: " + error );

@@ -4,7 +4,7 @@ const passport = require('passport');
 const profileService = require('../services/profile.service');
 
 // Access Approval
-router.get('/profile/accessapprovals/', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
+router.get('/profile/accessapprovals/', passport.authenticate('jwt',{session:false}), async (req, res, next) => {
   switch (req.query.ordinal) {
     case 'first':
       profileService.getFirstAccessApprovals(req, res, next);
