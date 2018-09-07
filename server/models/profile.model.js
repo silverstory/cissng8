@@ -1,4 +1,6 @@
-const MongoPaging = require('mongo-cursor-pagination');
+// const MongoPaging = require('mongo-cursor-pagination');
+// const mongoosePaginate = require('@electrivity/mongoose-paginate');
+const mongoosePaginate = require('mongoose-paginate-v2');
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
@@ -174,7 +176,8 @@ ProfileSchema.index({
 // schema.index({'$**': 'text'});
 
 // this will add paginate function.
-ProfileSchema.plugin(MongoPaging.mongoosePlugin);
+// ProfileSchema.plugin(MongoPaging.mongoosePlugin);
+ProfileSchema.plugin(mongoosePaginate);
 
 const Profile = mongoose.model('Profile', ProfileSchema);
 
@@ -202,56 +205,41 @@ const Profile = mongoose.model('Profile', ProfileSchema);
 //    -next {String} The value to start querying the page.
 //    -previous {String} The value to start querying previous page.
 // @param {Function} done Node errback style function.
+// exports.method = function() {};
+profilesPaginated = async (findText, page, limit) => {
+  // try {
+  //   // default function is "paginate"
+  //   const result = await Profile.paginate({
+  //     query: {
+  //       accessapproval: findText
+  //     },
+  //     paginatedField: 'accessdatetagged',
+  //     limit: parseInt(limit),
+  //     sortAscending: false
+  //   });
+  //   return await result;
+  // } catch (error) {
+  //   console.log(error);
+  //   return error;
+  // }
+  const query = {
+    accessapproval: findText
+  };
+  const options = {
+    sort:       { accessdatetagged: -1 },
+    lean:       true,
+    leanWithId: true,
+    page:       parseInt(page),
+    limit:      parseInt(limit)
+  };
 
-const paginateFirst = async (findText, limit, paginatedField, sortAscending = false) => {
-  try {
-    // default function is "paginate"
-    const result = await Profile.paginate({
-      query: {
-        accessapproval: findText
-      },
-      paginatedField: paginatedField,
-      limit: parseInt(limit),
-      sortAscending: sortAscending
-    });
-    // accessapproval: req.user._id
-    // paginate = async (..., previous)
-    // then in paginate function options
-    // previous: previous
-    console.log(result);
-    return result;
-  } catch (error) {
-    console.log(error);
-    return error;
-  }
+  let result = await Profile.paginate(query, options);
+  return result;
 }
 
-const paginateNext = async (findText, limit, paginatedField, next, sortAscending = false) => {
-  try {
-    // default function is "paginate"
-    const result = await Profile.paginate({
-      query: {
-        accessapproval: findText
-      },
-      paginatedField: paginatedField,
-      limit: parseInt(limit),
-      sortAscending: sortAscending,
-      next: next
-    });
-    // accessapproval: req.user._id
-    // paginate = async (..., previous)
-    // then in paginate function options
-    // previous: previous
-    console.log(result);
-    return result;
-  } catch (error) {
-    console.log(error);
-    return error;
-  }
-}
+// module.exports = Profile;
 
 module.exports = {
   Profile,
-  paginateFirst,
-  paginateNext
-};
+  profilesPaginated
+}

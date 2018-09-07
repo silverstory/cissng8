@@ -6,29 +6,18 @@ const qrcode = require('../services/qrcode');
 const shortId = require('./shortid-generator');
 const twofactor = require('./twofactor.service');
 
-const getFirstAccessApprovals = async (req, res, next) => {
+const getAccessApprovals = async (req, res, next) => {
   try {
-    const items = await
+    const result = await
       Profile
-        .paginateFirst(req.query.findtext, req.query.limit, req.query.paginatedfield);
+        // with paginatedfield and sort ascending
+        // .paginateFirst(req.query.findtext, req.query.limit, req.query.paginatedfield);
+        .profilesPaginated(req.query.findtext, req.query.page, req.query.limit);
     // res.setHeader("Content-Type", "application/json");
-    return await res.json( items );
+    return await res.json( result );
   } catch (error) {
     console.log("Error: " + error);
-    return await res.send( "Error: " + error );
-  }
-}
-
-const getNextAccessApprovals = async (req, res, next) => {
-  try {
-    const items = await
-      Profile
-        .paginateNext(req.query.findtext, req.query.limit, req.query.paginatedfield, req.query.next);
-    // res.setHeader("Content-Type", "application/json");
-    return await res.json(items);
-  } catch (error) {
-    console.log("Error: " + error);
-    return await res.send( "Error: " + error );
+    return res.send( "Error: " + error );
   }
 }
 
@@ -196,6 +185,5 @@ module.exports = {
   findProfile,
   getProfile,
   deleteProfileByIdDist,
-  getFirstAccessApprovals,
-  getNextAccessApprovals
+  getAccessApprovals
 };
