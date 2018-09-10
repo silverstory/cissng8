@@ -36,7 +36,7 @@ const ProfileSchema = new Schema({
   },
   personaccesslevel: {
     type: String,
-    default: 'BASIC',
+    default: 'PASSING THROUGH',
     required: [true, 'Person Access Level is required']
   },
   recordstatus: {
@@ -156,6 +156,10 @@ const ProfileSchema = new Schema({
   accessdatetagged: {
     type: Date,
     default: Date.now
+  },
+  blacklisted: {
+    type: Boolean,
+    default: false
   }
 },
 {
@@ -223,7 +227,8 @@ profilesPaginated = async (findText, page, limit) => {
   //   return error;
   // }
   const query = {
-    accessapproval: findText
+    accessapproval: findText,
+    distinction: 'OPEMPLOYEE'
   };
   const options = {
     sort:       { accessdatetagged: -1 },

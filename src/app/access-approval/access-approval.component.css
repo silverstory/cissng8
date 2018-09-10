@@ -1,0 +1,81 @@
+/* Custom CSS Classes */
+
+.demo-toolbar {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+mat-toolbar-row {
+  justify-content: space-between;
+}
+
+.example-card {
+max-width: 400px;
+font-family: Roboto, sans-serif, 'Nunito Semibold';
+}
+
+.example-card p {
+font-size: 0.9em;
+line-height: 2em;
+}
+
+.example-header-image {
+background-image: url('https://www.freeiconspng.com/uploads/flat-face-icon-23.png');
+background-size: cover;
+}
+
+.tag {
+  font-size: 2.2em;
+}
+
+.content-center {
+  text-align: -webkit-center;
+}
+
+/* CSS GRID  */
+
+#content{
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  grid-gap: 10px;
+  max-width: 100%;  /* 960px; */
+  margin: 0 auto;
+}
+@media screen and (min-width: 760px) {
+  #content{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 10px;
+    max-width: 100%; /* 960px; */
+    margin: 0 auto;
+  }
+}
+#content div {
+  /* background: #3bbced; */
+  padding: 10px;
+  font-family: Lato;
+  background-color: #FCE4EC;
+  /* #E0F7FA */
+  /* margin: 2em auto; */
+}
+#content div:nth-child(even){
+  /* background: #777; */
+  padding: 10px;
+  font-family: Lato;
+}
+.nested{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 10px;
+  /*grid-column: span 3;*/
+}
+.nested p{
+  border: 1px solid #fff;
+  /* padding: 10px; */
+  margin: 0;
+}
+
+.tag {
+  font-size: 2.2em;
+}

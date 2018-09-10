@@ -1,0 +1,31 @@
+{
+  "profileid": "9999eleven",
+  "mobile": "+639335146014",
+  "email": "jdelacruzeleven@malacanang.gov.ph",
+  "name": {
+    "first": "Juaneleven",
+    "middle": "P",
+    "last": "Dela Cruzeleven"
+  },
+  "distinction": "OPEMPLOYEE",
+  "personaccesslevel": "OFFICIAL",
+  "recordstatus": "ACTIVE",
+  "photothumbnailurl": "https://www.freeiconspng.com/uploads/flat-face-icon-23.png",
+  "employee": {
+    "position": "Director IV",
+    "office": "Office of the Executive Secretary, Office of the President, Malacanang"
+  },
+  "access": {
+    "one": "selected",
+    "two": "selected",
+    "three": "notSelected",
+    "four": "notSelected"
+  },
+  "proviaccess": {
+    "one": "selected",
+    "two": "selected",
+    "three": "notSelected",
+    "four": "notSelected"
+  },
+  "accessapproval": "Approved"
+}

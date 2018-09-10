@@ -36,6 +36,9 @@ import { VisitorComponent } from './visitor/visitor.component';
 import { ResidentComponent } from './resident/resident.component';
 import { ProfileNotFoundComponent } from './profile-not-found/profile-not-found.component';
 import { OPIDComponent } from './op-id/op-id.component';
+import { AccessApprovalComponent } from './access-approval/access-approval.component';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.component';
 
 // the second parameter 'fr' is optional
 // registerLocaleData(localeFr, 'fr');
@@ -57,7 +60,9 @@ registerLocaleData(localeEnPh, 'en-PH', localeEnPhExtra);
     VisitorComponent,
     ResidentComponent,
     ProfileNotFoundComponent,
-    OPIDComponent
+    OPIDComponent,
+    AccessApprovalComponent,
+    LoadingSpinnerComponent
   ],
   imports: [
     BrowserModule,
@@ -66,6 +71,7 @@ registerLocaleData(localeEnPh, 'en-PH', localeEnPhExtra);
     ReactiveFormsModule,
     FormsModule,
     BrowserAnimationsModule,
+    InfiniteScrollModule,
     AppMaterialModule
   ],
   providers: [

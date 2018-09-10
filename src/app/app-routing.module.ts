@@ -11,6 +11,7 @@ import { ResidentComponent } from './resident/resident.component';
 import { AuthGuard } from './auth/auth.guard';
 import { ProfileNotFoundComponent } from './profile-not-found/profile-not-found.component';
 import { OPIDComponent } from './op-id/op-id.component';
+import { AccessApprovalComponent } from './access-approval/access-approval.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthGuard], pathMatch: 'full' },
@@ -18,6 +19,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent, pathMatch: 'full' },
   { path: 'signup', component: SignupComponent, pathMatch: 'full' },
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard], pathMatch: 'full' },
+  { path: 'access-approval', component: AccessApprovalComponent, canActivate: [AuthGuard], pathMatch: 'full' },
   { path: 'employee/:id', component: EmployeeComponent, data: { state: 'employee' }, canActivate: [AuthGuard], runGuardsAndResolvers: 'paramsChange' },
   { path: 'visitor/:id', component: VisitorComponent, data: { state: 'visitor' }, canActivate: [AuthGuard], runGuardsAndResolvers: 'paramsChange' },
   { path: 'resident/:id', component: ResidentComponent, data: { state: 'resident' }, canActivate: [AuthGuard], runGuardsAndResolvers: 'paramsChange' },
