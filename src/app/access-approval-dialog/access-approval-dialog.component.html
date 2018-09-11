@@ -1,0 +1,26 @@
+<h1 mat-dialog-title>Access approval for {{data.profile.name.first}}</h1>
+<div mat-dialog-content>
+  <mat-card class="example-card">
+    <mat-card-header>
+      <div mat-card-avatar class="example-header-image"></div>
+      <mat-card-title>{{ data.profile.name.first }} {{ data.profile.name.last }}</mat-card-title>
+      <mat-card-subtitle>{{ data.profile.distinction }}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <ul>
+        <li>Mr/Ms. <b>{{ data.profile.name.last }}</b> is requesting to have access to these areas <strong>{{ getAccess(data.profile.access.one, data.profile.access.two, data.profile.access.three, data.profile.access.four) }}</strong>.</li>
+        <li>He/she is an <b style="color: red">{{ data.profile.recordstatus }}</b>&nbsp;<b>{{ data.profile.distinction }}</b> who <span *ngIf="data.profile.recordstatus === 'ACTIVE'">currently</span><span *ngIf="data.profile.recordstatus === 'INACTIVE'">recently</span> holds the position <b>{{ data.profile.employee.position }}</b> at the <b>{{ data.profile.employee.office }}</b>.</li>
+        <li>Based on the records, this person <span *ngIf="data.profile.blacklisted === true">has been blacklisted from entering</span><span *ngIf="data.profile.blacklisted === false">is allowed to enter</span> Malacanang Complex.</li>
+        <li>His/her most recent access level is <b>{{ data.profile.personaccesslevel }}</b> with current <b>{{ data.profile.accessapproval }}</b> status.</li>
+      </ul>
+    </mat-card-content>
+  </mat-card>
+  <!-- &#9679; -->
+  <!-- <mat-form-field>
+    <input matInput [(ngModel)]="data.animal">
+  </mat-form-field> -->
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">No Thanks</button>
+  <button mat-button [mat-dialog-close]="data.profile" cdkFocusInitial>Ok</button>
+</div>

@@ -39,6 +39,7 @@ import { OPIDComponent } from './op-id/op-id.component';
 import { AccessApprovalComponent } from './access-approval/access-approval.component';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.component';
+import { AccessApprovalDialogComponent } from './access-approval-dialog/access-approval-dialog.component';
 
 // the second parameter 'fr' is optional
 // registerLocaleData(localeFr, 'fr');
@@ -62,6 +63,7 @@ registerLocaleData(localeEnPh, 'en-PH', localeEnPhExtra);
     ProfileNotFoundComponent,
     OPIDComponent,
     AccessApprovalComponent,
+    AccessApprovalDialogComponent,
     LoadingSpinnerComponent
   ],
   imports: [
@@ -74,6 +76,7 @@ registerLocaleData(localeEnPh, 'en-PH', localeEnPhExtra);
     InfiniteScrollModule,
     AppMaterialModule
   ],
+  entryComponents: [AccessApprovalComponent, AccessApprovalDialogComponent],
   providers: [
     { provide: LOCALE_ID, useValue: 'en-PH' },
     ProfileService,

@@ -1,7 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { MydataserviceService } from '../mydataservice.service';
 import { Profile, ProfileObj } from '../profile';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { AccessApprovalDialogComponent } from '../access-approval-dialog/access-approval-dialog.component';
+
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 @Component({
   selector: 'app-access-approval',
@@ -10,6 +13,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
   providers: [MydataserviceService]
 })
 export class AccessApprovalComponent implements OnInit {
+  profile: Profile;
   myProfileList: Profile[] = [];
   page: number = 1;
   nextPage: number;
@@ -24,7 +28,8 @@ export class AccessApprovalComponent implements OnInit {
   public done: Observable<boolean> = this._done.asObservable();
   public loading: Observable<boolean> = this._loading.asObservable();
 
-  constructor(private service: MydataserviceService) { }
+  constructor(private service: MydataserviceService,
+              public dialog: MatDialog) { }
 
   ngOnInit() {
     this._loading.next(true);
@@ -93,8 +98,21 @@ export class AccessApprovalComponent implements OnInit {
       }
   }
 
-  OnMatCardClickEvent(item: any): void {
-    console.log(item.name.first);
+  openDialog(): void {
+    const dialogRef = this.dialog.open(AccessApprovalDialogComponent, {
+      // this should not be 700px and must implement css grid styling
+      width: '700px',
+      data: { profile: this.profile }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed ', result);
+      this.profile = result;
+    });
   }
 
+  OnMatCardClickEvent(item: any): void {
+    this.profile = <Profile>item;
+    this.openDialog();
+  }
 }

@@ -52,7 +52,7 @@ export interface Profile {
   };
   accessapproval: String;
   accessdatetagged: Date;
-  blacklisted: String;
+  blacklisted: Boolean;
 }
 
 export class ProfileObj implements Profile {
@@ -109,7 +109,7 @@ export class ProfileObj implements Profile {
   };
   accessapproval: String;
   accessdatetagged: Date;
-  blacklisted: String;
+  blacklisted: Boolean;
 
   constructor(item?: Profile) {
       if (item !== undefined) {
