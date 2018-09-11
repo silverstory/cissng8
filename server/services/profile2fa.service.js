@@ -12,7 +12,7 @@ const proveIdentity = async (req, res, next) => {
     //
     const _profile = req.body;
     let profile = null;
-    const cursor = await Profile.find({profileid: _profile.profileid, distinction: _profile.distinction}, { _id: 0 }).limit(1).cursor();
+    const cursor = await Profile.Profile.find({profileid: _profile.profileid, distinction: _profile.distinction}, { _id: 0 }).limit(1).cursor();
     profile = await cursor.next();
     if ( profile != null ) {
       // get mobile number
@@ -31,9 +31,9 @@ const proveIdentity = async (req, res, next) => {
         return await res.json( { success: false, message: `A text message with a 6-digit verification code was just sent to ${profile.name.first} ${profile.name.last}'s mobile number` } );
       } else {
         console.log(messageid);
-        return await res.json( { success: true, message: `A text message with a 6-digit verification code was just sent to ${profile.name.first} ${profile.name.last}'s mobile number` } );        
+        return await res.json( { success: true, message: `A text message with a 6-digit verification code was just sent to ${profile.name.first} ${profile.name.last}'s mobile number` } );
       }
-      
+
     } else {
       return await res.json( { success: true, message: `something went wrong :(` } );
     }
@@ -51,7 +51,7 @@ const verifyToken = async (req, res, next) => {
     //
     const _profile = req.body;
     let profile = null;
-    const cursor = await Profile.find({profileid: _profile.profileid, distinction: _profile.distinction}, { _id: 0 }).limit(1).cursor();
+    const cursor = await Profile.Profile.find({profileid: _profile.profileid, distinction: _profile.distinction}, { _id: 0 }).limit(1).cursor();
     profile = await cursor.next();
     if ( profile != null ) {
       // get secret

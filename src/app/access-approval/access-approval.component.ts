@@ -29,7 +29,6 @@ export class AccessApprovalComponent implements OnInit {
   ngOnInit() {
     this._loading.next(true);
     this.getProfiles();
-    this._loading.next(false);
   }
 
   // docs {Array} - Array of documents
@@ -53,6 +52,8 @@ export class AccessApprovalComponent implements OnInit {
           this._done.next(true);
         }
       });
+    } else {
+      this._loading.next(false);
     }
   }
 
@@ -71,7 +72,6 @@ export class AccessApprovalComponent implements OnInit {
     // console.log('scrolled');
     this.page = this.page + 1;
     this.getProfiles();
-    this._loading.next(false);
   }
 
   getAccess(one, two, three, four): string {

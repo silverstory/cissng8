@@ -28,7 +28,6 @@
         <mat-card-content>
           <p>
             <b>{{ i.employee.position }}</b>
-            <br><b>{{ i.employee.office }}</b>.
           </p>
         </mat-card-content>
         <!-- <mat-card-content>
@@ -42,8 +41,14 @@
       </mat-card>
     </div>
   </div>
-  <p class="tag is-warning" *ngIf="done | async">I ran out of profiles!</p>
-  <app-loading-spinner *ngIf="loading | async"></app-loading-spinner>
+  <!-- /*grid-column: span 3;*/ -->
+</div>
+
+<div id="footers">
+  <footer>
+    <p class="tag is-warning" *ngIf="done | async">I ran out of profiles!</p>
+    <app-loading-spinner *ngIf="loading | async"></app-loading-spinner>
+  </footer>
 </div>
 
 <!-- arrow 9658 square 9632 -->

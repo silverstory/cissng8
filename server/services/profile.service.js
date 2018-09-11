@@ -54,19 +54,19 @@ const postProfile = async (req, res, next) => {
   // find if record of ( profileid + distinction ) exist
   // if ( !util.isNullOrUndefined(find_profile) ) {
   let find_profile = null;
-  const cursor = await Profile.find({profileid: _profile.profileid, distinction: _profile.distinction}, { _id: 1 }).limit(1).cursor();
+  const cursor = await Profile.Profile.find({profileid: _profile.profileid, distinction: _profile.distinction}, { _id: 1 }).limit(1).cursor();
   find_profile = await cursor.next();
   if ( find_profile != null ) {
     // simply update the record ( no need to re-generate a token )
     // const updated_profile = await Profile.findByIdAndUpdate({_id: find_profile._id}, { name: _profile.name, email: _profile.email }, { new: true });
-    const updated_profile = await Profile.findByIdAndUpdate({_id: find_profile._id}, _profile, { new: true });
-    const profile = await Profile.findById({_id: updated_profile._id});
+    const updated_profile = await Profile.Profile.findByIdAndUpdate({_id: find_profile._id}, _profile, { new: true });
+    const profile = await Profile.Profile.findById({_id: updated_profile._id});
     return await res.json( profile );
 
   } else {
 
     // create the profile record
-    const saved_profile = await Profile.create(_profile);
+    const saved_profile = await Profile.Profile.create(_profile);
     // take the newly created profile document
     // create a shortid from its mongo _id and save it to a const [token]
     // const token = await shortId(saved_profile._id.toString()).toUpperCase();
@@ -86,8 +86,8 @@ const postProfile = async (req, res, next) => {
     saved_profile.two_factor_secret = secret;
     // save the updated document
     // const updated_profile = await Profile.findByIdAndUpdate({_id: saved_profile._id}, saved_profile);
-    const updated_profile = await Profile.findByIdAndUpdate({_id: saved_profile._id}, saved_profile, { new: true });
-    const profile = await Profile.findById({_id: updated_profile._id});
+    const updated_profile = await Profile.Profile.findByIdAndUpdate({_id: saved_profile._id}, saved_profile, { new: true });
+    const profile = await Profile.Profile.findById({_id: updated_profile._id});
     return await res.json( profile );
   }
   }
@@ -104,7 +104,7 @@ const getProfileByIdDist = async (req, res, next) => {
     //
     const _profile = req.body;
     let profile = null;
-    const cursor = await Profile.find({profileid: _profile.profileid, distinction: _profile.distinction}, { _id: 0 }).limit(1).cursor();
+    const cursor = await Profile.Profile.find({profileid: _profile.profileid, distinction: _profile.distinction}, { _id: 0 }).limit(1).cursor();
     profile = await cursor.next();
     if ( profile != null ) {
       // add qrcode to json
@@ -127,6 +127,7 @@ const getProfile = async (req, res, next) => {
 
     const profile = await
     Profile
+    .Profile
     .findById({_id: req.params.id});
     return await res.json( profile );
 
@@ -141,6 +142,7 @@ const findProfile = async (req, res, next) => {
 
     const cursor = await
     Profile
+    .Profile
     .find( { $text: { $search : req.params.text } },
       { score : { $meta: "textScore" } } )
     .sort( {
@@ -164,10 +166,10 @@ const deleteProfileByIdDist = async (req, res, next) => {
     //
     const _profile = req.body;
     let profile = null;
-    const cursor = await Profile.find({profileid: _profile.profileid, distinction: _profile.distinction}, { _id: 0 }).limit(1).cursor();
+    const cursor = await Profile.Profile.find({profileid: _profile.profileid, distinction: _profile.distinction}, { _id: 0 }).limit(1).cursor();
     profile = await cursor.next();
     if ( profile != null ) {
-      const deleted = await Profile.findByIdAndRemove({_id: profile._id});
+      const deleted = await Profile.Profile.findByIdAndRemove({_id: profile._id});
       return await res.json( { success: true } );
     } else {
       return await res.send("Profile not found!");
