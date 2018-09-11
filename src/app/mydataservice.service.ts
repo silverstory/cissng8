@@ -17,6 +17,7 @@ export class MydataserviceService {
 
   private find = 'Approved';
   private limit = 4;
+  private api = '/api';
 
   constructor(private http: HttpClient) { }
 
@@ -25,9 +26,9 @@ export class MydataserviceService {
   // }
 
   getProfiles(page: number) {
-    const query = `http://localhost:3000/api/profile/accessapprovals?findtext=${this.find}&page=${page}&limit=${this.limit}`;
-    console.log(query);
-    return this.http.get(query);
+    const url = `${this.api}/profile/accessapprovals?findtext=${this.find}&page=${page}&limit=${this.limit}`;
+    // console.log(url);
+    return this.http.get(url);
   }
 }
 
