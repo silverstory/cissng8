@@ -5,6 +5,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { AccessApprovalDialogComponent } from '../access-approval-dialog/access-approval-dialog.component';
 
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { switchMap, map, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-access-approval',
@@ -28,7 +29,7 @@ export class AccessApprovalComponent implements OnInit {
   public done: Observable<boolean> = this._done.asObservable();
   public loading: Observable<boolean> = this._loading.asObservable();
 
-  constructor(private service: MydataserviceService,
+  constructor(public service: MydataserviceService,
               public dialog: MatDialog) { }
 
   ngOnInit() {
@@ -49,15 +50,64 @@ export class AccessApprovalComponent implements OnInit {
 
   getProfiles() {
     if (this.hasNextPage === true) {
-      this.service.getProfiles(this.page).subscribe((res: any) => {
-        this.hasNextPage = res.hasNextPage;
-        this.nextPage = res.nextPage;
-        this.onProfileSuccess(res.docs);
-        if (res.hasNextPage === false) {
-          this._done.next(true);
+
+      // option 1
+      // this.service.getProfiles(this.page).pipe(
+      // map(params => params['id']),
+      // switchMap(id => id ? id : Observable.empty())
+      // .subscribe(user => this.user = user);
+      // );
+
+      // option 2
+      // const result = this.service.getProfiles(this.page).pipe(
+      //   map(res => res),
+      //   switchMap(id => id ? id : empty())
+      // );
+
+      // option 3
+      // const result = this.service.getProfiles(this.page)
+      // .pipe(
+      //   map((res: any) => res),
+      //   switchMap((res: any) => res ? res : empty()))
+      // .subscribe({
+      //   next: (res: any) => {
+      //     this.hasNextPage = res.hasNextPage;
+      //     this.nextPage = res.nextPage;
+      //     this.onProfileSuccess(res.docs);
+      //   },
+      //   complete: () => {
+      //     this._done.next(true);
+      //     this._loading.next(false);
+      //   }
+      // });
+
+      this.service.getProfiles(this.page)
+      .pipe( tap((res: any) => res) )
+      .subscribe({
+        next: (res: any) => {
+          this.hasNextPage = res.hasNextPage;
+          this.nextPage = res.nextPage;
+          this.onProfileSuccess(res.docs);
+        },
+        complete: () => {
+          if (this.hasNextPage === false) { this._done.next(true); }
+          this._loading.next(false);
         }
       });
+
+      // orig code
+      // try if... res => res.length > 0
+      // this.service.getProfiles(this.page).subscribe((res: any) => {
+      //   this.hasNextPage = res.hasNextPage;
+      //   this.nextPage = res.nextPage;
+      //   this.onProfileSuccess(res.docs);
+      //   // if (res.hasNextPage === false) {
+      //   //   this._done.next(true);
+      //   // }
+      // });
+
     } else {
+      this._done.next(true);
       this._loading.next(false);
     }
   }
@@ -114,5 +164,16 @@ export class AccessApprovalComponent implements OnInit {
   OnMatCardClickEvent(item: any): void {
     this.profile = <Profile>item;
     this.openDialog();
+  }
+
+  OnAccessTypeClickEvent(type: string): void {
+    this.service.find = type;
+    this._loading.next(true);
+    this._done.next(false);
+    this.myProfileList = [];
+    this.page = 1;
+    this.nextPage = 0;
+    this.hasNextPage = true;
+    this.getProfiles();
   }
 }

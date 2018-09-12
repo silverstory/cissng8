@@ -15,8 +15,8 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class MydataserviceService {
 
-  private find = 'Approved';
-  private limit = 4;
+  public find = 'Approved';
+  public limit = 8; // limit must be not less than 8
   private api = '/api';
 
   constructor(private http: HttpClient) { }
@@ -31,5 +31,3 @@ export class MydataserviceService {
     return this.http.get(url);
   }
 }
-
-
