@@ -54,14 +54,15 @@ router.post('/authenticate', async (req,res) => {
     }
 });
 
-// router.get('/profile', passport.authenticate('jwt',{session:false}), async (req,res) => await res.json( {"user": req.user} ));
-router.get('/profile', passport.authenticate('jwt',{session:false}), async (req,res) => {
-            return await res.json( { user : req.user } )
-        });
+  // router.get('/profile', passport.authenticate('jwt',{session:false}), async (req,res) => await res.json( {"user": req.user} ));
+  router.get('/profile/:name', passport.authenticate('jwt',{session:false}), async (req,res) => {
+    const user = await User.getUserByUserName(req.params.name);
+    return await res.json({user: user});
+  });
 
 
-// nilagay lang galing sa ng azure
-async function isLoggedIn(req, res, next) {
+  // nilagay lang galing sa ng azure
+  async function isLoggedIn(req, res, next) {
     // If user is authenticated in the session
     // carry on to the next middleware function
     if (await req.isAuthenticated() && await isValidAdmin(req.user)) {

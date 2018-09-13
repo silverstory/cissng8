@@ -53,6 +53,7 @@ module.exports.getUserById = async id => {
         return error;
     }
 }
+
 module.exports.getUserByUserName = async userName => {
     try {
         const query = { userName : userName };

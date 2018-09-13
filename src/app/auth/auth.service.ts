@@ -92,7 +92,7 @@ export class AuthService {
     // headers.append('Authorization', `Bearer ${token}`);
     headers.append('Content-Type', 'application/json');
 
-    const url = `${this.userServiceUrl}/profile`;
+    const url = `${this.userServiceUrl}/profile/${this.getUserName()}`;
     return this.http.get(url, {headers: headers}).pipe(
     map( ( v: any ) => v.user ))
     .pipe(
@@ -105,6 +105,9 @@ export class AuthService {
   // < NEW TOKEN CODE
   public getToken(): string {
     return localStorage.getItem('token');
+  }
+  private getUserName(): string {
+    return localStorage.getItem('userName');
   }
   public isAuthenticated(): boolean {
     // get the token
@@ -122,8 +125,10 @@ export class AuthService {
 
   storeUserData(token, user) {
     localStorage.setItem('token', token);
+    // I think Stringfy will be helpful someday...
     // localStorage.setItem('user',JSON.stringify(user));
     localStorage.setItem('user', user);
+    localStorage.setItem('userName', user.userName);
     // this.authToken = token;
     // this.user = user;
   }

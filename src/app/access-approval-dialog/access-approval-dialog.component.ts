@@ -3,6 +3,11 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { Profile, ProfileObj } from '../profile';
 import { BehaviorSubject, Observable } from 'rxjs';
 
+import { AuthService } from '../auth/auth.service';
+import { User } from '../auth/user';
+
+import { switchMap, map, tap } from 'rxjs/operators';
+
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 export interface DialogData {
@@ -21,9 +26,13 @@ export interface DialogData {
 })
 export class AccessApprovalDialogComponent implements OnInit {
 
+  // public user$: Observable<User>;
+  public user: User;
+
   constructor(
     public dialogRef: MatDialogRef<AccessApprovalDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
+    @Inject(MAT_DIALOG_DATA) public data: DialogData,
+    private authService: AuthService) { }
 
   onNoClick(): void {
     this.dialogRef.close();
@@ -87,6 +96,14 @@ export class AccessApprovalDialogComponent implements OnInit {
     }
   }
 
-  ngOnInit() { }
-
+  async ngOnInit() {
+    try {
+      await this.authService.getProfile()
+        .subscribe((user) => {
+          this.user = user;
+        });
+    } catch (error) {
+      this.authService.log(error);
+    }
+  }
 }
