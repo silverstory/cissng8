@@ -33,12 +33,12 @@ export const homeTransition = trigger('homeTransition', [
   ])
 ]);
 
-export interface Tile {
-  color: string;
-  cols: number;
-  rows: number;
-  text: string;
-}
+// export interface Tile {
+//   color: string;
+//   cols: number;
+//   rows: number;
+//   text: string;
+// }
 
 @Component({
   selector: 'app-employee',
@@ -137,13 +137,13 @@ export class EmployeeComponent implements OnInit, OnDestroy {
   @Input() profile: Profile = null;
   navigationSubscription;
 
-  tiles: Tile[] = [
-    {text: '1', cols: 2, rows: 1, color: '#CFD8DC'},
-    {text: '2', cols: 2, rows: 1, color: '#CFD8DC'},
-    {text: '', cols: 4, rows: 6, color: 'url(https://www.freeiconspng.com/uploads/flat-face-icon-23.png)'},
-    {text: '3', cols: 2, rows: 1, color: '#CFD8DC'},
-    {text: '4', cols: 2, rows: 1, color: '#CFD8DC'},
-  ];
+  // tiles: Tile[] = [
+  //   {text: '1', cols: 2, rows: 1, color: '#CFD8DC'},
+  //   {text: '2', cols: 2, rows: 1, color: '#CFD8DC'},
+  //   {text: '', cols: 4, rows: 6, color: 'url(https://www.freeiconspng.com/uploads/flat-face-icon-23.png)'},
+  //   {text: '3', cols: 2, rows: 1, color: '#CFD8DC'},
+  //   {text: '4', cols: 2, rows: 1, color: '#CFD8DC'},
+  // ];
 
   constructor(
     private route: ActivatedRoute,
@@ -180,13 +180,13 @@ export class EmployeeComponent implements OnInit, OnDestroy {
     this.profileService.getProfile(id)
       .subscribe(profile => {
         this.profile = profile;
-        this.tiles = [
-          {text: '1', cols: 2, rows: 1, color: this.getTileAccess(this.profile.access.one, 'One') },
-          {text: '2', cols: 2, rows: 1, color: this.getTileAccess(this.profile.access.two, 'Two')},
-          {text: '', cols: 4, rows: 6, color: 'url(' + this.profile.photothumbnailurl + ')'},
-          {text: '3', cols: 2, rows: 1, color: this.getTileAccess(this.profile.access.three, 'Three')},
-          {text: '4', cols: 2, rows: 1, color: this.getTileAccess(this.profile.access.four, 'Four')},
-        ];
+        // this.tiles = [
+        //   {text: '1', cols: 2, rows: 1, color: this.getTileAccess(this.profile.access.one, 'One') },
+        //   {text: '2', cols: 2, rows: 1, color: this.getTileAccess(this.profile.access.two, 'Two')},
+        //   {text: '', cols: 4, rows: 6, color: 'url(' + this.profile.photothumbnailurl + ')'},
+        //   {text: '3', cols: 2, rows: 1, color: this.getTileAccess(this.profile.access.three, 'Three')},
+        //   {text: '4', cols: 2, rows: 1, color: this.getTileAccess(this.profile.access.four, 'Four')},
+        // ];
       });
   }
 

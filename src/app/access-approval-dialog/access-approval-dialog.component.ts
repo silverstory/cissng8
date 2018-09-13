@@ -9,6 +9,11 @@ export interface DialogData {
   profile: Profile;
 }
 
+// PSG-GATE-OFFICER
+// PSG-DATA-OFFICER
+// HRMO-DATA-OFFICER
+// PSG-CISS-MANAGER
+
 @Component({
   selector: 'app-access-approval-dialog',
   templateUrl: './access-approval-dialog.component.html',
@@ -41,6 +46,45 @@ export class AccessApprovalDialogComponent implements OnInit {
         case 'selected':
         return `Code ${code} ` ;
       }
+  }
+
+  // tiles
+
+  getTileColor(tile) {
+    switch (tile) {
+      case 'One':
+        return 'lightblue';
+        case 'Two':
+        return 'lightgreen';
+        case 'Three':
+        return '#DDBDF1';
+        case 'Four':
+        return '#DDBDF1';
+      }
+  }
+
+  getTileAccess(access, tile) {
+    switch (access) {
+      case 'selected':
+        return this.getTileColor(tile);
+      case 'notSelected':
+        return '#BDBDBD';
+      default:
+        return '#BDBDBD';
+    }
+  }
+
+  // GET BACKGROUND COLOR
+
+  getColor(status) {
+    switch (status) {
+      case 'ACTIVE':
+        return '#1B5E20';
+      case 'INACTIVE':
+        return '#E91E63';
+      default:
+        return '#E8EAF6';
+    }
   }
 
   ngOnInit() { }

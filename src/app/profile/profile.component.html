@@ -1,9 +1,9 @@
 <div class="signin-content">
   <mat-card>
     <mat-card-header>
-      <mat-card-title>Central Information System</mat-card-title>
+      <mat-card-title>OP - Central Information Security System</mat-card-title>
       <mat-card-subtitle>Profile</mat-card-subtitle>
-    </mat-card-header>    
+    </mat-card-header>
     <mat-card-content>
       <span>Username: <strong>{{ ( user$ | async )?.userName }}</strong></span>
       <br>
@@ -17,7 +17,7 @@
     <mat-card-header>
       <mat-card-title>Central Information System</mat-card-title>
       <mat-card-subtitle>Profile</mat-card-subtitle>
-    </mat-card-header>    
+    </mat-card-header>
     <mat-card-content>
       <div *ngIf="user$ | async as user">
         <span>Username: </span><strong>{{user.userName}}</strong>

@@ -151,7 +151,8 @@ export class AccessApprovalComponent implements OnInit {
   openDialog(): void {
     const dialogRef = this.dialog.open(AccessApprovalDialogComponent, {
       // this should not be 700px and must implement css grid styling
-      width: '700px',
+      // width: '100%',
+      width: 'calc(100%)',
       data: { profile: this.profile }
     });
 
