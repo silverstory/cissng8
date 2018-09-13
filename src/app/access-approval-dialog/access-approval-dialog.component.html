@@ -68,6 +68,6 @@
   <button mat-raised-button color="warn" *ngIf="user.usertype === 'PSG-DATA-OFFICER'" [mat-dialog-close]="data.profile" cdkFocusInitial>Endorse Access</button>
 
   <!-- ciss manager -->
-  <button mat-flat-button color="warn" *ngIf="user.usertype === 'PSG-CISS-MANAGER'" [mat-dialog-close]="data.profile">Deny Access</button>
+  <button mat-flat-button color="warn" *ngIf="user.usertype === 'PSG-CISS-MANAGER'" [mat-dialog-close]="data.profile">Deny Access</button>&nbsp;&nbsp;
   <button mat-raised-button color="primary" *ngIf="user.usertype === 'PSG-CISS-MANAGER'" [mat-dialog-close]="data.profile" cdkFocusInitial>Approve Access</button>
 </div>
