@@ -4,7 +4,7 @@ import { Profile, ProfileObj } from '../profile';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { AccessApprovalDialogComponent } from '../access-approval-dialog/access-approval-dialog.component';
 
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatSlideToggleChange } from '@angular/material';
 import { switchMap, map, tap } from 'rxjs/operators';
 
 @Component({
@@ -29,11 +29,36 @@ export class AccessApprovalComponent implements OnInit {
   public done: Observable<boolean> = this._done.asObservable();
   public loading: Observable<boolean> = this._loading.asObservable();
 
+  // slide toggle
+  color = 'accent';
+  checked = true;
+  disabled = false;
+
   constructor(public service: MydataserviceService,
               public dialog: MatDialog) { }
 
   ngOnInit() {
     this._loading.next(true);
+    this.getProfiles();
+
+    // this.optionB.valueChanges.subscribe(checked => {
+    //   if (checked) {
+    //     this.optionBExtra.setValidators([Validators.required, Validators.minLength(5)]);
+    //   } else {
+    //     this.optionBExtra.setValidators(null);
+    //   }
+    //   this.optionBExtra.updateValueAndValidity();
+    // });
+  }
+
+  toggle(event: MatSlideToggleChange) {
+    this.service.newestFirst = event.checked;
+    this._loading.next(true);
+    this._done.next(false);
+    this.myProfileList = [];
+    this.page = 1;
+    this.nextPage = 0;
+    this.hasNextPage = true;
     this.getProfiles();
   }
 

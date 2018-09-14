@@ -12,7 +12,7 @@ const getAccessApprovals = async (req, res, next) => {
       Profile
         // with paginatedfield and sort ascending
         // .paginateFirst(req.query.findtext, req.query.limit, req.query.paginatedfield);
-        .profilesPaginated(req.query.findtext, req.query.page, req.query.limit);
+        .profilesPaginated(req.query.findtext, req.query.page, req.query.limit, req.query.newestfirst);
     // res.setHeader("Content-Type", "application/json");
     return await res.json( result );
   } catch (error) {
@@ -36,11 +36,12 @@ const postProfile = async (req, res, next) => {
   } else {
   }
 
-  try {
-    if (_profile.accessapproval === 'Approved') {
-        _profile.access = _profile.proviaccess;
-    }
-  } catch (error) { }
+  // do not do this block of code here. do it in angular
+  // try {
+  //   if (_profile.accessapproval === 'Approved') {
+  //       _profile.access = _profile.proviaccess;
+  //   }
+  // } catch (error) { }
 
   // if visitor, convert date field to
   // ISODate before saving document

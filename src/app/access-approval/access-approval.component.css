@@ -125,3 +125,18 @@ footer {
   grid-area: footer;
   /* background: #333 !important; */
 }
+
+
+/* slide toggle */
+.example-section {
+  display: flex;
+  flex: 100%;
+  align-content: center;
+  align-items: center;
+  height: 60px;
+  width: 100%;
+}
+
+.example-margin {
+  margin: 10px 20px;
+}

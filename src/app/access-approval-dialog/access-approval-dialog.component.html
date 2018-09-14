@@ -13,7 +13,7 @@
         <mat-card-content>
           <div class="row">
             <ul>
-              <li>Mr/Ms. <b>{{ data.profile.name.last }}</b> is requesting to have access to these areas <strong>{{ getAccess(data.profile.access.one, data.profile.access.two, data.profile.access.three, data.profile.access.four) }}</strong>.</li>
+              <li *ngIf="user.usertype === 'PSG-CISS-MANAGER'">Mr/Ms. <b>{{ data.profile.name.last }}</b> is requesting to have access to these areas <strong>{{ getAccess(data.profile.access.one, data.profile.access.two, data.profile.access.three, data.profile.access.four) }}</strong>.</li>
               <li>He/she is an <b [style.color]="getColor(data.profile.recordstatus)">{{ data.profile.recordstatus | uppercase }}</b>&nbsp;<b>{{ data.profile.distinction }}</b> who <span *ngIf="data.profile.recordstatus === 'ACTIVE'">currently</span><span *ngIf="data.profile.recordstatus === 'INACTIVE'">recently</span> holds the position <b>{{ data.profile.employee.position }}</b> at the <b>{{ data.profile.employee.office }}</b>.</li>
               <li>Based on the records, this person <span *ngIf="data.profile.blacklisted === true">has been blacklisted from entering</span><span *ngIf="data.profile.blacklisted === false">is allowed to enter</span> Malacanang Complex.</li>
               <li>His/her most recent access level is <b>{{ data.profile.personaccesslevel }}</b> with current <b>{{ data.profile.accessapproval }}</b> status.</li>
@@ -43,22 +43,22 @@
     <!-- end radio and toggle on nested grid -->
     <!-- color access preview -->
     <div>
-        <mat-card class="column-card">
-            <div class="row">
-              <div class="one-2-3-4" [style.background-color]="getTileAccess(data.profile.access.one, 'One')">1</div>
-              <div class="one-2-3-4" [style.background-color]="getTileAccess(data.profile.access.two, 'Two')">2</div>
-            </div>
-            <img mat-card-image src="{{data.profile.photothumbnailurl}}" alt="Photo" style="height:250px; object-fit: contain;">
-            <div class="row">
-              <div class="one-2-3-4" [style.background-color]="getTileAccess(data.profile.access.three, 'Three')">3</div>
-              <div class="one-2-3-4" [style.background-color]="getTileAccess(data.profile.access.four, 'Four')">4</div>
-            </div>
-          </mat-card>
+      <mat-card class="column-card">
+        <div class="row">
+          <div class="one-2-3-4" [style.background-color]="getTileAccess(data.profile.access.one, 'One')">1</div>
+          <div class="one-2-3-4" [style.background-color]="getTileAccess(data.profile.access.two, 'Two')">2</div>
+        </div>
+        <img mat-card-image src="{{data.profile.photothumbnailurl}}" alt="Photo" style="height:250px; object-fit: contain;">
+        <div class="row">
+          <div class="one-2-3-4" [style.background-color]="getTileAccess(data.profile.access.three, 'Three')">3</div>
+          <div class="one-2-3-4" [style.background-color]="getTileAccess(data.profile.access.four, 'Four')">4</div>
+        </div>
+      </mat-card>
     </div>
     <!-- end color access preview -->
   </div>
 </div>
-<div mat-dialog-actions>
+<div mat-dialog-actions align="end">
   <button mat-button (click)="onNoClick()">Cancel</button>&nbsp;&nbsp;
 
   <!-- hr -->
@@ -68,6 +68,6 @@
   <button mat-raised-button color="warn" *ngIf="user.usertype === 'PSG-DATA-OFFICER'" [mat-dialog-close]="data.profile" cdkFocusInitial>Endorse Access</button>
 
   <!-- ciss manager -->
-  <button mat-flat-button color="warn" *ngIf="user.usertype === 'PSG-CISS-MANAGER'" [mat-dialog-close]="data.profile">Deny Access</button>&nbsp;&nbsp;
-  <button mat-raised-button color="primary" *ngIf="user.usertype === 'PSG-CISS-MANAGER'" [mat-dialog-close]="data.profile" cdkFocusInitial>Approve Access</button>
+  <button mat-flat-button color="warn" *ngIf="user.usertype === 'PSG-CISS-MANAGER'" [mat-dialog-close]="data.profile">Deny Request</button>&nbsp;&nbsp;
+  <button mat-raised-button color="primary" *ngIf="user.usertype === 'PSG-CISS-MANAGER'" [mat-dialog-close]="data.profile" cdkFocusInitial>Approve Request</button>
 </div>

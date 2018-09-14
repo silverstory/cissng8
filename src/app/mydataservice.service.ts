@@ -15,8 +15,9 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class MydataserviceService {
 
-  public find = 'Approved';
-  public limit = 8; // limit must be not less than 8
+  public find = 'Provisional';
+  public limit = 8; // limit must be atleast 8 and above
+  public newestFirst = true;
   private api = '/api';
 
   constructor(private http: HttpClient) { }
@@ -26,8 +27,8 @@ export class MydataserviceService {
   // }
 
   getProfiles(page: number) {
-    const url = `${this.api}/profile/accessapprovals?findtext=${this.find}&page=${page}&limit=${this.limit}`;
-    // console.log(url);
+    // tslint:disable-next-line:max-line-length
+    const url = `${this.api}/profile/accessapprovals?findtext=${this.find}&page=${page}&limit=${this.limit}&newestfirst=${this.newestFirst}`;
     return this.http.get(url);
   }
 }
