@@ -1,4 +1,4 @@
-<h1 mat-dialog-title>Access approval for {{data.profile.name.first}}</h1>
+<h1 mat-dialog-title>Access approval for {{data.profile.name.first}} {{data.profile.name.last}}</h1>
 <div mat-dialog-content>
   <!-- style="text-align: -webkit-center;" -->
   <div id="content">
@@ -25,20 +25,75 @@
     <!-- end preface -->
     <!-- radio and toggle on nested grid -->
     <div>
-      <mat-card class="example-card">
-        <mat-card-header>
-          <div mat-card-avatar class="example-header-image"></div>
-          <mat-card-title>{{ data.profile.name.first }} {{ data.profile.name.last }}</mat-card-title>
-          <mat-card-subtitle>{{ data.profile.distinction }}</mat-card-subtitle>
-        </mat-card-header>
-        <mat-card-content>
+      <!-- <mat-card class="example-card"> -->
+        <!-- <mat-card-content> -->
           <div class="row">
-            <p>
-              <b>nested grid for radio and toggle buttons here</b>
-            </p>
+            <mat-card class="example-card">
+              <mat-card-content>
+                <h2 class="example-h2">Access Presets</h2>
+                <mat-radio-group class="nested">
+                  <mat-radio-button value="PASSING THROUGH">PASSING THROUGH</mat-radio-button>
+                  <mat-radio-button value="OFFICIAL">OFFICIAL</mat-radio-button>
+                  <mat-radio-button value="RANK AND FILE">RANK AND FILE</mat-radio-button>
+                  <mat-radio-button value="UNIFORMED OFFICIAL">UNIFORMED OFFICIAL</mat-radio-button>
+                  <mat-radio-button value="UNIFORMED PERSONNEL">UNIFORMED PERSONNEL</mat-radio-button>
+                  <mat-radio-button value="CUSTOMIZED">CUSTOMIZED</mat-radio-button>
+                </mat-radio-group>
+              </mat-card-content>
+            </mat-card>
           </div>
-        </mat-card-content>
-      </mat-card>
+          <div class="row">
+            <mat-card class="example-card">
+              <mat-card-content>
+                <h2 class="example-h2">Access Codes</h2>
+                <div class="nested">
+                  <mat-slide-toggle
+                      class="example-margin"
+                      [color]="oneColor"
+                      [checked]="oneChecked"
+                      [disabled]="oneDisabled">
+                    Code 1
+                  </mat-slide-toggle>
+
+                  <mat-slide-toggle
+                      class="example-margin"
+                      [color]="twoColor"
+                      [checked]="twoChecked"
+                      [disabled]="twoDisabled">
+                    Code 2
+                  </mat-slide-toggle>
+
+                  <mat-slide-toggle
+                      class="example-margin"
+                      [color]="threeColor"
+                      [checked]="threeChecked"
+                      [disabled]="threeDisabled">
+                    Code 3
+                  </mat-slide-toggle>
+
+                  <mat-slide-toggle
+                      class="example-margin"
+                      [color]="fourColor"
+                      [checked]="fourChecked"
+                      [disabled]="fourDisabled">
+                    Code 4
+                  </mat-slide-toggle>
+
+                </div>
+              </mat-card-content>
+            </mat-card>
+          </div>
+          <div class="row">
+            <pre>
+Legend:
+
+  Code 1 is palace, pgh ( critical areas )
+  Code 2 is mabini, engr., other non-critical OP buildings
+  Codes 3 and 4 are PSG reserved codes ( controlled areas )
+            </pre>
+          </div>
+        <!-- </mat-card-content> -->
+      <!-- </mat-card> -->
     </div>
     <!-- end radio and toggle on nested grid -->
     <!-- color access preview -->

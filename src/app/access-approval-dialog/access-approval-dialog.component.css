@@ -90,6 +90,24 @@ background-size: cover;
   /* padding: 10px; */
   margin: 0;
 }
+.nested div{
+  padding: 10px;
+  /* font-family: Lato; */
+  /* padding: 10px; */
+  /* margin: 0; */
+}
+.nested mat-radio-button{
+  /* padding: 10px; */
+  /* font-family: Lato; */
+  /* padding: 10px; */
+  margin: 10px;
+}
+.nested mat-slide-toggle{
+  /* padding: 10px; */
+  /* font-family: Lato; */
+  /* padding: 10px; */
+  margin: 10px;
+}
 
  /* footers loading and alerts */
 
@@ -110,6 +128,8 @@ background-size: cover;
 
 .one-2-3-4 {
   flex: 50%;
+  font-size: 1.1em;
+  font-weight: bold;
   font-family: Roboto, Arial, sans-serif;
   margin: 0 .025rem 0px .025rem;
   text-align: center;
@@ -117,4 +137,37 @@ background-size: cover;
   line-height: 40px;
   height: 40px;
   background-color: #BDBDBD;
+}
+
+.example-radio-group {
+  display: inline-flex;
+  flex-direction: column;
+  height: auto;
+}
+
+.example-radio-button {
+  margin: 10;
+}
+
+.example-selected-value {
+  margin: 15px 0;
+}
+
+.example-h2 {
+  margin: 10px;
+}
+
+.example-section {
+  display: flex;
+  align-content: center;
+  align-items: center;
+  height: 60px;
+}
+
+.example-margin {
+  margin: 10px;
+}
+
+pre{
+  margin: 10px;
 }

@@ -18,14 +18,15 @@
   </mat-slide-toggle>
 </section>
 <div  infiniteScroll
-      [infiniteScrollDistance]="2"
-      [infiniteScrollThrottle]="150"
-      (scrolled)="onScroll()"
-      [scrollWindow]="true"
-      id="content"
-      style="height: 100%;
-      overflow-y: scroll;
-      text-align: -webkit-center;">
+    [infiniteScrollDistance]="2"
+    [infiniteScrollThrottle]="500"
+    (scrolled)="onScroll()"
+    id="content"
+    style="overflow-y: scroll; text-align: -webkit-center;"
+  >
+  <!-- height: 100%;
+  overflow-y: scroll;
+  text-align: -webkit-center; -->
   <div *ngFor="let i of myProfileList">
     <div>
       <mat-card class="example-card" (click)="OnMatCardClickEvent(i)">

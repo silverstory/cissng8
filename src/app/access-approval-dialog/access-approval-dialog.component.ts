@@ -25,6 +25,21 @@ export interface DialogData {
   styleUrls: ['./access-approval-dialog.component.css']
 })
 export class AccessApprovalDialogComponent implements OnInit {
+  oneColor = 'accent';
+  oneChecked = false;
+  oneDisabled = false;
+
+  twoColor = 'accent';
+  twoChecked = false;
+  twoDisabled = false;
+
+  threeColor = 'accent';
+  threeChecked = false;
+  threeDisabled = false;
+
+  fourColor = 'accent';
+  fourChecked = false;
+  fourDisabled = false;
 
   // public user$: Observable<User>;
   public user: User;

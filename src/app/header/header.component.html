@@ -1,14 +1,54 @@
 <mat-toolbar color="primary" *ngIf="isLoggedIn$ | async as isLoggedIn">
   <span>
     <img src="assets/img/angular_whiteTransparent.svg" class="angular-logo">
-    OP - Central Information Security System
+    OP - CISS
   </span>
   <span class="fill-remaining-space"></span>
-  <!-- <button mat-button *ngIf="isLoggedIn" routerLink="dashboard">Heroes Dashboard</button> -->
-  <!-- <button mat-button *ngIf="isLoggedIn" routerLink="heroes">Heroes List</button> -->
-  <!-- <button mat-button *ngIf="isLoggedIn" routerLink="profile">Profile</button> -->
-  <button mat-button *ngIf="isLoggedIn" routerLink="access-approval">Access Approval</button>
-  <button mat-button *ngIf="!isLoggedIn" routerLink="login">Login</button>
-  <!-- <button mat-button *ngIf="isLoggedIn" routerLink="signup">Sign Up</button> -->
-  <button mat-button (click)="onLogout()" *ngIf="isLoggedIn">Logout</button>
+
+  <button mat-icon-button [matMenuTriggerFor]="menu">
+    <mat-icon>more_vert</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item *ngIf="isLoggedIn" routerLink="access-approval">
+      <mat-icon>vpn_key</mat-icon>
+      <span>Access Approval</span>
+    </button>
+    <button mat-menu-item *ngIf="!isLoggedIn" routerLink="login">
+      <mat-icon>perm_identity</mat-icon>
+      <span>Login</span>
+    </button>
+    <button mat-menu-item *ngIf="isLoggedIn" (click)="onLogout()">
+      <mat-icon>exit_to_app</mat-icon>
+      <span>Logout</span>
+    </button>
+  </mat-menu>
+
+
+
 </mat-toolbar>
+
+
+<!-- <mat-toolbar color="primary" *ngIf="isLoggedIn$ | async as isLoggedIn">
+  <span class="demo-toolbar">
+    <div id="content">
+    <div>
+      <span>
+        <img src="assets/img/angular_whiteTransparent.svg" class="angular-logo">
+        OP - Central Information Security System
+      </span>
+    </div>
+    <div>
+      <span class="fill-remaining-space"></span>
+    </div>
+    <div *ngIf="isLoggedIn">
+      <button mat-button routerLink="access-approval">Access Approval</button>
+    </div>
+    <div *ngIf="!isLoggedIn">
+      <button mat-button routerLink="login">Login</button>
+    </div>
+    <div *ngIf="isLoggedIn">
+      <button mat-button (click)="onLogout()">Logout</button>
+    </div>
+    </div>
+  </span>
+</mat-toolbar> -->
