@@ -24,76 +24,101 @@
     </div>
     <!-- end preface -->
     <!-- radio and toggle on nested grid -->
+    <!-- *ngIf="!(user.usertype === 'PSG-CISS-MANAGER' && data.profile.accessapproval === 'Provisional')" -->
     <div>
-      <!-- <mat-card class="example-card"> -->
-        <!-- <mat-card-content> -->
-          <div class="row">
-            <mat-card class="example-card">
-              <mat-card-content>
-                <h2 class="example-h2">Access Presets</h2>
-                <mat-radio-group class="nested">
-                  <mat-radio-button value="PASSING THROUGH">PASSING THROUGH</mat-radio-button>
-                  <mat-radio-button value="OFFICIAL">OFFICIAL</mat-radio-button>
-                  <mat-radio-button value="RANK AND FILE">RANK AND FILE</mat-radio-button>
-                  <mat-radio-button value="UNIFORMED OFFICIAL">UNIFORMED OFFICIAL</mat-radio-button>
-                  <mat-radio-button value="UNIFORMED PERSONNEL">UNIFORMED PERSONNEL</mat-radio-button>
-                  <mat-radio-button value="CUSTOMIZED">CUSTOMIZED</mat-radio-button>
-                </mat-radio-group>
-              </mat-card-content>
-            </mat-card>
-          </div>
-          <div class="row">
-            <mat-card class="example-card">
-              <mat-card-content>
-                <h2 class="example-h2">Access Codes</h2>
-                <div class="nested">
-                  <mat-slide-toggle
-                      class="example-margin"
-                      [color]="oneColor"
-                      [checked]="oneChecked"
-                      [disabled]="oneDisabled">
-                    Code 1
-                  </mat-slide-toggle>
+      <!-- <div class="row"> -->
+        <mat-card class="example-card">
+          <mat-card-header>
+            <!-- <div mat-card-avatar><mat-icon color="primary">ballot</mat-icon></div> -->
+            <!-- <div mat-card-avatar><mat-icon color="primary">filtre_2</mat-icon></div> -->
+            <!-- <div mat-card-avatar><mat-icon color="primary">looks_one</mat-icon></div> -->
+            <!-- <div mat-card-avatar><mat-icon color="primary">list</mat-icon></div> -->
+            <div mat-card-avatar class="example-header-image-1"></div>
+            <mat-card-title>ACCESS PRESETS</mat-card-title>
+            <mat-card-subtitle>Select an access label</mat-card-subtitle>
+          </mat-card-header>
+          <br>
+          <mat-card-content>
+            <!-- <h2 class="example-h2">Access Presets</h2> -->
+            <mat-radio-group class="nested">
+              <mat-radio-button class="example-margin" value="PASSING THROUGH" matTooltip="Visitors & Residents (no code selected)">PASSING THROUGH</mat-radio-button>
+              <mat-radio-button class="example-margin" value="OFFICIAL" matTooltip="OP Officials (codes 1 and 2 are selected)">OFFICIAL</mat-radio-button>
+              <mat-radio-button class="example-margin" value="RANK AND FILE" matTooltip="Rank and File OP Personnels (code 2 is selected)">RANK AND FILE</mat-radio-button>
+              <mat-radio-button class="example-margin" value="UNIFORMED OFFICIAL" matTooltip="PSG Officials (all codes are selected)">UNIFORMED OFFICIAL</mat-radio-button>
+              <mat-radio-button class="example-margin" value="UNIFORMED PERSONNEL" matTooltip="PSG Personnels (codes 2 and 4 are selected)">UNIFORMED PERSONNEL</mat-radio-button>
+              <mat-radio-button class="example-margin" value="CUSTOMIZED" matTooltip="Manually select access codes">CUSTOMIZED</mat-radio-button>
+            </mat-radio-group>
+          </mat-card-content>
+        </mat-card>
+      <!-- </div> -->
+      <div class="row">
+        <mat-card class="example-card">
+          <mat-card-header>
+            <!-- <div mat-card-avatar><mat-icon color="accent">settings_input_component</mat-icon></div> -->
+            <!-- <div mat-card-avatar><mat-icon color="accent">exposure</mat-icon></div> -->
+            <!-- <div mat-card-avatar><mat-icon color="accent">hdr_strong</mat-icon></div> -->
+            <!-- <div mat-card-avatar><mat-icon color="accent">iso</mat-icon></div> -->
+            <!-- <div mat-card-avatar><mat-icon color="accent">filtre_2</mat-icon></div> -->
+            <!-- <div mat-card-avatar><mat-icon color="accent">looks_two</mat-icon></div> -->
+            <!-- <div mat-card-avatar><mat-icon color="accent">tune</mat-icon></div> -->
+            <!-- <div mat-card-avatar><mat-icon color="accent">fiber_smart_record</mat-icon></div> -->
+            <!-- <div mat-card-avatar><mat-icon color="accent">edit_attributes</mat-icon></div> -->
+            <div mat-card-avatar class="example-header-image-2"></div>
+            <mat-card-title>ACCESS CODES</mat-card-title>
+            <mat-card-subtitle>Identify codes for access</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+            <!-- <h2 class="example-h2">Access Codes</h2> -->
+            <div class="nested">
+              <mat-slide-toggle
+                  class="example-margin"
+                  [color]="oneColor"
+                  [checked]="oneChecked"
+                  [disabled]="oneDisabled"
+                  matTooltip="Code 1 is palace, pgh (critical areas)">
+                Code 1
+              </mat-slide-toggle>
 
-                  <mat-slide-toggle
-                      class="example-margin"
-                      [color]="twoColor"
-                      [checked]="twoChecked"
-                      [disabled]="twoDisabled">
-                    Code 2
-                  </mat-slide-toggle>
+              <mat-slide-toggle
+                  class="example-margin"
+                  [color]="twoColor"
+                  [checked]="twoChecked"
+                  [disabled]="twoDisabled"
+                  matTooltip="Code 2 is mabini, engr., other non-critical OP buildings">
+                Code 2
+              </mat-slide-toggle>
 
-                  <mat-slide-toggle
-                      class="example-margin"
-                      [color]="threeColor"
-                      [checked]="threeChecked"
-                      [disabled]="threeDisabled">
-                    Code 3
-                  </mat-slide-toggle>
+              <mat-slide-toggle
+                  class="example-margin"
+                  [color]="threeColor"
+                  [checked]="threeChecked"
+                  [disabled]="threeDisabled"
+                  matTooltip="Codes 3 is a PSG reserved code (PSG controlled areas)">
+                Code 3
+              </mat-slide-toggle>
 
-                  <mat-slide-toggle
-                      class="example-margin"
-                      [color]="fourColor"
-                      [checked]="fourChecked"
-                      [disabled]="fourDisabled">
-                    Code 4
-                  </mat-slide-toggle>
+              <mat-slide-toggle
+                  class="example-margin"
+                  [color]="fourColor"
+                  [checked]="fourChecked"
+                  [disabled]="fourDisabled"
+                  matTooltip="Codes 4 is a PSG reserved code (PSG controlled areas)">
+                Code 4
+              </mat-slide-toggle>
 
-                </div>
-              </mat-card-content>
-            </mat-card>
-          </div>
-          <div class="row">
-            <pre>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+      <div class="row">
+        <pre>
 Legend:
 
   Code 1 is palace, pgh ( critical areas )
   Code 2 is mabini, engr., other non-critical OP buildings
-  Codes 3 and 4 are PSG reserved codes ( controlled areas )
-            </pre>
-          </div>
-        <!-- </mat-card-content> -->
-      <!-- </mat-card> -->
+  Codes 3 and 4 are PSG reserved codes ( PSG controlled areas )
+        </pre>
+      </div>
     </div>
     <!-- end radio and toggle on nested grid -->
     <!-- color access preview -->
@@ -123,6 +148,6 @@ Legend:
   <button mat-raised-button color="warn" *ngIf="user.usertype === 'PSG-DATA-OFFICER'" [mat-dialog-close]="data.profile" cdkFocusInitial>Endorse Access</button>
 
   <!-- ciss manager -->
-  <button mat-flat-button color="warn" *ngIf="user.usertype === 'PSG-CISS-MANAGER'" [mat-dialog-close]="data.profile">Deny Request</button>&nbsp;&nbsp;
-  <button mat-raised-button color="primary" *ngIf="user.usertype === 'PSG-CISS-MANAGER'" [mat-dialog-close]="data.profile" cdkFocusInitial>Approve Request</button>
+  <button mat-flat-button color="warn" *ngIf="user.usertype === 'PSG-CISS-MANAGER' && data.profile.accessapproval === 'Provisional'" [mat-dialog-close]="data.profile">Deny Request</button>&nbsp;&nbsp;
+  <button mat-raised-button color="primary" *ngIf="user.usertype === 'PSG-CISS-MANAGER' && data.profile.accessapproval === 'Provisional'" [mat-dialog-close]="data.profile" cdkFocusInitial>Approve Request</button>
 </div>

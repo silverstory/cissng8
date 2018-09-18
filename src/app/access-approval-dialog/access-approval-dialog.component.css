@@ -30,6 +30,16 @@ background-image: url('https://www.freeiconspng.com/uploads/flat-face-icon-23.pn
 background-size: cover;
 }
 
+.example-header-image-1 {
+background-image: url('https://www.freeiconspng.com/uploads/email-flat-icon-png-26.png');
+background-size: cover;
+}
+
+.example-header-image-2 {
+background-image: url('https://www.freeiconspng.com/uploads/flat-mac-icon-15.png');
+background-size: cover;
+}
+
 .content-center {
   text-align: -webkit-center;
 }
