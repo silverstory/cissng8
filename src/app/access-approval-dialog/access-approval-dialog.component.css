@@ -20,6 +20,13 @@ font-size: 1.1em;
 line-height: 2em;
 }
 
+.example-card ul {
+  list-style-position: inside;
+  padding-left: 0;
+  padding-right: 0;
+  text-align: left;
+}
+
 .example-card li {
 font-size: 1.1em;
 line-height: 2em;

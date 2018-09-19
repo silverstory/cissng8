@@ -13,10 +13,12 @@
         <mat-card-content>
           <div class="row">
             <ul>
-              <li *ngIf="user.usertype === 'PSG-CISS-MANAGER'">Mr/Ms. <b>{{ data.profile.name.last }}</b> is requesting to have access to these areas <strong>{{ getAccess(data.profile.access.one, data.profile.access.two, data.profile.access.three, data.profile.access.four) }}</strong>.</li>
+              <li *ngIf="user.usertype === 'PSG-CISS-MANAGER'">Mr/Ms. <b>{{ data.profile.name.last }}</b> is requesting to have access to these areas: <strong>{{ getAccess(data.profile.proviaccess.one, data.profile.proviaccess.two, data.profile.proviaccess.three, data.profile.proviaccess.four) }}</strong>.</li>
+              <li>Currently, the areas: <strong>{{ getAccess(data.profile.access.one, data.profile.access.two, data.profile.access.three, data.profile.access.four) }}</strong> are accessible to Mr/Ms. {{ data.profile.name.last }}.</li>
               <li>He/she is an <b [style.color]="getColor(data.profile.recordstatus)">{{ data.profile.recordstatus | uppercase }}</b>&nbsp;<b>{{ data.profile.distinction }}</b> who <span *ngIf="data.profile.recordstatus === 'ACTIVE'">currently</span><span *ngIf="data.profile.recordstatus === 'INACTIVE'">recently</span> holds the position <b>{{ data.profile.employee.position }}</b> at the <b>{{ data.profile.employee.office }}</b>.</li>
               <li>Based on the records, this person <span *ngIf="data.profile.blacklisted === true">has been blacklisted from entering</span><span *ngIf="data.profile.blacklisted === false">is allowed to enter</span> Malacanang Complex.</li>
-              <li>His/her most recent access level is <b>{{ data.profile.personaccesslevel }}</b> with current <b>{{ data.profile.accessapproval }}</b> status.</li>
+              <li>His/her access is tagged as <b>{{ data.profile.personaccesslevel }}</b>.</li>
+              <li>And his/her most recent request for access was <span *ngIf="(data.profile.accessdatetagged | date:'EEEE d MMMM') === (today | date:'EEEE d MMMM')">today </span><span *ngIf="(data.profile.accessdatetagged | date:'EEEE d MMMM') !== (today | date:'EEEE d MMMM')">this past </span><b>{{ data.profile.accessdatetagged | date: 'MMMM dd yyyy @ hh:mm a' }}</b> and was <b>{{ data.profile.accessapproval | uppercase }}</b>.</li>
             </ul>
           </div>
         </mat-card-content>
@@ -41,12 +43,12 @@
           <mat-card-content>
             <!-- <h2 class="example-h2">Access Presets</h2> -->
             <mat-radio-group class="nested">
-              <mat-radio-button class="example-margin" value="PASSING THROUGH" matTooltip="Visitors & Residents (no code selected)">PASSING THROUGH</mat-radio-button>
-              <mat-radio-button class="example-margin" value="OFFICIAL" matTooltip="OP Officials (codes 1 and 2 are selected)">OFFICIAL</mat-radio-button>
-              <mat-radio-button class="example-margin" value="RANK AND FILE" matTooltip="Rank and File OP Personnels (code 2 is selected)">RANK AND FILE</mat-radio-button>
-              <mat-radio-button class="example-margin" value="UNIFORMED OFFICIAL" matTooltip="PSG Officials (all codes are selected)">UNIFORMED OFFICIAL</mat-radio-button>
-              <mat-radio-button class="example-margin" value="UNIFORMED PERSONNEL" matTooltip="PSG Personnels (codes 2 and 4 are selected)">UNIFORMED PERSONNEL</mat-radio-button>
-              <mat-radio-button class="example-margin" value="CUSTOMIZED" matTooltip="Manually select access codes">CUSTOMIZED</mat-radio-button>
+              <mat-radio-button class="example-margin" [checked]="passingThroughChecked" value="PASSING THROUGH" (change)="optionButtonChanged($event)" matTooltip="Visitors & Residents (no code selected)">PASSING THROUGH</mat-radio-button>
+              <mat-radio-button class="example-margin" [checked]="officialChecked" value="OFFICIAL" (change)="optionButtonChanged($event)" matTooltip="OP Officials (codes 1 and 2 are selected)">OFFICIAL</mat-radio-button>
+              <mat-radio-button class="example-margin" [checked]="rankAndFileChecked" value="RANK AND FILE" (change)="optionButtonChanged($event)" matTooltip="Rank and File OP Personnels (code 2 is selected)">RANK AND FILE</mat-radio-button>
+              <mat-radio-button class="example-margin" [checked]="uniformedOfficialChecked" value="UNIFORMED OFFICIAL" (change)="optionButtonChanged($event)" matTooltip="PSG Officials (all codes are selected)">UNIFORMED OFFICIAL</mat-radio-button>
+              <mat-radio-button class="example-margin" [checked]="uniformedPersonnelChecked" value="UNIFORMED PERSONNEL" (change)="optionButtonChanged($event)" matTooltip="PSG Personnels (codes 2 and 4 are selected)">UNIFORMED PERSONNEL</mat-radio-button>
+              <mat-radio-button class="example-margin" [checked]="customizedChecked" value="CUSTOMIZED" (change)="optionButtonChanged($event)" matTooltip="Manually select access codes">CUSTOMIZED</mat-radio-button>
             </mat-radio-group>
           </mat-card-content>
         </mat-card>
@@ -75,6 +77,7 @@
                   [color]="oneColor"
                   [checked]="oneChecked"
                   [disabled]="oneDisabled"
+                  (change)="slideToggleOneChanged($event)"
                   matTooltip="Code 1 is palace, pgh (critical areas)">
                 Code 1
               </mat-slide-toggle>
@@ -84,6 +87,7 @@
                   [color]="twoColor"
                   [checked]="twoChecked"
                   [disabled]="twoDisabled"
+                  (change)="slideToggleTwoChanged($event)"
                   matTooltip="Code 2 is mabini, engr., other non-critical OP buildings">
                 Code 2
               </mat-slide-toggle>
@@ -93,6 +97,7 @@
                   [color]="threeColor"
                   [checked]="threeChecked"
                   [disabled]="threeDisabled"
+                  (change)="slideToggleThreeChanged($event)"
                   matTooltip="Codes 3 is a PSG reserved code (PSG controlled areas)">
                 Code 3
               </mat-slide-toggle>
@@ -102,6 +107,7 @@
                   [color]="fourColor"
                   [checked]="fourChecked"
                   [disabled]="fourDisabled"
+                  (change)="slideToggleFourChanged($event)"
                   matTooltip="Codes 4 is a PSG reserved code (PSG controlled areas)">
                 Code 4
               </mat-slide-toggle>
@@ -142,12 +148,12 @@ Legend:
   <button mat-button (click)="onNoClick()">Cancel</button>&nbsp;&nbsp;
 
   <!-- hr -->
-  <button mat-raised-button color="accent" *ngIf="user.usertype === 'OP-HRMO-DATA-OFFICER'" [mat-dialog-close]="data.profile" cdkFocusInitial>Send Request</button>
+  <button mat-raised-button color="accent" *ngIf="user.usertype === 'OP-HRMO-DATA-OFFICER'" [mat-dialog-close]="data" cdkFocusInitial>Send Request</button>
 
   <!-- psg -->
-  <button mat-raised-button color="warn" *ngIf="user.usertype === 'PSG-DATA-OFFICER'" [mat-dialog-close]="data.profile" cdkFocusInitial>Endorse Access</button>
+  <button mat-raised-button color="warn" *ngIf="user.usertype === 'PSG-DATA-OFFICER'" [mat-dialog-close]="data" cdkFocusInitial>Endorse Access</button>
 
   <!-- ciss manager -->
-  <button mat-flat-button color="warn" *ngIf="user.usertype === 'PSG-CISS-MANAGER' && data.profile.accessapproval === 'Provisional'" [mat-dialog-close]="data.profile">Deny Request</button>&nbsp;&nbsp;
-  <button mat-raised-button color="primary" *ngIf="user.usertype === 'PSG-CISS-MANAGER' && data.profile.accessapproval === 'Provisional'" [mat-dialog-close]="data.profile" cdkFocusInitial>Approve Request</button>
+  <button mat-flat-button color="warn" *ngIf="user.usertype === 'PSG-CISS-MANAGER' && data.profile.accessapproval === 'Provisional'" [mat-dialog-close]="data">Deny Request</button>&nbsp;&nbsp;
+  <button mat-raised-button color="primary" *ngIf="user.usertype === 'PSG-CISS-MANAGER' && data.profile.accessapproval === 'Provisional'" [mat-dialog-close]="data" cdkFocusInitial>Approve Request</button>
 </div>

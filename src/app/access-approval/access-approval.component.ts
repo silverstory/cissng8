@@ -178,12 +178,13 @@ export class AccessApprovalComponent implements OnInit {
       // this should not be 700px and must implement css grid styling
       // width: '100%',
       width: 'calc(100%)',
-      data: { profile: this.profile }
+      data: { profile: this.profile, action: '' }
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed ', result);
-      this.profile = result;
+      // console.log('The dialog was closed ', result);
+      this.profile = result.profile;
+      // result.action here
     });
   }
 
