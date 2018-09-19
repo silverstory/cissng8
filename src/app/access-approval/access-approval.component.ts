@@ -185,6 +185,44 @@ export class AccessApprovalComponent implements OnInit {
       // console.log('The dialog was closed ', result);
       this.profile = result.profile;
       // result.action here
+      switch (result.action) {
+        case 'Cancelled':
+          break;
+        case 'Send Request':
+          // set proviaccess to access
+          // set accessaproval to Provisional
+          // update db with this.profile
+
+          // refresh infin8 list
+          this.refreshInfin8List();
+          break;
+        case 'Endorse Access':
+          // set proviaccess to access
+          // set accessaproval to Provisional
+          // update db with this.profile
+
+          // refresh infin8 list
+          this.refreshInfin8List();
+          break;
+        case 'Deny Request':
+          // set accessaproval to Denied
+          // update db with this.profile
+
+          // refresh infin8 list
+          this.refreshInfin8List();
+          break;
+        case 'Approve Request':
+          // set accessaproval to Approved
+          // update db with this.profile
+
+          // refresh infin8 list
+          this.refreshInfin8List();
+          break;
+        case '':
+          break;
+        default:
+          break;
+      }
     });
   }
 
@@ -195,6 +233,10 @@ export class AccessApprovalComponent implements OnInit {
 
   OnAccessTypeClickEvent(type: string): void {
     this.service.find = type;
+    this.refreshInfin8List();
+  }
+
+  refreshInfin8List() {
     this._loading.next(true);
     this._done.next(false);
     this.myProfileList = [];
@@ -203,4 +245,5 @@ export class AccessApprovalComponent implements OnInit {
     this.hasNextPage = true;
     this.getProfiles();
   }
+
 }

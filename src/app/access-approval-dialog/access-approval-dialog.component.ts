@@ -60,6 +60,7 @@ export class AccessApprovalDialogComponent implements OnInit {
     private authService: AuthService) { }
 
   onNoClick(): void {
+    this.data.action = 'Cancelled';
     this.dialogRef.close();
   }
 
@@ -249,19 +250,27 @@ export class AccessApprovalDialogComponent implements OnInit {
   }
 
   slideToggleOneChanged(event: MatSlideToggleChange) {
+    this.oneChecked = event.checked;
     this.data.profile.access.one = this.isSelected(event.checked);
   }
 
   slideToggleTwoChanged(event: MatSlideToggleChange) {
+    this.twoChecked = event.checked;
     this.data.profile.access.two = this.isSelected(event.checked);
   }
 
   slideToggleThreeChanged(event: MatSlideToggleChange) {
+    this.threeChecked = event.checked;
     this.data.profile.access.three = this.isSelected(event.checked);
   }
 
   slideToggleFourChanged(event: MatSlideToggleChange) {
+    this.fourChecked = event.checked;
     this.data.profile.access.four = this.isSelected(event.checked);
+  }
+
+  onButtonClick(action) {
+    this.data.action = action;
   }
 
 }

@@ -18,7 +18,7 @@
               <li>He/she is an <b [style.color]="getColor(data.profile.recordstatus)">{{ data.profile.recordstatus | uppercase }}</b>&nbsp;<b>{{ data.profile.distinction }}</b> who <span *ngIf="data.profile.recordstatus === 'ACTIVE'">currently</span><span *ngIf="data.profile.recordstatus === 'INACTIVE'">recently</span> holds the position <b>{{ data.profile.employee.position }}</b> at the <b>{{ data.profile.employee.office }}</b>.</li>
               <li>Based on the records, this person <span *ngIf="data.profile.blacklisted === true">has been blacklisted from entering</span><span *ngIf="data.profile.blacklisted === false">is allowed to enter</span> Malacanang Complex.</li>
               <li>His/her access is tagged as <b>{{ data.profile.personaccesslevel }}</b>.</li>
-              <li>And his/her most recent request for access was <span *ngIf="(data.profile.accessdatetagged | date:'EEEE d MMMM') === (today | date:'EEEE d MMMM')">today </span><span *ngIf="(data.profile.accessdatetagged | date:'EEEE d MMMM') !== (today | date:'EEEE d MMMM')">this past </span><b>{{ data.profile.accessdatetagged | date: 'MMMM dd yyyy @ hh:mm a' }}</b> and was <b>{{ data.profile.accessapproval | uppercase }}</b>.</li>
+              <li>And his/her most recent request for access was <span *ngIf="(data.profile.accessdatetagged | date:'EEEE d MMMM') === (today | date:'EEEE d MMMM')">today </span><span *ngIf="(data.profile.accessdatetagged | date:'EEEE d MMMM') !== (today | date:'EEEE d MMMM')">this past </span><b>{{ data.profile.accessdatetagged | date: 'MMMM dd yyyy @ hh:mm a' }}</b> which was <b>{{ data.profile.accessapproval | uppercase }}</b>.</li>
             </ul>
           </div>
         </mat-card-content>
@@ -148,12 +148,12 @@ Legend:
   <button mat-button (click)="onNoClick()">Cancel</button>&nbsp;&nbsp;
 
   <!-- hr -->
-  <button mat-raised-button color="accent" *ngIf="user.usertype === 'OP-HRMO-DATA-OFFICER'" [mat-dialog-close]="data" cdkFocusInitial>Send Request</button>
+  <button mat-raised-button color="accent" *ngIf="user.usertype === 'OP-HRMO-DATA-OFFICER'" (click)="onButtonClick('Send Request')" [mat-dialog-close]="data" cdkFocusInitial>Send Request</button>
 
   <!-- psg -->
-  <button mat-raised-button color="warn" *ngIf="user.usertype === 'PSG-DATA-OFFICER'" [mat-dialog-close]="data" cdkFocusInitial>Endorse Access</button>
+  <button mat-raised-button color="warn" *ngIf="user.usertype === 'PSG-DATA-OFFICER'" (click)="onButtonClick('Endorse Access')" [mat-dialog-close]="data" cdkFocusInitial>Endorse Access</button>
 
   <!-- ciss manager -->
-  <button mat-flat-button color="warn" *ngIf="user.usertype === 'PSG-CISS-MANAGER' && data.profile.accessapproval === 'Provisional'" [mat-dialog-close]="data">Deny Request</button>&nbsp;&nbsp;
-  <button mat-raised-button color="primary" *ngIf="user.usertype === 'PSG-CISS-MANAGER' && data.profile.accessapproval === 'Provisional'" [mat-dialog-close]="data" cdkFocusInitial>Approve Request</button>
+  <button mat-flat-button color="warn" *ngIf="user.usertype === 'PSG-CISS-MANAGER' && data.profile.accessapproval === 'Provisional'" (click)="onButtonClick('Deny Request')" [mat-dialog-close]="data">Deny Request</button>&nbsp;&nbsp;
+  <button mat-raised-button color="primary" *ngIf="user.usertype === 'PSG-CISS-MANAGER' && data.profile.accessapproval === 'Provisional'" (click)="onButtonClick('Approve Request')" [mat-dialog-close]="data" cdkFocusInitial>Approve Request</button>
 </div>
