@@ -52,12 +52,21 @@ const postProfile = async (req, res, next) => {
 
   try {
 
+  _profile.dateupdated = Date.now();
+
   // find if record of ( profileid + distinction ) exist
   // if ( !util.isNullOrUndefined(find_profile) ) {
   let find_profile = null;
   const cursor = await Profile.Profile.find({profileid: _profile.profileid, distinction: _profile.distinction}, { _id: 1 }).limit(1).cursor();
   find_profile = await cursor.next();
   if ( find_profile != null ) {
+    if (find_profile.accessapproval !== _profile.accessapproval) {
+      _profile.accessdatetagged = Date.now();
+    }
+    // if (_profile.accessapproval === 'Provisional') {
+    //   _profile.accessdatetagged = Date.now();
+    // }
+
     // simply update the record ( no need to re-generate a token )
     // const updated_profile = await Profile.findByIdAndUpdate({_id: find_profile._id}, { name: _profile.name, email: _profile.email }, { new: true });
     const updated_profile = await Profile.Profile.findByIdAndUpdate({_id: find_profile._id}, _profile, { new: true });

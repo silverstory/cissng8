@@ -149,7 +149,7 @@ export class AccessApprovalDialogComponent implements OnInit {
           this.checkAccessOption(this.data.profile.personaccesslevel);
           // disable toggles
           this.disableToggles(this.data.profile.personaccesslevel);
-          // check toggles. important: must check toggles after checkAsscessOption
+          // check toggles. important: must check toggles after checkAccessOption
           this.oneChecked = this.isChecked(this.data.profile.proviaccess.one);
           this.twoChecked = this.isChecked(this.data.profile.proviaccess.two);
           this.threeChecked = this.isChecked(this.data.profile.proviaccess.three);
@@ -243,34 +243,33 @@ export class AccessApprovalDialogComponent implements OnInit {
     this.twoChecked = two;
     this.threeChecked = three;
     this.fourChecked = four;
-    this.data.profile.access.one = this.isSelected(one);
-    this.data.profile.access.two = this.isSelected(two);
-    this.data.profile.access.three = this.isSelected(three);
-    this.data.profile.access.four = this.isSelected(four);
+    this.data.profile.proviaccess.one = this.isSelected(one);
+    this.data.profile.proviaccess.two = this.isSelected(two);
+    this.data.profile.proviaccess.three = this.isSelected(three);
+    this.data.profile.proviaccess.four = this.isSelected(four);
   }
 
   slideToggleOneChanged(event: MatSlideToggleChange) {
     this.oneChecked = event.checked;
-    this.data.profile.access.one = this.isSelected(event.checked);
+    this.data.profile.proviaccess.one = this.isSelected(event.checked);
   }
 
   slideToggleTwoChanged(event: MatSlideToggleChange) {
     this.twoChecked = event.checked;
-    this.data.profile.access.two = this.isSelected(event.checked);
+    this.data.profile.proviaccess.two = this.isSelected(event.checked);
   }
 
   slideToggleThreeChanged(event: MatSlideToggleChange) {
     this.threeChecked = event.checked;
-    this.data.profile.access.three = this.isSelected(event.checked);
+    this.data.profile.proviaccess.three = this.isSelected(event.checked);
   }
 
   slideToggleFourChanged(event: MatSlideToggleChange) {
     this.fourChecked = event.checked;
-    this.data.profile.access.four = this.isSelected(event.checked);
+    this.data.profile.proviaccess.four = this.isSelected(event.checked);
   }
 
   onButtonClick(action) {
     this.data.action = action;
   }
-
 }

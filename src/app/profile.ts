@@ -34,6 +34,7 @@ export interface Profile {
     visitstatus: String;
   };
   datecreated: Date;
+  dateupdated: Date;
   two_factor_temp_secret: String;
   two_factor_secret: String;
   two_factor_enabled: Boolean;
@@ -91,6 +92,7 @@ export class ProfileObj implements Profile {
     visitstatus: String;
   };
   datecreated: Date;
+  dateupdated: Date;
   two_factor_temp_secret: String;
   two_factor_secret: String;
   two_factor_enabled: Boolean;

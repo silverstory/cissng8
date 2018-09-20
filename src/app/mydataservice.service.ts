@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient , HttpHeaders  } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
+import { Profile, ProfileObj } from './profile';
 
 // const httpOptions = {
 //   headers: new HttpHeaders({
@@ -30,5 +31,11 @@ export class MydataserviceService {
     // tslint:disable-next-line:max-line-length
     const url = `${this.api}/profile/accessapprovals?findtext=${this.find}&page=${page}&limit=${this.limit}&newestfirst=${this.newestFirst}`;
     return this.http.get(url);
+  }
+
+  saveProfile(profile: Profile) {
+    // tslint:disable-next-line:max-line-length
+    const url = `${this.api}/profile`;
+    return this.http.post(url, new ProfileObj(profile));
   }
 }

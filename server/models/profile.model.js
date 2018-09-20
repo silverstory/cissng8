@@ -103,6 +103,11 @@ const ProfileSchema = new Schema({
     // `Date.now()` returns the current unix timestamp as a number
     default: Date.now
   },
+  dateupdated: {
+    type: Date,
+    // `Date.now()` returns the current unix timestamp as a number
+    default: Date.now
+  },
   two_factor_temp_secret: {
     type: String
   },

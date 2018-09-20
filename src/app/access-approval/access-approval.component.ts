@@ -6,6 +6,7 @@ import { AccessApprovalDialogComponent } from '../access-approval-dialog/access-
 
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatSlideToggleChange } from '@angular/material';
 import { switchMap, map, tap } from 'rxjs/operators';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-access-approval',
@@ -35,7 +36,8 @@ export class AccessApprovalComponent implements OnInit {
   disabled = false;
 
   constructor(public service: MydataserviceService,
-              public dialog: MatDialog) { }
+              public dialog: MatDialog,
+              public snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this._loading.next(true);
@@ -189,39 +191,51 @@ export class AccessApprovalComponent implements OnInit {
         case 'Cancelled':
           break;
         case 'Send Request':
-          // set proviaccess to access
           // set accessaproval to Provisional
+          this.profile.accessapproval = 'Provisional';
           // update db with this.profile
-
-          // refresh infin8 list
-          this.refreshInfin8List();
+          this.saveProfile();
           break;
         case 'Endorse Access':
-          // set proviaccess to access
           // set accessaproval to Provisional
+          this.profile.accessapproval = 'Provisional';
           // update db with this.profile
-
-          // refresh infin8 list
-          this.refreshInfin8List();
+          this.saveProfile();
           break;
         case 'Deny Request':
           // set accessaproval to Denied
+          this.profile.accessapproval = 'Denied';
           // update db with this.profile
-
-          // refresh infin8 list
-          this.refreshInfin8List();
+          this.saveProfile();
           break;
         case 'Approve Request':
+          // set access to proviaccess
+          this.profile.access = this.profile.proviaccess;
           // set accessaproval to Approved
+          this.profile.accessapproval = 'Approved';
           // update db with this.profile
-
-          // refresh infin8 list
-          this.refreshInfin8List();
+          this.saveProfile();
           break;
         case '':
           break;
         default:
           break;
+      }
+    });
+  }
+
+  saveProfile(): void {
+    this.service.saveProfile(this.profile)
+    .pipe( tap((res: any) => res) )
+    .subscribe({
+      next: (res: any) => {
+        this.snackBar.open('Success!', 'Profile updated.', {
+          duration: 5000,
+        });
+      },
+      complete: () => {
+        // refresh infin8 list
+        this.refreshInfin8List();
       }
     });
   }
