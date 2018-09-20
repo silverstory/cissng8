@@ -1,7 +1,7 @@
 version: "3.3"
 services:
   web:
-    image: iameprel/ciss:0.1.3
+    image: iameprel/ciss:0.1.4
     deploy:
       replicas: 3
       update_config:
