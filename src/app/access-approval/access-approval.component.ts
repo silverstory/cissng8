@@ -144,9 +144,101 @@ export class AccessApprovalComponent implements OnInit {
     if (res !== undefined) {
       // this.myPhotosList = [];
       res.forEach(item => {
-        this.myProfileList.push(new ProfileObj(item));
+        this.myProfileList.push(this.createFreezedProfile(new ProfileObj(item)));
       });
     }
+  }
+
+  createFreezedProfile(p: Profile): Profile {
+
+    // deconstruct then set to this.profile
+    const {
+      _id,
+      profileid,
+      mobile,
+      email,
+      name,
+      distinction,
+      personaccesslevel,
+      recordstatus,
+      cisscode,
+      cissinqtext,
+      cisstoken,
+      photothumbnailurl,
+      employee,
+      resident,
+      visitor,
+      datecreated,
+      dateupdated,
+      two_factor_temp_secret,
+      two_factor_secret,
+      two_factor_enabled,
+      score,
+      access,
+      proviaccess,
+      accessapproval,
+      accessdatetagged,
+      blacklisted,
+    } = p;
+
+    const profile: Profile = <Profile> Object.freeze({
+      _id: _id,
+      profileid: profileid,
+      mobile: mobile,
+      email: email,
+      name: Object.freeze({
+        first: name.first,
+        middle: name.middle,
+        last: name.last
+      }),
+      distinction: distinction,
+      personaccesslevel: personaccesslevel,
+      recordstatus: recordstatus,
+      cisscode: cisscode,
+      cissinqtext: cissinqtext,
+      cisstoken: cisstoken,
+      photothumbnailurl: photothumbnailurl,
+      employee: employee !== undefined ? Object.freeze({
+        position: employee.position,
+        office: employee.office
+      }) : {},
+      resident: resident !== undefined ? Object.freeze({
+        city: resident.city,
+        district: resident.district,
+        barangay: resident.barangay
+      }) : {},
+      visitor: visitor !== undefined ? Object.freeze({
+        visitorid: visitor.visitorid,
+        visitorcompany: visitor.visitorcompany,
+        persontovisit: visitor.persontovisit,
+        visitorpurpose: visitor.visitorpurpose,
+        visitordestination: visitor.visitordestination,
+        timeofappointment: visitor.timeofappointment,
+        visitstatus: visitor.visitstatus
+      }) : {},
+      datecreated: datecreated,
+      dateupdated: dateupdated,
+      two_factor_temp_secret: two_factor_temp_secret,
+      two_factor_secret: two_factor_secret,
+      two_factor_enabled: two_factor_enabled,
+      score: score,
+      access: Object.freeze({
+        one: access.one,
+        two: access.two,
+        three: access.three,
+        four: access.four
+      }),
+      proviaccess: Object.freeze({
+        one: proviaccess.one,
+        two: proviaccess.two,
+        three: proviaccess.three,
+        four: proviaccess.four
+      }),
+      accessapproval: accessapproval,
+      accessdatetagged: accessdatetagged,
+      blacklisted: blacklisted
+    });
+    return profile;
   }
 
   onScroll() {
@@ -176,40 +268,49 @@ export class AccessApprovalComponent implements OnInit {
   }
 
   openDialog(): void {
+    const p: Profile = this.createFreezedProfile(this.profile);
     const dialogRef = this.dialog.open(AccessApprovalDialogComponent, {
       // this should not be 700px and must implement css grid styling
       // width: '100%',
       width: 'calc(100%)',
-      data: { profile: this.profile, action: '' }
+      data: {
+        profile: this.profile,
+        freezedProfile: p,
+        action: ''
+      }
     });
 
     dialogRef.afterClosed().subscribe(result => {
       // console.log('The dialog was closed ', result);
-      this.profile = result.profile;
       // result.action here
       switch (result.action) {
         case 'Cancelled':
+        this.profile = p;
           break;
         case 'Send Request':
           // set accessaproval to Provisional
+          this.profile = result.profile;
           this.profile.accessapproval = 'Provisional';
           // update db with this.profile
           this.saveProfile();
           break;
         case 'Endorse Access':
           // set accessaproval to Provisional
+          this.profile = result.profile;
           this.profile.accessapproval = 'Provisional';
           // update db with this.profile
           this.saveProfile();
           break;
         case 'Deny Request':
           // set accessaproval to Denied
+          this.profile = p;
           this.profile.accessapproval = 'Denied';
           // update db with this.profile
           this.saveProfile();
           break;
         case 'Approve Request':
           // set access to proviaccess
+          this.profile = result.profile;
           this.profile.access = this.profile.proviaccess;
           // set accessaproval to Approved
           this.profile.accessapproval = 'Approved';
@@ -217,8 +318,10 @@ export class AccessApprovalComponent implements OnInit {
           this.saveProfile();
           break;
         case '':
+          this.profile = p;
           break;
         default:
+        this.profile = p;
           break;
       }
     });
