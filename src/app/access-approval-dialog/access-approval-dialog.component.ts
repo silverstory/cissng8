@@ -122,9 +122,9 @@ export class AccessApprovalDialogComponent implements OnInit {
       case 'selected':
         return this.getTileColor(tile);
       case 'notSelected':
-        return '#BDBDBD';
+        return '#e6e6e6';
       default:
-        return '#BDBDBD';
+        return '#e6e6e6';
     }
   }
 

@@ -1,7 +1,7 @@
 version: "3.3"
 services:
   web:
-    image: iameprel/ciss:0.1.5
+    image: iameprel/ciss:0.1.6
     deploy:
       replicas: 3
       update_config:
@@ -27,6 +27,7 @@ services:
       - TWILIO_ACCOUNT_SID
       - TWILIO_AUTH_TOKEN
       - TWILIO_FROM_NUMBER
+      - CISS_SMS_TOKEN
     environment:
       NODE_ENV: production
     ports:
@@ -62,6 +63,8 @@ secrets:
   TWILIO_AUTH_TOKEN:
     external: true
   TWILIO_FROM_NUMBER:
+    external: true
+  CISS_SMS_TOKEN:
     external: true
 networks:
   webnet:

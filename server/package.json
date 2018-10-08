@@ -23,6 +23,7 @@
     "jsonwebtoken": "^8.3.0",
     "mongoose": "^5.1.7",
     "mongoose-paginate-v2": "^1.0.12",
+    "node-fetch": "^2.2.0",
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",
     "qrcode": "^1.2.0",

@@ -1,4 +1,6 @@
 const config = require("../config/config");
+const fetch = require('node-fetch');
+
 // Twilio Credentials
 // You must implement this in a secret
 const accountSid = config.TWILIO_ACCOUNT_SID;
@@ -18,6 +20,24 @@ const createSMS = async (number, sms) => {
     // console.log(message.sid);
     return message.sid;
 
+  } catch (err) {
+    console.log(err)
+    return null;
+  }
+}
+
+const create8888SMS = async (number, sms) => {
+  try {
+    const base_url = 'http://210.213.193.148:3000/api/sms?';
+    const token = await `token=${config.CISS_SMS_TOKEN}`;
+    number = await number.replace('+63', '0');
+    const toNumber = `&number=${number}`;
+    const message = `&message=${sms}`;
+    const url = `${base_url}${token}${toNumber}${message}`;
+    const response = await fetch(url);
+    const json = await response.json();
+    // await res.json( json );
+    return json;
   } catch (err) {
     console.log(err)
     return null;

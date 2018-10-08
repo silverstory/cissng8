@@ -8,5 +8,6 @@ module.exports = {
     DB_MODE: secrets.get("DB_MODE") || process.env.DB_MODE,
     TWILIO_ACCOUNT_SID: secrets.get("TWILIO_ACCOUNT_SID") || process.env.TWILIO_ACCOUNT_SID,
     TWILIO_AUTH_TOKEN: secrets.get("TWILIO_AUTH_TOKEN") || process.env.TWILIO_AUTH_TOKEN,
-    TWILIO_FROM_NUMBER: secrets.get("TWILIO_FROM_NUMBER") || process.env.TWILIO_FROM_NUMBER
+    TWILIO_FROM_NUMBER: secrets.get("TWILIO_FROM_NUMBER") || process.env.TWILIO_FROM_NUMBER,
+    CISS_SMS_TOKEN: secrets.get("CISS_SMS_TOKEN") || process.env.CISS_SMS_TOKEN
 };

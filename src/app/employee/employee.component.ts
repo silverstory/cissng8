@@ -208,9 +208,9 @@ export class EmployeeComponent implements OnInit, OnDestroy {
       case 'selected':
         return this.getTileColor(tile);
       case 'notSelected':
-        return '#BDBDBD';
+        return '#e6e6e6';
       default:
-        return '#BDBDBD';
+        return '#e6e6e6';
     }
   }
 
