@@ -30,7 +30,7 @@ const proveIdentity = async (req, res, next) => {
         console.log("error sending");
         return await res.json( { success: false, message: `A text message with a 6-digit verification code was just sent to ${profile.name.first} ${profile.name.last}'s mobile number` } );
       } else {
-        console.log(messageid);
+        // console.log(messageid);
         return await res.json( { success: true, message: `A text message with a 6-digit verification code was just sent to ${profile.name.first} ${profile.name.last}'s mobile number` } );
       }
 

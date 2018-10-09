@@ -9,7 +9,7 @@ const authToken = config.TWILIO_AUTH_TOKEN;
 // require the Twilio module and create a REST client
 const client = require('twilio')(accountSid, authToken);
 
-const createSMS = async (number, sms) => {
+const createTwilioSMS = async (number, sms) => {
   try {
     const message = await client.messages
     .create({
@@ -26,7 +26,7 @@ const createSMS = async (number, sms) => {
   }
 }
 
-const create8888SMS = async (number, sms) => {
+const createSMS = async (number, sms) => {
   try {
     const base_url = 'http://210.213.193.148:3000/api/sms?';
     const token = await `token=${config.CISS_SMS_TOKEN}`;
@@ -36,10 +36,9 @@ const create8888SMS = async (number, sms) => {
     const url = `${base_url}${token}${toNumber}${message}`;
     const response = await fetch(url);
     const json = await response.json();
-    // await res.json( json );
     return json;
-  } catch (err) {
-    console.log(err)
+  } catch (error) {
+    console.log(error);
     return null;
   }
 }
