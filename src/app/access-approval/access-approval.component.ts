@@ -303,7 +303,7 @@ export class AccessApprovalComponent implements OnInit {
           break;
         case 'Deny Request':
           // set accessaproval to Denied
-          this.profile = p;
+          this.profile = this.unfreezeProfile(p);
           this.profile.accessapproval = 'Denied';
           // update db with this.profile
           this.saveProfile();
@@ -361,6 +361,98 @@ export class AccessApprovalComponent implements OnInit {
     this.nextPage = 0;
     this.hasNextPage = true;
     this.getProfiles();
+  }
+
+  unfreezeProfile(p: Profile): Profile {
+
+    // deconstruct then set to this.profile
+    const {
+      _id,
+      profileid,
+      mobile,
+      email,
+      name,
+      distinction,
+      personaccesslevel,
+      recordstatus,
+      cisscode,
+      cissinqtext,
+      cisstoken,
+      photothumbnailurl,
+      employee,
+      resident,
+      visitor,
+      datecreated,
+      dateupdated,
+      two_factor_temp_secret,
+      two_factor_secret,
+      two_factor_enabled,
+      score,
+      access,
+      proviaccess,
+      accessapproval,
+      accessdatetagged,
+      blacklisted,
+    } = p;
+
+    const profile: Profile = <Profile> {
+      _id: _id,
+      profileid: profileid,
+      mobile: mobile,
+      email: email,
+      name: {
+        first: name.first,
+        middle: name.middle,
+        last: name.last
+      },
+      distinction: distinction,
+      personaccesslevel: personaccesslevel,
+      recordstatus: recordstatus,
+      cisscode: cisscode,
+      cissinqtext: cissinqtext,
+      cisstoken: cisstoken,
+      photothumbnailurl: photothumbnailurl,
+      employee: employee !== undefined ? {
+        position: employee.position,
+        office: employee.office
+      } : {},
+      resident: resident !== undefined ? {
+        city: resident.city,
+        district: resident.district,
+        barangay: resident.barangay
+      } : {},
+      visitor: visitor !== undefined ? {
+        visitorid: visitor.visitorid,
+        visitorcompany: visitor.visitorcompany,
+        persontovisit: visitor.persontovisit,
+        visitorpurpose: visitor.visitorpurpose,
+        visitordestination: visitor.visitordestination,
+        timeofappointment: visitor.timeofappointment,
+        visitstatus: visitor.visitstatus
+      } : {},
+      datecreated: datecreated,
+      dateupdated: dateupdated,
+      two_factor_temp_secret: two_factor_temp_secret,
+      two_factor_secret: two_factor_secret,
+      two_factor_enabled: two_factor_enabled,
+      score: score,
+      access: {
+        one: access.one,
+        two: access.two,
+        three: access.three,
+        four: access.four
+      },
+      proviaccess: {
+        one: proviaccess.one,
+        two: proviaccess.two,
+        three: proviaccess.three,
+        four: proviaccess.four
+      },
+      accessapproval: accessapproval,
+      accessdatetagged: accessdatetagged,
+      blacklisted: blacklisted
+    };
+    return profile;
   }
 
 }
