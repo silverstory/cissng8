@@ -30,9 +30,9 @@ const postProfile = async (req, res, next) => {
   if ( _profile.distinction == 'OPEMPLOYEE' ) {
     base_url = 'https://op-proper.gov.ph/OP-ID/';
   } else if ( _profile.distinction == 'OPVISITOR' ) {
-    base_url = 'https://visitor.malacanang.gov.ph/';
+    base_url = 'https://visitor.op-proper.gov.ph/V-ID/';
   } else if ( _profile.distinction == 'BRGYRESIDENT' ) {
-    base_url = 'https://id.brgy.gov.ph/';
+    base_url = 'https://barangay.op-proper.gov.ph/R-ID/';
   } else {
   }
 
