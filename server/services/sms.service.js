@@ -1,6 +1,5 @@
 const config = require("../config/config");
 const fetch = require('node-fetch');
-
 // Twilio Credentials
 // You must implement this in a secret
 const accountSid = config.TWILIO_ACCOUNT_SID;

@@ -5,6 +5,7 @@ const qrcode = require('../services/qrcode');
 // const shortId = require('burst-short-id');
 const shortId = require('./shortid-generator');
 const twofactor = require('./twofactor.service');
+const sms = require('./sms.service');
 
 const getAccessApprovals = async (req, res, next) => {
   try {
@@ -30,9 +31,9 @@ const postProfile = async (req, res, next) => {
   if ( _profile.distinction == 'OPEMPLOYEE' ) {
     base_url = 'https://op-proper.gov.ph/OP-ID/';
   } else if ( _profile.distinction == 'OPVISITOR' ) {
-    base_url = 'https://visitor.op-proper.gov.ph/V-ID/';
+    base_url = 'https://op-proper.gov.ph/visitor/';
   } else if ( _profile.distinction == 'BRGYRESIDENT' ) {
-    base_url = 'https://barangay.op-proper.gov.ph/R-ID/';
+    base_url = 'https://op-proper.gov.ph/barangay/';
   } else {
   }
 
@@ -97,7 +98,36 @@ const postProfile = async (req, res, next) => {
     // save the updated document
     // const updated_profile = await Profile.findByIdAndUpdate({_id: saved_profile._id}, saved_profile);
     const updated_profile = await Profile.Profile.findByIdAndUpdate({_id: saved_profile._id}, saved_profile, { new: true });
-    const profile = await Profile.Profile.findById({_id: updated_profile._id});
+    const profile = await Profile.Profile.findById({ _id: updated_profile._id });
+    // get mobile number
+    const mobile = await profile.mobile;
+    // get url
+    const qr_page = await profile.cissinqtext;
+    // get token
+    const access_token = await profile.cisstoken;
+    // create message
+
+    // colon : %3A
+    // \ : %5C
+    // / : %2F
+    //  /[\/]/g matches forward slashes.
+    //  /[\\]/g matches backward slashes.
+    //  /\//ig; //  Matches /
+
+    let message = `Your Malacanang Access Record has been approved. Your 8-digit access code is : ${access_token}. You can view or download your Gate Access QR Code anytime from this url : ${qr_page}. You can use either your QR Code or 8-digit code upon entering the Malacanang compound gates.`
+    message = message.replace(/:/g, "%3A");
+    message = message.replace(/\//g, "%2F");
+
+    // send token via SMS
+    const messageid = await sms.sendSMS(mobile, message);
+
+    if (messageid === null) {
+      console.log("error sending");
+      // return await res.json( { success: false, message: `A text message with a 6-digit verification code was just sent to ${profile.name.first} ${profile.name.last}'s mobile number` } );
+    } else {
+      // console.log(messageid);
+      // return await res.json( { success: true, message: `A text message with a 6-digit verification code was just sent to ${profile.name.first} ${profile.name.last}'s mobile number` } );
+    }
     return await res.json( profile );
   }
   }
