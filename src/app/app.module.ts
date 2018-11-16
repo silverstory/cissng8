@@ -41,6 +41,8 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.component';
 import { AccessApprovalDialogComponent } from './access-approval-dialog/access-approval-dialog.component';
 
+import { QRCodeModule } from 'angularx-qrcode';
+
 // the second parameter 'fr' is optional
 // registerLocaleData(localeFr, 'fr');
 // registerLocaleData(localeFr, 'fr-FR', localeFrExtra);
@@ -74,7 +76,8 @@ registerLocaleData(localeEnPh, 'en-PH', localeEnPhExtra);
     FormsModule,
     BrowserAnimationsModule,
     InfiniteScrollModule,
-    AppMaterialModule
+    AppMaterialModule,
+    QRCodeModule
   ],
   entryComponents: [AccessApprovalComponent, AccessApprovalDialogComponent],
   providers: [

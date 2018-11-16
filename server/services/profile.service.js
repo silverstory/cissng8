@@ -31,9 +31,9 @@ const postProfile = async (req, res, next) => {
   if ( _profile.distinction == 'OPEMPLOYEE' ) {
     base_url = 'https://op-proper.gov.ph/OP-ID/';
   } else if ( _profile.distinction == 'OPVISITOR' ) {
-    base_url = 'https://op-proper.gov.ph/visitor/';
+    base_url = 'https://op-proper.gov.ph/OP-ID/';
   } else if ( _profile.distinction == 'BRGYRESIDENT' ) {
-    base_url = 'https://op-proper.gov.ph/barangay/';
+    base_url = 'https://op-proper.gov.ph/OP-ID/';
   } else {
   }
 
@@ -118,8 +118,10 @@ const postProfile = async (req, res, next) => {
     message = message.replace(/:/g, "%3A");
     message = message.replace(/\//g, "%2F");
 
-    // send token via SMS
-    const messageid = await sms.sendSMS(mobile, message);
+    if (profile.recordstatus === 'ACTIVE' && profile.blacklisted === false) {
+      // send token via SMS
+      const messageid = await sms.sendSMS(mobile, message);
+    }
 
     if (messageid === null) {
       console.log("error sending");

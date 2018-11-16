@@ -52,14 +52,14 @@
         </mat-card>
         <mat-card class="column-card">
           <mat-card-header>
-            <div mat-card-avatar><mat-icon aria-label="EMPLOYEE NAME">person</mat-icon></div>
-            <mat-card-title>EMPLOYEE NAME</mat-card-title>
+            <div mat-card-avatar><mat-icon aria-label="NAME">person</mat-icon></div>
+            <mat-card-title>NAME</mat-card-title>
           </mat-card-header>
           <div class="row">
             <span class="profile">{{ profile.name.first | uppercase }} {{ profile.name.middle | slice:0:1 | uppercase }}. {{ profile.name.last | uppercase }}</span>
           </div>
         </mat-card>
-        <mat-card class="column-card">
+        <mat-card *ngIf="profile.distinction === 'OPEMPLOYEE'" class="column-card">
           <mat-card-header>
             <div mat-card-avatar><mat-icon aria-label="DESIGNATION AND OFFICE">location_city</mat-icon></div>
             <mat-card-title>DESIGNATION AND OFFICE</mat-card-title>
@@ -69,6 +69,31 @@
           </div>
           <div class="row">
             <span class="profile" style="color: #817e7e">{{ profile.employee.office | uppercase }}</span>
+          </div>
+        </mat-card>
+        <mat-card *ngIf="profile.distinction === 'BRGYRESIDENT'" class="column-card">
+          <mat-card-header>
+            <div mat-card-avatar><mat-icon aria-label="RESIDENCE LOCATION">location_city</mat-icon></div>
+            <mat-card-title>RESIDENCE LOCATION</mat-card-title>
+          </mat-card-header>
+          <div class="row">
+            <span class="profile">Barangay {{ profile.resident.barangay | uppercase }}</span>
+          </div>
+          <div class="row">
+            <span class="profile" style="color: #817e7e">{{ profile.resident.district | uppercase }}</span>
+          </div>
+        </mat-card>
+        <mat-card class="column-card">
+          <mat-card-header>
+            <div mat-card-avatar><mat-icon aria-label="GATE ACCESS KEY">vpn_key</mat-icon></div>
+            <mat-card-title>GATE ACCESS KEY</mat-card-title>
+          </mat-card-header>
+          <div class="row">
+            <qrcode [qrdata]="profile.cissinqtext" [size]="300" [level]="'M'" style="width: 50%;padding: 20px;"></qrcode>
+          </div>
+          <br/>
+          <div class="row">
+            <span class="profile">Your 8-digit key: {{ profile.cisstoken }}</span>
           </div>
         </mat-card>
       </div>
