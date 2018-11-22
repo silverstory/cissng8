@@ -22,6 +22,18 @@ const getAccessApprovals = async (req, res, next) => {
   }
 }
 
+const getResidentByName = async (req, res, next) => {
+  try {
+    const result = await
+      Profile
+        .residentSearchByName(req.query.firstname, req.query.lastname, req.query.page, req.query.limit);
+    return await res.json( result );
+  } catch (error) {
+    console.log("Error: " + error);
+    return res.send( "Error: " + error );
+  }
+}
+
 const postProfile = async (req, res, next) => {
 
   // determine the base_url to be used based from
@@ -229,5 +241,6 @@ module.exports = {
   findProfile,
   getProfile,
   deleteProfileByIdDist,
-  getAccessApprovals
+  getAccessApprovals,
+  getResidentByName
 };

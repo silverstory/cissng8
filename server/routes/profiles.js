@@ -8,6 +8,11 @@ router.get('/profile/accessapprovals/', passport.authenticate('jwt',{session:fal
   await profileService.getAccessApprovals(req, res, next);
 });
 
+// Resident Search By Name
+router.get('/profile/residents/', passport.authenticate('jwt',{session:false}), async (req, res, next) => {
+  await profileService.getResidentByName(req, res, next);
+});
+
 // GET http://localhost:3000/api/profile/270253d17070590077106fba4323188ea733c6aec1f2ed040c47476ef0202365
 router.get('/profile/:text', passport.authenticate('jwt',{session:false}), async (req, res, next) => {
   // router.get('/profile/:text', async (req, res, next) => {

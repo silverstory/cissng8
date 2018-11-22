@@ -8,11 +8,13 @@ const Schema = mongoose.Schema;
 const ProfileSchema = new Schema({
   profileid: {
     type: String,
-    required: [true, 'Profile ID is required']
+    required: [true, 'Profile ID is required'],
+    index: true
   },
   mobile: {
     type: String,
-    required: [true, 'Mobile No. is required']
+    required: [true, 'Mobile No. is required'],
+    index: true
   },
   email: {
     type: String
@@ -20,14 +22,16 @@ const ProfileSchema = new Schema({
   name: {
     first: {
       type: String,
-      required: [true, 'Firstname is required']
+      required: [true, 'Firstname is required'],
+      index: true
     },
     middle: {
       type: String
     },
     last: {
       type: String,
-      required: [true, 'Lastname is required']
+      required: [true, 'Lastname is required'],
+      index: true
     }
   },
   distinction: {
@@ -50,7 +54,8 @@ const ProfileSchema = new Schema({
     type: String
   },
   cisstoken: {
-    type: String
+    type: String,
+    unique: true
   },
   photothumbnailurl: {
     type: String,
@@ -177,6 +182,7 @@ ProfileSchema.index({
   accessapproval: 1,
   _id: 1
 });
+
 // ProfileSchema.index( { cissinqtext: 'text', cisstoken: 'text' }, { weights: { cissinqtext: 3, cisstoken: 2, 'name.first': 1 }} );
 
 // To create an index to support text search on, say, cissinqtext and name.first:
@@ -249,9 +255,36 @@ profilesPaginated = async (findText, page, limit, newestFirst) => {
   return result;
 }
 
-// module.exports = Profile;
+residentSearchByName = async (firstname, lastname, page, limit) => {
+  const query = {
+    "name.first": { $regex : new RegExp(firstname, "i") },
+    "name.last" : { $regex : new RegExp(lastname, "i") },
+    distinction: 'BRGYRESIDENT'
+  };
+  const sortOrder = 1;
+  const options = {
+    sort:       { "name.last": sortOrder, "name.first": sortOrder },
+    lean:       true,
+    leanWithId: true,
+    page:       parseInt(page),
+    limit:      parseInt(limit)
+  };
+
+  let result = await Profile.paginate(query, options);
+  return result;
+}
+
+// You'd need to use a case-insensitive regular expression for this one, e.g.
+
+// db.collection.find( { "name" : { $regex : /Andrew/i } } );
+// To use the regex pattern from your thename variable, construct a new RegExp object:
+
+// var thename = "Andrew";
+// db.collection.find( { "name" : { $regex : new RegExp(thename, "i") } } );
+// Update: For exact match, you should use the regex "name": /^Andrew$/i. Thanks to Yannick L.
 
 module.exports = {
   Profile,
-  profilesPaginated
+  profilesPaginated,
+  residentSearchByName
 }
