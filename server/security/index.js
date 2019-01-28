@@ -18,14 +18,14 @@ module.exports = () => {
       saveUninitialized: true
     }),
     passport.initialize(),
-    passport.session()
-    // disable csrf for now, to give way
-    // to containerized app on cluster
-    // csrf(),
-    // async (req, res, next) => {
-    //   res.cookie('XSRF-TOKEN', req.csrfToken());
-    //   return next();
-    // }
+    passport.session(),
+    // disable csrf if using
+    // containerized app on cluster
+    csrf(),
+    async (req, res, next) => {
+      res.cookie('XSRF-TOKEN', req.csrfToken());
+      return next();
+    }
   ];
   return middleware;
 };
