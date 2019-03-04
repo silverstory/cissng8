@@ -19,7 +19,7 @@ module.exports = () => {
     }),
     passport.initialize(),
     passport.session(),
-    // disable csrf if using
+    // only disable csrf if using
     // containerized app on cluster
     csrf(),
     async (req, res, next) => {

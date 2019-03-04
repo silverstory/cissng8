@@ -302,6 +302,8 @@ export class AccessApprovalDialogComponent implements OnInit {
       score,
       access,
       proviaccess,
+      gender,
+      nextstep,
       accessapproval,
       accessdatetagged,
       blacklisted,
@@ -352,14 +354,24 @@ export class AccessApprovalDialogComponent implements OnInit {
         one: access.one,
         two: access.two,
         three: access.three,
-        four: access.four
+        four: access.four,
+        colorone: access.colorone,
+        colortwo: access.colortwo,
+        colorthree: access.colorthree,
+        colorfour: access.colorfour
       },
       proviaccess: {
         one: proviaccess.one,
         two: proviaccess.two,
         three: proviaccess.three,
-        four: proviaccess.four
+        four: proviaccess.four,
+        colorone: proviaccess.colorone,
+        colortwo: proviaccess.colortwo,
+        colorthree: proviaccess.colorthree,
+        colorfour: proviaccess.colorfour
       },
+      gender: gender,
+      nextstep: nextstep,
       accessapproval: accessapproval,
       accessdatetagged: accessdatetagged,
       blacklisted: blacklisted

@@ -83,7 +83,18 @@ const postProfile = async (req, res, next) => {
     // simply update the record ( no need to re-generate a token )
     // const updated_profile = await Profile.findByIdAndUpdate({_id: find_profile._id}, { name: _profile.name, email: _profile.email }, { new: true });
     const updated_profile = await Profile.Profile.findByIdAndUpdate({_id: find_profile._id}, _profile, { new: true });
-    const profile = await Profile.Profile.findById({_id: updated_profile._id});
+    const profile = await Profile.Profile.findById({ _id: updated_profile._id });
+
+    if (profile.recordstatus === 'ACTIVE' && profile.accessapproval === 'Approved' && profile.blacklisted === false) {
+      // send token via SMS
+      const messageid = await sms.sendSMS(mobile, message);
+    }
+    if (messageid === null) {
+      console.log("error sending");
+    } else {
+      console.log(messageid);
+    }
+
     return await res.json( profile );
 
   } else {
@@ -126,22 +137,20 @@ const postProfile = async (req, res, next) => {
     //  /[\\]/g matches backward slashes.
     //  /\//ig; //  Matches /
 
-    let message = `Your Malacanang Access Record has been approved. Your 8-digit access code is : ${access_token}. You can view or download your Gate Access QR Code anytime from this url : ${qr_page}. You can use either your QR Code or 8-digit code upon entering the Malacanang compound gates.`
+    let message = `Your request for access to Malacanang has been approved. Your 8-digit access code is : ${access_token}. You can view or download your Gate Access QR Code anytime from this url : ${qr_page}. You can use either your QR Code or 8-digit code upon entering the Malacanang compound gates.`
     message = message.replace(/:/g, "%3A");
     message = message.replace(/\//g, "%2F");
 
-    if (profile.recordstatus === 'ACTIVE' && profile.blacklisted === false) {
+    if (profile.recordstatus === 'ACTIVE' && profile.accessapproval === 'Approved' && profile.blacklisted === false) {
       // send token via SMS
       const messageid = await sms.sendSMS(mobile, message);
     }
-
     if (messageid === null) {
       console.log("error sending");
-      // return await res.json( { success: false, message: `A text message with a 6-digit verification code was just sent to ${profile.name.first} ${profile.name.last}'s mobile number` } );
     } else {
-      // console.log(messageid);
-      // return await res.json( { success: true, message: `A text message with a 6-digit verification code was just sent to ${profile.name.first} ${profile.name.last}'s mobile number` } );
+      console.log(messageid);
     }
+
     return await res.json( profile );
   }
   }

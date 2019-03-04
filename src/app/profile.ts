@@ -44,13 +44,23 @@ export interface Profile {
     two: String;
     three: String;
     four: String;
+    colorone: String;
+    colortwo: String;
+    colorthree: String;
+    colorfour: String;
   };
   proviaccess: {
     one: String;
     two: String;
     three: String;
     four: String;
+    colorone: String;
+    colortwo: String;
+    colorthree: String;
+    colorfour: String;
   };
+  gender: String;
+  nextstep: Number;
   accessapproval: String;
   accessdatetagged: Date;
   blacklisted: Boolean;
@@ -102,13 +112,23 @@ export class ProfileObj implements Profile {
     two: String;
     three: String;
     four: String;
+    colorone: String;
+    colortwo: String;
+    colorthree: String;
+    colorfour: String;
   };
   proviaccess: {
     one: String;
     two: String;
     three: String;
     four: String;
+    colorone: String;
+    colortwo: String;
+    colorthree: String;
+    colorfour: String;
   };
+  gender: String;
+  nextstep: Number;
   accessapproval: String;
   accessdatetagged: Date;
   blacklisted: Boolean;

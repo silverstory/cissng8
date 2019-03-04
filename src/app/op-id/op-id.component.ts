@@ -104,7 +104,7 @@ export class OPIDComponent implements OnInit, OnDestroy {
       this.valid = false;
       const url = `${this.api}/opid/v/${phrase}`;
       this.tmpProfile = await this.http.get<Profile>(url).toPromise();
-      this.name = `${this.tmpProfile.name.first} ${this.tmpProfile.name.last}`;
+      this.name = `${this.tmpProfile.profileid} ${this.tmpProfile.name.last}`;
       // present verify token input box
       this.validate = 'start validation';
       const sendToken: any = await this.validateTokenService.sendToken(this.tmpProfile.profileid, this.tmpProfile.distinction);

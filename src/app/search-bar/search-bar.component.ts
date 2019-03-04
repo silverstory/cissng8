@@ -57,12 +57,16 @@ export class SearchBarComponent implements OnInit {
         if (profile) {
 
           // third determine the type of individual
-          if (profile.distinction === 'OPEMPLOYEE') {
+          // use sentence.includes(word)
+          // profile.distinction === 'OPEMPLOYEE'
+          if (profile.distinction.includes('OPEMPLOYEE')) {
             this.color = this.getColor(profile.recordstatus);
             component_page = '/employee';
-          } else if (profile.distinction === 'OPVISITOR') {
+            // profile.distinction === 'OPVISITOR'
+          } else if (profile.distinction.includes('OPVISITOR')) {
             this.color = this.getVisitorColor(profile.visitor.visitstatus);
             component_page = '/visitor';
+            // profile.distinction === 'BRGYRESIDENT'
           } else if (profile.distinction === 'BRGYRESIDENT') {
             this.color = this.getColor(profile.recordstatus);
             component_page = '/resident';

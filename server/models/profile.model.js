@@ -140,6 +140,22 @@ const ProfileSchema = new Schema({
       type: String,
       default: 'notSelected'
     },
+    colorone: {
+      type: String,
+      default: 'lightgray'
+    },
+    colortwo: {
+      type: String,
+      default: 'lightgray'
+    },
+    colorthree: {
+      type: String,
+      default: 'lightgray'
+    },
+    colorfour: {
+      type: String,
+      default: 'lightgray'
+    },
   },
   proviaccess: {
     one: {
@@ -158,6 +174,30 @@ const ProfileSchema = new Schema({
       type: String,
       default: 'notSelected'
     },
+    colorone: {
+      type: String,
+      default: 'lightgray'
+    },
+    colortwo: {
+      type: String,
+      default: 'lightgray'
+    },
+    colorthree: {
+      type: String,
+      default: 'lightgray'
+    },
+    colorfour: {
+      type: String,
+      default: 'lightgray'
+    },
+  },
+  gender: {
+    type: String,
+    default: 'not set'
+  },
+  nextstep: {
+    type: Number,
+    default: 0
   },
   accessapproval: {
     type: String,
