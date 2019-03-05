@@ -58,6 +58,8 @@ const profile2fa = require('./routes/profile2fa');
 app.use('/api', profile2fa);
 const ipwhitelist = require('./routes/ipwhitelist');
 app.use('/api', ipwhitelist);
+const approvaltemplate = require('./routes/approvaltemplate');
+app.use('/api', approvaltemplate);
 
 // try to implement this line if it'll solve resource not found if :3000/{path}
 // app.get('*', (req, res) => {

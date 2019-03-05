@@ -13,7 +13,8 @@ import {
   MatDialogModule,
   MatSlideToggleModule,
   MatMenuModule,
-  MatTooltipModule
+  MatTooltipModule,
+  MatChipsModule
 } from '@angular/material';
 
 // import {MatDividerModule} from '@angular/material/divider';
@@ -33,7 +34,8 @@ import {
     MatDialogModule,
     MatSlideToggleModule,
     MatMenuModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatChipsModule
   ]
 })
 export class AppMaterialModule {}

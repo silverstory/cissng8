@@ -4,7 +4,7 @@
     <button mat-fab color="accent" (click)="OnAccessTypeClickEvent('Approved')">Apprvd</button>&nbsp;
     <button mat-fab color="warn" (click)="OnAccessTypeClickEvent('Denied')">Denied</button>&nbsp;
     <button mat-fab color="primary" (click)="OnAccessTypeClickEvent('New Record')">New</button>&nbsp;
-    &nbsp;&nbsp;LIST OF {{ service.find | uppercase }} ACCESS
+    &nbsp;&nbsp;LIST OF {{ service.find | uppercase }} ACCESS ( {{ current_distinction | uppercase }} )
   </span>
 </mat-toolbar>
 <section class="example-section">
@@ -16,6 +16,10 @@
     (change)="toggle($event)">
     Newest first!
   </mat-slide-toggle>
+  <mat-chip-list>
+    <mat-chip *ngFor="let chip of chips" color="accent" selected (click)="onDistinctionChipClick(chip.name)">{{ chip.name }}</mat-chip>
+  </mat-chip-list>
+  {{ service.distinction }}
 </section>
 <div  infiniteScroll
     [infiniteScrollDistance]="2"

@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
-// import { MydataserviceService } from '../mydataservice.service';
+import { MydataserviceService } from '../mydataservice.service';
 import { Profile, ProfileObj } from '../profile';
 import { BehaviorSubject, Observable } from 'rxjs';
 
@@ -24,9 +24,18 @@ export interface DialogData {
 @Component({
   selector: 'app-access-approval-dialog',
   templateUrl: './access-approval-dialog.component.html',
-  styleUrls: ['./access-approval-dialog.component.css']
+  styleUrls: ['./access-approval-dialog.component.css'],
+  providers: [MydataserviceService]
 })
 export class AccessApprovalDialogComponent implements OnInit {
+
+  colors = [
+    {name: 'White'},
+    {name: 'Blue'},
+    {name: 'Green'},
+    {name: 'Red'}
+  ];
+
   oneColor = 'accent';
   oneChecked = false;
   oneDisabled = false;
@@ -55,7 +64,7 @@ export class AccessApprovalDialogComponent implements OnInit {
 
   public today = new Date();
 
-  constructor(
+  constructor(public service: MydataserviceService,
     public dialogRef: MatDialogRef<AccessApprovalDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
     private authService: AuthService) { }
@@ -142,6 +151,10 @@ export class AccessApprovalDialogComponent implements OnInit {
   }
 
   async ngOnInit() {
+
+    // steps code here
+    // this.service.userapprovaltemplate.step
+
     try {
       this.data.profile = new ProfileObj(this.unfreezeProfile(this.data.profile));
       await this.authService.getProfile()

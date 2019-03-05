@@ -60,7 +60,7 @@ export interface Profile {
     colorfour: String;
   };
   gender: String;
-  nextstep: Number;
+  nextstep: number;
   accessapproval: String;
   accessdatetagged: Date;
   blacklisted: Boolean;
@@ -128,7 +128,7 @@ export class ProfileObj implements Profile {
     colorfour: String;
   };
   gender: String;
-  nextstep: Number;
+  nextstep: number;
   accessapproval: String;
   accessdatetagged: Date;
   blacklisted: Boolean;

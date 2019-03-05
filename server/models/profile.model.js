@@ -220,6 +220,7 @@ ProfileSchema.index( { cisscode: 'text', cisstoken: 'text', cissinqtext: 'text' 
 ProfileSchema.index({
   accessdatetagged: 1,
   accessapproval: 1,
+  distinction: 1,
   _id: 1
 });
 
@@ -261,7 +262,7 @@ const Profile = mongoose.model('Profile', ProfileSchema);
 //    -previous {String} The value to start querying previous page.
 // @param {Function} done Node errback style function.
 // exports.method = function() {};
-profilesPaginated = async (findText, page, limit, newestFirst) => {
+profilesPaginated = async (findText, distinction, nextstep, page, limit, newestFirst) => {
   // try {
   //   // default function is "paginate"
   //   const result = await Profile.paginate({
@@ -279,7 +280,8 @@ profilesPaginated = async (findText, page, limit, newestFirst) => {
   // }
   const query = {
     accessapproval: findText,
-    distinction: 'OPEMPLOYEE'
+    distinction: distinction,
+    nextstep: nextstep
   };
   const isTrueSet = (newestFirst === 'true');
   const sortOrder = isTrueSet === true ? -1 : 1;

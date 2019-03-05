@@ -3,7 +3,8 @@ import { MydataserviceService } from '../mydataservice.service';
 import { Profile, ProfileObj } from '../profile';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { AccessApprovalDialogComponent } from '../access-approval-dialog/access-approval-dialog.component';
-
+import { AuthService } from '../auth/auth.service';
+import { User } from '../auth/user';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatSlideToggleChange } from '@angular/material';
 import { switchMap, map, tap } from 'rxjs/operators';
 import { MatSnackBar } from '@angular/material';
@@ -15,6 +16,13 @@ import { MatSnackBar } from '@angular/material';
   providers: [MydataserviceService]
 })
 export class AccessApprovalComponent implements OnInit {
+
+  chips = [
+    {name: 'OPEMPLOYEE'},
+    {name: 'OPVISITOR'},
+    {name: 'BRGYRESIDENT'}
+  ];
+
   profile: Profile;
   myProfileList: Profile[] = [];
   page: number = 1;
@@ -35,22 +43,35 @@ export class AccessApprovalComponent implements OnInit {
   checked = true;
   disabled = false;
 
+  // for new approval workflow
+  current_distinction = 'OPEMPLOYEE';
+  current_approvalstatus = 'Provisional';
+  // end for new approval workflow
+
   constructor(public service: MydataserviceService,
               public dialog: MatDialog,
-              public snackBar: MatSnackBar) { }
+              public snackBar: MatSnackBar,
+              private authService: AuthService
+              ) { }
 
-  ngOnInit() {
+  async ngOnInit() {
     this._loading.next(true);
-    this.getProfiles();
 
-    // this.optionB.valueChanges.subscribe(checked => {
-    //   if (checked) {
-    //     this.optionBExtra.setValidators([Validators.required, Validators.minLength(5)]);
-    //   } else {
-    //     this.optionBExtra.setValidators(null);
-    //   }
-    //   this.optionBExtra.updateValueAndValidity();
-    // });
+    try {
+      await this.authService.getProfile()
+        .subscribe((user) => {
+          this.service.usertype = user.usertype;
+          this.getProfiles();
+        });
+    } catch (error) {
+      this.authService.log(error);
+    }
+  }
+
+  onDistinctionChipClick(chipname) {
+    this.service.distinction = chipname;
+    this.current_distinction = chipname;
+    this.refreshInfin8List();
   }
 
   toggle(event: MatSlideToggleChange) {
@@ -108,19 +129,50 @@ export class AccessApprovalComponent implements OnInit {
       //   }
       // });
 
-      this.service.getProfiles(this.page)
-      .pipe( tap((res: any) => res) )
-      .subscribe({
-        next: (res: any) => {
-          this.hasNextPage = res.hasNextPage;
-          this.nextPage = res.nextPage;
-          this.onProfileSuccess(res.docs);
-        },
-        complete: () => {
-          if (this.hasNextPage === false) { this._done.next(true); }
-          this._loading.next(false);
-        }
+
+      this.service.getApprovalTemplate()
+      .pipe(
+        tap((res: any) => res)
+      )
+      .subscribe( template => {
+        this.service.getProfiles(this.page)
+        .pipe(
+          tap((res: any) => res)
+        )
+        .subscribe({
+          next: (res: any) => {
+            this.hasNextPage = res.hasNextPage;
+            this.nextPage = res.nextPage;
+            this.onProfileSuccess(res.docs);
+          },
+          complete: () => {
+            if (this.hasNextPage === false) { this._done.next(true); }
+            this._loading.next(false);
+          }
+        });
       });
+
+
+      // // old working march 2019
+      // // this.service.getProfiles(this.page)
+      // // .pipe(
+      // // tap((res: any) => res)
+      // // )
+      // this.service.getApprovalTemplate()
+      // .pipe(
+      //   switchMap(profiles => this.service.getProfiles(this.page))
+      // )
+      // .subscribe({
+      //   next: (res: any) => {
+      //     this.hasNextPage = res.hasNextPage;
+      //     this.nextPage = res.nextPage;
+      //     this.onProfileSuccess(res.docs);
+      //   },
+      //   complete: () => {
+      //     if (this.hasNextPage === false) { this._done.next(true); }
+      //     this._loading.next(false);
+      //   }
+      // });
 
       // orig code
       // try if... res => res.length > 0
@@ -362,6 +414,7 @@ export class AccessApprovalComponent implements OnInit {
 
   OnAccessTypeClickEvent(type: string): void {
     this.service.find = type;
+    this.current_approvalstatus = type;
     this.refreshInfin8List();
   }
 

@@ -13,7 +13,7 @@ const getAccessApprovals = async (req, res, next) => {
       Profile
         // with paginatedfield and sort ascending
         // .paginateFirst(req.query.findtext, req.query.limit, req.query.paginatedfield);
-        .profilesPaginated(req.query.findtext, req.query.page, req.query.limit, req.query.newestfirst);
+        .profilesPaginated(req.query.findtext, req.query.distinction, req.query.nextstep, req.query.page, req.query.limit, req.query.newestfirst);
     // res.setHeader("Content-Type", "application/json");
     return await res.json( result );
   } catch (error) {
