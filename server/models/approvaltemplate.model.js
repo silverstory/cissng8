@@ -39,10 +39,10 @@ const ApprovaltemplateSchema = new Schema({
   }
 })
 
-ApprovaltemplateSchema.index({
-  // dateupdated: 1,
-  _id: 1
-});
+// ApprovaltemplateSchema.index({
+//   // dateupdated: 1,
+//   _id: 1
+// });
 
 const Approvaltemplate = mongoose.model('Approvaltemplate', ApprovaltemplateSchema);
 

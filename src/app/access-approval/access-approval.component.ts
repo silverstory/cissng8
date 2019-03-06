@@ -99,61 +99,27 @@ export class AccessApprovalComponent implements OnInit {
   getProfiles() {
     if (this.hasNextPage === true) {
 
-      // option 1
-      // this.service.getProfiles(this.page).pipe(
-      // map(params => params['id']),
-      // switchMap(id => id ? id : Observable.empty())
-      // .subscribe(user => this.user = user);
-      // );
-
-      // option 2
-      // const result = this.service.getProfiles(this.page).pipe(
-      //   map(res => res),
-      //   switchMap(id => id ? id : empty())
-      // );
-
-      // option 3
-      // const result = this.service.getProfiles(this.page)
-      // .pipe(
-      //   map((res: any) => res),
-      //   switchMap((res: any) => res ? res : empty()))
-      // .subscribe({
-      //   next: (res: any) => {
-      //     this.hasNextPage = res.hasNextPage;
-      //     this.nextPage = res.nextPage;
-      //     this.onProfileSuccess(res.docs);
-      //   },
-      //   complete: () => {
-      //     this._done.next(true);
-      //     this._loading.next(false);
-      //   }
-      // });
-
-
       this.service.getApprovalTemplate()
       .pipe(
-        tap((res: any) => res)
+        map( (usertemplate: any) => {
+          this.service.userapprovaltemplate = usertemplate;
+          this.service.nextstep = usertemplate.step;
+        }),
+        switchMap(profiles => this.service.getProfiles(this.page))
       )
-      .subscribe( template => {
-        this.service.getProfiles(this.page)
-        .pipe(
-          tap((res: any) => res)
-        )
-        .subscribe({
-          next: (res: any) => {
-            this.hasNextPage = res.hasNextPage;
-            this.nextPage = res.nextPage;
-            this.onProfileSuccess(res.docs);
-          },
-          complete: () => {
-            if (this.hasNextPage === false) { this._done.next(true); }
-            this._loading.next(false);
-          }
-        });
+      .subscribe({
+        next: (res: any) => {
+          this.hasNextPage = res.hasNextPage;
+          this.nextPage = res.nextPage;
+          this.onProfileSuccess(res.docs);
+        },
+        complete: () => {
+          if (this.hasNextPage === false) { this._done.next(true); }
+          this._loading.next(false);
+        }
       });
 
-
-      // // old working march 2019
+      // // old working without approval template march 2019
       // // this.service.getProfiles(this.page)
       // // .pipe(
       // // tap((res: any) => res)
@@ -174,17 +140,6 @@ export class AccessApprovalComponent implements OnInit {
       //   }
       // });
 
-      // orig code
-      // try if... res => res.length > 0
-      // this.service.getProfiles(this.page).subscribe((res: any) => {
-      //   this.hasNextPage = res.hasNextPage;
-      //   this.nextPage = res.nextPage;
-      //   this.onProfileSuccess(res.docs);
-      //   // if (res.hasNextPage === false) {
-      //   //   this._done.next(true);
-      //   // }
-      // });
-
     } else {
       this._done.next(true);
       this._loading.next(false);
@@ -192,7 +147,6 @@ export class AccessApprovalComponent implements OnInit {
   }
 
   onProfileSuccess(res) {
-    // console.log(res);
     if (res !== undefined) {
       // this.myPhotosList = [];
       res.forEach(item => {

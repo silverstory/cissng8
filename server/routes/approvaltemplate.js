@@ -4,7 +4,7 @@ const passport = require('passport');
 const approvaltemplateService = require('../services/approvaltemplate.service');
 
 // POST by Distinction, Usertype
-router.post('/approvaltemplate', passport.authenticate('jwt',{session:false}), async (req, res, next) => {
+router.post('/approvaltemplate', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
   approvaltemplateService.getApprovaltemplateByUserDist(req, res, next);
 });
 
