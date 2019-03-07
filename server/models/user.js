@@ -19,6 +19,10 @@ const UserSchema = mongoose.Schema(
         mobileno: {
           type: String,
           required: true
+        },
+        useroffice: {
+          type: String,
+          default: 'NONE'
         }
     },
     {

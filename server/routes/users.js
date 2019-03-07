@@ -13,7 +13,8 @@ router.post('/register', async (req,res) => {
         userName: req.body.userName,
         password: req.body.password,
         usertype: req.body.usertype,
-        mobileno: req.body.mobileno
+        mobileno: req.body.mobileno,
+        useroffice: req.body.useroffice
     });
 
     try {

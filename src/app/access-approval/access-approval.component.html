@@ -17,7 +17,7 @@
     Newest first!
   </mat-slide-toggle>
   <mat-chip-list>
-    <mat-chip *ngFor="let chip of chips" color="primary" selected (click)="onDistinctionChipClick(chip.name)">{{ chip.name }}</mat-chip>
+    <mat-chip *ngFor="let chip of chips" color="primary" selected (click)="onDistinctionChipClick(chip.name)">{{ chip.alias }}</mat-chip>
   </mat-chip-list>
 </section>
 <div  infiniteScroll

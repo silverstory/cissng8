@@ -13,6 +13,7 @@ export class MydataserviceService {
   public find = 'Provisional';
   public distinction = 'OPEMPLOYEE';
   public usertype: string;
+  public useroffice: string;
   public nextstep = 100;
   public limit = 8; // limit must be atleast 8 and above
   public newestFirst = true;
@@ -22,7 +23,7 @@ export class MydataserviceService {
 
   getProfiles(page: number) {
     // tslint:disable-next-line:max-line-length
-    const url = `${this.api}/profile/accessapprovals?findtext=${this.find}&distinction=${this.distinction}&nextstep=${this.nextstep}&page=${page}&limit=${this.limit}&newestfirst=${this.newestFirst}`;
+    const url = `${this.api}/profile/accessapprovals?findtext=${this.find}&distinction=${this.distinction}&nextstep=${this.nextstep}&useroffice=${this.useroffice}&page=${page}&limit=${this.limit}&newestfirst=${this.newestFirst}`;
     return this.http.get(url);
   }
 

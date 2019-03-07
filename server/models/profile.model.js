@@ -262,7 +262,7 @@ const Profile = mongoose.model('Profile', ProfileSchema);
 //    -previous {String} The value to start querying previous page.
 // @param {Function} done Node errback style function.
 // exports.method = function() {};
-profilesPaginated = async (findText, distinction, nextstep, page, limit, newestFirst) => {
+profilesPaginated = async (findText, distinction, nextstep, useroffice, page, limit, newestFirst) => {
   // try {
   //   // default function is "paginate"
   //   const result = await Profile.paginate({
@@ -278,11 +278,38 @@ profilesPaginated = async (findText, distinction, nextstep, page, limit, newestF
   //   console.log(error);
   //   return error;
   // }
-  const query = {
-    accessapproval: findText,
-    distinction: distinction,
-    nextstep: nextstep
-  };
+
+  let query = { };
+  let qry = { };
+  if (useroffice !== 'NONE') {
+    switch (distinction) {
+      case 'OPEMPLOYEE':
+        qry = {
+          accessapproval: findText,
+          distinction: distinction,
+          nextstep: nextstep,
+          "employee.office": useroffice
+        };
+        break;
+      case 'OPVISITOR':
+        qry = {
+          accessapproval: findText,
+          distinction: distinction,
+          nextstep: nextstep,
+          "visitor.visitordestination": useroffice
+        };
+        break;
+      default:
+        break;
+    }
+  } else {
+    qry = {
+      accessapproval: findText,
+      distinction: distinction,
+      nextstep: nextstep
+    };
+  }
+  query = qry;
   const isTrueSet = (newestFirst === 'true');
   const sortOrder = isTrueSet === true ? -1 : 1;
   const options = {

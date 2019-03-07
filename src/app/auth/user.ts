@@ -3,4 +3,5 @@ export interface User {
   password: string;
   usertype: string;
   mobileno: string;
+  useroffice: string;
 }

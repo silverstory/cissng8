@@ -18,9 +18,17 @@ import { MatSnackBar } from '@angular/material';
 export class AccessApprovalComponent implements OnInit {
 
   chips = [
-    {name: 'OPEMPLOYEE'},
-    {name: 'OPVISITOR'},
-    {name: 'BRGYRESIDENT'}
+    {name: 'OPEMPLOYEE', alias: 'OP EMPLOYEE' },
+    {name: 'BRGYRESIDENT-PSG', alias: 'PSG' },
+    {name: 'OPVISITOR-PRRD-GUEST', alias: 'PRRD GUEST' },
+    {name: 'OPVISITOR-GENERAL-GUEST', alias: 'GENERAL GUEST'},
+    {name: 'BRGYRESIDENT', alias: 'BRGY RESIDENT'},
+    {name: 'BRGYRESIDENT-RTVM', alias: 'RTVM' },
+    {name: 'OPEMPLOYEE-MESLA', alias: 'MESLA'},
+    {name: 'OPEMPLOYEE-MECOOP', alias: 'MECOOP'},
+    {name: 'OPVISITOR', alias: 'VISITOR'},
+    {name: 'OPVISITOR-SECURITY-CLEARANCE', alias: 'SECURITY CLEARANCE'},
+    {name: 'BRGYRESIDENT-PASSING-THRU', alias: 'PASSING THRU'}
   ];
 
   profile: Profile;
@@ -61,6 +69,7 @@ export class AccessApprovalComponent implements OnInit {
       await this.authService.getProfile()
         .subscribe((user) => {
           this.service.usertype = user.usertype;
+          this.service.useroffice = user.useroffice;
           this.getProfiles();
         });
     } catch (error) {
