@@ -280,7 +280,11 @@ profilesPaginated = async (findText, distinction, nextstep, useroffice, page, li
   // }
 
   let query = { };
-  let qry = { };
+  let qry = {
+    accessapproval: findText,
+    distinction: distinction,
+    nextstep: nextstep
+  };
   if (useroffice !== 'NONE') {
     switch (distinction) {
       case 'OPEMPLOYEE':
@@ -302,13 +306,7 @@ profilesPaginated = async (findText, distinction, nextstep, useroffice, page, li
       default:
         break;
     }
-  } else {
-    qry = {
-      accessapproval: findText,
-      distinction: distinction,
-      nextstep: nextstep
-    };
-  }
+  } else { }
   query = qry;
   const isTrueSet = (newestFirst === 'true');
   const sortOrder = isTrueSet === true ? -1 : 1;
