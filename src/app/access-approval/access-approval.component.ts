@@ -24,8 +24,8 @@ export class AccessApprovalComponent implements OnInit {
     {name: 'OPVISITOR-GENERAL-GUEST', alias: 'GENERAL GUEST'},
     {name: 'BRGYRESIDENT', alias: 'BRGY RESIDENT'},
     {name: 'BRGYRESIDENT-RTVM', alias: 'RTVM' },
-    {name: 'OPEMPLOYEE-MESLA', alias: 'MESLA'},
-    {name: 'OPEMPLOYEE-MECOOP', alias: 'MECOOP'},
+    {name: 'BRGYRESIDENT-MESLA', alias: 'MESLA'},
+    {name: 'BRGYRESIDENT-MECOOP', alias: 'MECOOP'},
     {name: 'OPVISITOR', alias: 'VISITOR'},
     {name: 'OPVISITOR-SECURITY-CLEARANCE', alias: 'SECURITY CLEARANCE'},
     {name: 'BRGYRESIDENT-PASSING-THRU', alias: 'PASSING THRU'}
@@ -54,6 +54,7 @@ export class AccessApprovalComponent implements OnInit {
   // for new approval workflow
   current_distinction = 'OPEMPLOYEE';
   current_approvalstatus = 'Provisional';
+  current_distinction_alias = 'OP EMPLOYEE';
   // end for new approval workflow
 
   constructor(public service: MydataserviceService,
@@ -80,6 +81,8 @@ export class AccessApprovalComponent implements OnInit {
   onDistinctionChipClick(chipname) {
     this.service.distinction = chipname;
     this.current_distinction = chipname;
+    const chip = this.chips.find(c => c.name === chipname);
+    this.current_distinction_alias = chip.alias;
     this.refreshInfin8List();
   }
 

@@ -4,7 +4,7 @@
     <button mat-fab color="accent" (click)="OnAccessTypeClickEvent('Approved')">Apprvd</button>&nbsp;
     <button mat-fab color="warn" (click)="OnAccessTypeClickEvent('Denied')">Denied</button>&nbsp;
     <button mat-fab color="primary" (click)="OnAccessTypeClickEvent('New Record')">New</button>&nbsp;
-    &nbsp;&nbsp;LIST OF {{ service.find | uppercase }} ACCESS ( {{ current_distinction | uppercase }} )
+    &nbsp;&nbsp;LIST OF {{ service.find | uppercase }} ACCESS ( {{ current_distinction_alias | uppercase }} )
   </span>
 </mat-toolbar>
 <section class="example-section">
@@ -41,8 +41,9 @@
         <img mat-card-image src="{{ i.photothumbnailurl }}" alt="Photo">
         <mat-card-content>
           <p>
-            <!-- if employee add ngIf here -->
-            <b>{{ i.employee.position }}</b>
+            <b *ngIf="i.distinction.includes('OPEMPLOYEE')">{{ i.employee.position }}</b>
+            <b *ngIf="i.distinction.includes('OPVISITOR')">{{ i.visitor.visitorcompany }}</b>
+            <b *ngIf="i.distinction.includes('BRGYRESIDENT')">{{ i.resident.barangay }}</b>
           </p>
         </mat-card-content>
       </mat-card>
