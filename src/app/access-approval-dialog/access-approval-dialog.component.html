@@ -1,5 +1,13 @@
 <h1 mat-dialog-title>Access approval for {{data.freezedProfile.name.first}} {{data.freezedProfile.name.last}}</h1>
 <div mat-dialog-content>
+  <mat-horizontal-stepper [linear]="isLinear" [selectedIndex]="data.freezedProfile.nextstep" #stepper>
+    <ng-template matStepperIcon="edit">
+      <mat-icon>check</mat-icon>
+    </ng-template>
+    <mat-step *ngFor="let step of steps" [stepControl]="step.dialogbuttontext" [completed]="completedBa[step.step]" editable="false">
+      <ng-template matStepLabel>{{ step.step < data.freezedProfile.nextstep || data.freezedProfile.accessapproval === 'Approved' ? step.completedsteptext : step.activesteptext }}</ng-template>
+    </mat-step>
+  </mat-horizontal-stepper>
   <!-- style="text-align: -webkit-center;" -->
   <div id="content">
   <!-- preface -->

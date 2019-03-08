@@ -40,6 +40,13 @@ export class MydataserviceService {
     }
   }
 
+  // findapprovaltemplates API
+  getTemplates(distinction: String, page: number) {
+    // tslint:disable-next-line:max-line-length
+    const url = `${this.api}/findapprovaltemplates?distinction=${distinction}&page=${page}&limit=10`;
+    return this.http.get(url);
+  }
+
   saveProfile(profile: Profile) {
     const url = `${this.api}/profile`;
     return this.http.post(url, new ProfileObj(profile));

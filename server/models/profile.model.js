@@ -1,5 +1,3 @@
-// const MongoPaging = require('mongo-cursor-pagination');
-// const mongoosePaginate = require('@electrivity/mongoose-paginate');
 const mongoosePaginate = require('mongoose-paginate-v2');
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;

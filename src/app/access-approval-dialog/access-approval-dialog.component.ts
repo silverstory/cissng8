@@ -1,6 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MydataserviceService } from '../mydataservice.service';
 import { Profile, ProfileObj } from '../profile';
+import { Approvaltemplate, ApprovaltemplateObj } from '../approvaltemplate';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 import { AuthService } from '../auth/auth.service';
@@ -35,6 +36,10 @@ export class AccessApprovalDialogComponent implements OnInit {
     {name: 'Green'},
     {name: 'Red'}
   ];
+
+  steps = [];
+  isLinear = true;
+  completedBa = [];
 
   oneColor = 'accent';
   oneChecked = false;
@@ -152,9 +157,6 @@ export class AccessApprovalDialogComponent implements OnInit {
 
   async ngOnInit() {
 
-    // steps code here
-    // this.service.userapprovaltemplate.step
-
     try {
       this.data.profile = new ProfileObj(this.unfreezeProfile(this.data.profile));
       await this.authService.getProfile()
@@ -169,6 +171,36 @@ export class AccessApprovalDialogComponent implements OnInit {
           this.twoChecked = this.isChecked(this.data.profile.proviaccess.two);
           this.threeChecked = this.isChecked(this.data.profile.proviaccess.three);
           this.fourChecked = this.isChecked(this.data.profile.proviaccess.four);
+
+          // steps code here
+          // this.service.userapprovaltemplate.step
+          this.steps = [];
+          this.completedBa = [];
+          this.service.getTemplates(this.data.profile.distinction, 1)
+          .pipe(
+            tap((res: any) => res)
+          )
+          .subscribe({
+            next: (res: any) => {
+              const items = res.docs;
+              if (items !== undefined) {
+                items.forEach(item => {
+                  this.steps.push(new ApprovaltemplateObj(item));
+                  if (item.step < this.data.freezedProfile.nextstep || this.data.freezedProfile.accessapproval === 'Approved') {
+                    this.completedBa.push( true );
+                  } else {
+                    this.completedBa.push( false );
+                  }
+                });
+              }
+            },
+            complete: () => {
+              // this._done.next(true);
+              // this._loading.next(false);
+            }
+          });
+          // end steps
+
         });
     } catch (error) {
       this.authService.log(error);

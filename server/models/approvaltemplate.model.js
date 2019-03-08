@@ -1,3 +1,4 @@
+const mongoosePaginate = require('mongoose-paginate-v2');
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
@@ -44,8 +45,30 @@ const ApprovaltemplateSchema = new Schema({
 //   _id: 1
 // });
 
+ApprovaltemplateSchema.plugin(mongoosePaginate);
+
 const Approvaltemplate = mongoose.model('Approvaltemplate', ApprovaltemplateSchema);
 
-module.exports = Approvaltemplate;
+findTemplatesByDistinction = async (distinction, page, limit) => {
+  const query = {
+    distinction: distinction
+  };
+  const sortOrder = 1;
+  const options = {
+    sort:       { step: sortOrder },
+    lean:       true,
+    leanWithId: true,
+    page:       parseInt(page),
+    limit:      parseInt(limit)
+  };
+
+  let result = await Approvaltemplate.paginate(query, options);
+  return result;
+}
+
+module.exports = {
+  Approvaltemplate,
+  findTemplatesByDistinction
+}
 
 
