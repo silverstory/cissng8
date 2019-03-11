@@ -140,3 +140,13 @@ footer {
 .example-margin {
   margin: 10px 20px;
 }
+
+.example-button-row button,
+.example-button-row a {
+  margin-right: 10px;
+}
+
+.custom-button {
+  border-radius: 16px;
+  line-height: 32px;
+}

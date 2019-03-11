@@ -16,9 +16,16 @@
     (change)="toggle($event)">
     Newest first!
   </mat-slide-toggle>
-  <mat-chip-list>
+  <!-- <mat-chip-list>
     <mat-chip *ngFor="let chip of chips" color="primary" selected (click)="onDistinctionChipClick(chip.name)">{{ chip.alias }}</mat-chip>
-  </mat-chip-list>
+  </mat-chip-list> -->
+  <div *ngFor="let chip of chips" class="example-button-row">
+    <button mat-flat-button class="custom-button" color="primary"
+      [matBadge]="chip.badge" [matBadgeHidden]="chip.badgehidden" matBadgePosition="after" [matBadgeColor]="chip.badgecolor"
+      (click)="onDistinctionChipClick(chip.name)">
+      {{ chip.alias }}
+    </button>
+  </div>
 </section>
 <div  infiniteScroll
     [infiniteScrollDistance]="2"

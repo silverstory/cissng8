@@ -1,13 +1,14 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MydataserviceService } from '../mydataservice.service';
 import { Profile, ProfileObj } from '../profile';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, from } from 'rxjs';
 import { AccessApprovalDialogComponent } from '../access-approval-dialog/access-approval-dialog.component';
 import { AuthService } from '../auth/auth.service';
 import { User } from '../auth/user';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatSlideToggleChange } from '@angular/material';
-import { switchMap, map, tap } from 'rxjs/operators';
+import { switchMap, map, tap, mergeMap } from 'rxjs/operators';
 import { MatSnackBar } from '@angular/material';
+import { template } from '@angular/core/src/render3';
 
 @Component({
   selector: 'app-access-approval',
@@ -17,19 +18,22 @@ import { MatSnackBar } from '@angular/material';
 })
 export class AccessApprovalComponent implements OnInit {
 
-  chips = [
-    {name: 'OPEMPLOYEE', alias: 'OP EMPLOYEE' },
-    {name: 'BRGYRESIDENT-PSG', alias: 'PSG' },
-    {name: 'OPVISITOR-PRRD-GUEST', alias: 'PRRD GUEST' },
-    {name: 'OPVISITOR-GENERAL-GUEST', alias: 'GENERAL GUEST'},
-    {name: 'BRGYRESIDENT', alias: 'BRGY RESIDENT'},
-    {name: 'BRGYRESIDENT-RTVM', alias: 'RTVM' },
-    {name: 'BRGYRESIDENT-MESLA', alias: 'MESLA'},
-    {name: 'BRGYRESIDENT-MECOOP', alias: 'MECOOP'},
-    {name: 'OPVISITOR', alias: 'VISITOR'},
-    {name: 'OPVISITOR-SECURITY-CLEARANCE', alias: 'SECURITY CLEARANCE'},
-    {name: 'BRGYRESIDENT-PASSING-THRU', alias: 'PASSING THRU'}
+  public chips = [
+    { id: 1, name: 'OPEMPLOYEE', alias: 'OP EMPLOYEE', badge: 0, badgehidden: true, badgecolor: 'accent' },
+    { id: 2, name: 'BRGYRESIDENT-PSG', alias: 'PSG', badge: 0, badgehidden: true, badgecolor: 'accent' },
+    { id: 3, name: 'OPVISITOR-PRRD-GUEST', alias: 'PRRD GUEST', badge: 0, badgehidden: true, badgecolor: 'accent' },
+    { id: 4, name: 'OPVISITOR-GENERAL-GUEST', alias: 'GENERAL GUEST', badge: 0, badgehidden: true, badgecolor: 'accent' },
+    { id: 5, name: 'BRGYRESIDENT', alias: 'BRGY RESIDENT', badge: 0, badgehidden: true, badgecolor: 'accent' },
+    { id: 6, name: 'BRGYRESIDENT-RTVM', alias: 'RTVM', badge: 0, badgehidden: true, badgecolor: 'accent' },
+    { id: 7, name: 'BRGYRESIDENT-MESLA', alias: 'MESLA', badge: 0, badgehidden: true, badgecolor: 'accent' },
+    { id: 8, name: 'BRGYRESIDENT-MECOOP', alias: 'MECOOP', badge: 0, badgehidden: true, badgecolor: 'accent' },
+    { id: 9, name: 'OPVISITOR', alias: 'VISITOR', badge: 0, badgehidden: true, badgecolor: 'accent' },
+    { id: 10, name: 'OPVISITOR-SECURITY-CLEARANCE', alias: 'SECURITY CLEARANCE', badge: 0, badgehidden: true, badgecolor: 'accent' },
+    { id: 11, name: 'BRGYRESIDENT-PASSING-THRU', alias: 'PASSING THRU', badge: 0, badgehidden: true, badgecolor: 'accent' }
   ];
+
+  public timeLeft: number = this.chips.length;
+  public interval;
 
   profile: Profile;
   myProfileList: Profile[] = [];
@@ -76,6 +80,75 @@ export class AccessApprovalComponent implements OnInit {
     } catch (error) {
       this.authService.log(error);
     }
+
+    this.updateBadges();
+
+  }
+
+  updateBadges() {
+
+    this.interval = setInterval(() => {
+      if (this.timeLeft > 0) {
+
+        // code here
+        const id = 12 - this.timeLeft;
+
+        const chip = this.chips.find(x => x.id === id);
+        const distinction = chip.name;
+        let nextstep = 100;
+        this.service.getApprovalTemplateforBadges(distinction, this.service.usertype)
+        .pipe(
+          switchMap((usertemplate: any) => {
+            nextstep = usertemplate.step;
+            return this.service.getProfilesforBadges(
+              this.service.find,
+              distinction,
+              nextstep,
+              this.service.useroffice);
+          })
+        )
+        .subscribe({
+          next: (res: any) => {
+            // tapos array find using distinction to update array item value
+            const item = this.chips.find(x => x.name === distinction);
+            const index = this.chips.indexOf(item);
+            // update badges properties lang
+            item.badge = res.totalDocs;
+            if (item.badge < 1) {
+              item.badgehidden = true;
+            }
+            if (item.badge >= 1 && item.badge <= 50) {
+              item.badgehidden = false;
+              item.badgecolor = 'accent';
+            }
+            if (item.badge >= 51 && item.badge <= 100) {
+              item.badgehidden = false;
+              item.badgecolor = 'primary';
+            }
+            if (item.badge > 100) {
+              item.badgehidden = false;
+              item.badgecolor = 'warn';
+            }
+            this.chips[index] = item;
+          },
+          complete: () => { }
+        });
+
+        // end code here
+
+        this.timeLeft--;
+
+      } else {
+        this.timeLeft = this.chips.length;
+        this.pauseTimer();
+      }
+    }, 500);
+
+
+  }
+
+  pauseTimer() {
+    clearInterval(this.interval);
   }
 
   onDistinctionChipClick(chipname) {
@@ -382,6 +455,7 @@ export class AccessApprovalComponent implements OnInit {
     this.service.find = type;
     this.current_approvalstatus = type;
     this.refreshInfin8List();
+    this.updateBadges();
   }
 
   refreshInfin8List() {

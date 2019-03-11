@@ -51,4 +51,25 @@ export class MydataserviceService {
     const url = `${this.api}/profile`;
     return this.http.post(url, new ProfileObj(profile));
   }
+
+  // para sa badges
+  getProfilesforBadges(findtext: String, distinction: String, nextstep: number, useroffice: String) {
+    // tslint:disable-next-line:max-line-length
+    const url = `${this.api}/profile/accessapprovals?findtext=${findtext}&distinction=${distinction}&nextstep=${nextstep}&useroffice=${useroffice}&page=1&limit=1&newestfirst=${this.newestFirst}`;
+    return this.http.get(url);
+  }
+
+  getApprovalTemplateforBadges(distinction: String, usertype: String) {
+    const body = {
+      distinction: distinction,
+      usertype: usertype
+    };
+    const approvaltemplateurl = `${this.api}/approvaltemplate`;
+    const approvaltemplate: any = this.http.post<any>(approvaltemplateurl, body);
+    if (approvaltemplate !== null) {
+      return approvaltemplate;
+    }
+  }
+  // end para sa badges
+
 }
