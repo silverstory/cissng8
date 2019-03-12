@@ -7,25 +7,25 @@
     &nbsp;&nbsp;LIST OF {{ service.find | uppercase }} ACCESS ( {{ current_distinction_alias | uppercase }} )
   </span>
 </mat-toolbar>
-<section class="example-section">
+<!-- <section class="example-section"> -->
+<div id="chipcontent" style="text-align: -webkit-center;">
   <mat-slide-toggle
-    class="example-margin"
     [color]="color"
     [checked]="checked"
     [disabled]="disabled"
     (change)="toggle($event)">
     Newest first!
   </mat-slide-toggle>
-  <!-- <mat-chip-list>
-    <mat-chip *ngFor="let chip of chips"
-      class="allow-overflow" color="primary" selected
-      [matBadge]="chip.badge" [matBadgeHidden]="chip.badgehidden"
-      matBadgePosition="above after" [matBadgeColor]="chip.badgecolor"
-      [matBadgeSize]="chip.badgesize"
-      (click)="onDistinctionChipClick(chip.name)">{{ chip.alias }}</mat-chip>
-  </mat-chip-list> -->
-  <div *ngFor="let chip of chips" class="example-button-row">
-    <button mat-flat-button class="custom-button" color="primary"
+  <div *ngFor="let chip of chips">
+    <!-- <mat-chip-list>
+      <mat-chip *ngFor="let chip of chips"
+        class="allow-overflow" color="primary" selected
+        [matBadge]="chip.badge" [matBadgeHidden]="chip.badgehidden"
+        matBadgePosition="above after" [matBadgeColor]="chip.badgecolor"
+        [matBadgeSize]="chip.badgesize"
+        (click)="onDistinctionChipClick(chip.name)">{{ chip.alias }}</mat-chip>
+    </mat-chip-list> -->
+    <button mat-flat-button color="primary"
       [matBadge]="chip.badge" [matBadgeHidden]="chip.badgehidden"
       matBadgePosition="above after" [matBadgeColor]="chip.badgecolor"
       [matBadgeSize]="chip.badgesize"
@@ -33,7 +33,8 @@
       {{ chip.alias }}
     </button>
   </div>
-</section>
+</div>
+<!-- </section> -->
 <div  infiniteScroll
     [infiniteScrollDistance]="2"
     [infiniteScrollThrottle]="500"

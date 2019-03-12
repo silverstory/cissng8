@@ -102,7 +102,7 @@ export class AccessApprovalComponent implements OnInit {
       const usertype = this.service.usertype;
       const findtext = this.service.find;
       const useroffice = this.service.useroffice;
-      const largemeter = 10;
+      const largemeter = 100;
       let nextstep = 100;
 
       const body = {
@@ -136,6 +136,9 @@ export class AccessApprovalComponent implements OnInit {
           item.badgehidden = false;
           item.badgecolor = 'accent';
           item.badgesize = 'large';
+          if (findtext === 'Approved') {
+            item.badgesize = 'medium';
+          }
         }
         this.chips[index] = item;
       }

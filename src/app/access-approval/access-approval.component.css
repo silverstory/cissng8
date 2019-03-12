@@ -141,10 +141,71 @@ footer {
   margin: 10px 20px;
 }
 
-.example-button-row button,
+
+/* CSS GRID - distinction buttons  */
+/* iphone */
+#chipcontent{
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  grid-gap: 10px;
+  max-width: 100%;
+  margin: 18px auto 8px auto;
+}
+/* ipad */
+@media screen and (min-width: 760px) {
+  #chipcontent{
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-gap: 10px;
+    max-width: 100%;
+    margin: 18px auto 8px auto;
+  }
+}
+/* macbook 1366+ or 1280+ */
+@media screen and (min-width: 1360px) {
+  #chipcontent{
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    grid-gap: 10px;
+    max-width: 100%;
+    margin: 18px auto 8px auto;
+  }
+}
+/* large screen laptops or desktops 1600+ */
+@media screen and (min-width: 1600px) {
+  #chipcontent{
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-gap: 10px;
+    max-width: 100%;
+    margin: 18px auto 8px auto;
+  }
+}
+
+#chipcontent button {
+  border-radius: 16px;
+  line-height: 32px;
+}
+#chipcontent mat-slide-toggle {
+  margin: 10px 20px;
+}
+
+/* #chipcontent div {
+  padding: 10px;
+  font-family: Lato;
+  background-color: #FCE4EC;
+}
+#chipcontent div:nth-child(even){
+  padding: 10px;
+  font-family: Lato;
+} */
+
+/* .example-button-row button,
 .example-button-row a {
   margin-right: 10px;
-}
+} */
+
+/* end distinction buttons */
 
 /* Badges */
 
