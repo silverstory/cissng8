@@ -1,6 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MydataserviceService } from '../mydataservice.service';
 import { Profile, ProfileObj } from '../profile';
+import { Approvaltemplate, ApprovaltemplateObj } from '../approvaltemplate';
 import { BehaviorSubject, Observable, from } from 'rxjs';
 import { AccessApprovalDialogComponent } from '../access-approval-dialog/access-approval-dialog.component';
 import { AuthService } from '../auth/auth.service';
@@ -9,6 +10,8 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatSlideToggleChange } from '
 import { switchMap, map, tap, mergeMap } from 'rxjs/operators';
 import { MatSnackBar } from '@angular/material';
 import { template } from '@angular/core/src/render3';
+
+import { HttpClient , HttpHeaders  } from '@angular/common/http';
 
 @Component({
   selector: 'app-access-approval',
@@ -19,17 +22,20 @@ import { template } from '@angular/core/src/render3';
 export class AccessApprovalComponent implements OnInit {
 
   public chips = [
-    { id: 1, name: 'OPEMPLOYEE', alias: 'OP EMPLOYEE', badge: 0, badgehidden: true, badgecolor: 'accent' },
-    { id: 2, name: 'BRGYRESIDENT-PSG', alias: 'PSG', badge: 0, badgehidden: true, badgecolor: 'accent' },
-    { id: 3, name: 'OPVISITOR-PRRD-GUEST', alias: 'PRRD GUEST', badge: 0, badgehidden: true, badgecolor: 'accent' },
-    { id: 4, name: 'OPVISITOR-GENERAL-GUEST', alias: 'GENERAL GUEST', badge: 0, badgehidden: true, badgecolor: 'accent' },
-    { id: 5, name: 'BRGYRESIDENT', alias: 'BRGY RESIDENT', badge: 0, badgehidden: true, badgecolor: 'accent' },
-    { id: 6, name: 'BRGYRESIDENT-RTVM', alias: 'RTVM', badge: 0, badgehidden: true, badgecolor: 'accent' },
-    { id: 7, name: 'BRGYRESIDENT-MESLA', alias: 'MESLA', badge: 0, badgehidden: true, badgecolor: 'accent' },
-    { id: 8, name: 'BRGYRESIDENT-MECOOP', alias: 'MECOOP', badge: 0, badgehidden: true, badgecolor: 'accent' },
-    { id: 9, name: 'OPVISITOR', alias: 'VISITOR', badge: 0, badgehidden: true, badgecolor: 'accent' },
-    { id: 10, name: 'OPVISITOR-SECURITY-CLEARANCE', alias: 'SECURITY CLEARANCE', badge: 0, badgehidden: true, badgecolor: 'accent' },
-    { id: 11, name: 'BRGYRESIDENT-PASSING-THRU', alias: 'PASSING THRU', badge: 0, badgehidden: true, badgecolor: 'accent' }
+    { id: 1, name: 'OPEMPLOYEE', alias: 'OP EMPLOYEE', badge: 0, badgehidden: true, badgecolor: 'accent', badgesize: 'medium' },
+    { id: 2, name: 'BRGYRESIDENT-PSG', alias: 'PSG', badge: 0, badgehidden: true, badgecolor: 'accent', badgesize: 'medium' },
+    { id: 3, name: 'OPVISITOR-PRRD-GUEST', alias: 'PRRD GUEST', badge: 0, badgehidden: true, badgecolor: 'accent', badgesize: 'medium' },
+    // tslint:disable-next-line:max-line-length
+    { id: 4, name: 'OPVISITOR-GENERAL-GUEST', alias: 'GENERAL GUEST', badge: 0, badgehidden: true, badgecolor: 'accent', badgesize: 'medium' },
+    { id: 5, name: 'BRGYRESIDENT', alias: 'BRGY RESIDENT', badge: 0, badgehidden: true, badgecolor: 'accent', badgesize: 'medium' },
+    { id: 6, name: 'BRGYRESIDENT-RTVM', alias: 'RTVM', badge: 0, badgehidden: true, badgecolor: 'accent', badgesize: 'medium' },
+    { id: 7, name: 'BRGYRESIDENT-MESLA', alias: 'MESLA', badge: 0, badgehidden: true, badgecolor: 'accent', badgesize: 'medium' },
+    { id: 8, name: 'BRGYRESIDENT-MECOOP', alias: 'MECOOP', badge: 0, badgehidden: true, badgecolor: 'accent', badgesize: 'medium' },
+    { id: 9, name: 'OPVISITOR', alias: 'VISITOR', badge: 0, badgehidden: true, badgecolor: 'accent', badgesize: 'medium' },
+    // tslint:disable-next-line:max-line-length
+    { id: 10, name: 'OPVISITOR-SECURITY-CLEARANCE', alias: 'SECURITY CLEARANCE', badge: 0, badgehidden: true, badgecolor: 'accent', badgesize: 'medium' },
+    // tslint:disable-next-line:max-line-length
+    { id: 11, name: 'BRGYRESIDENT-PASSING-THRU', alias: 'PASSING THRU', badge: 0, badgehidden: true, badgecolor: 'accent', badgesize: 'medium' }
   ];
 
   public timeLeft: number = this.chips.length;
@@ -64,7 +70,8 @@ export class AccessApprovalComponent implements OnInit {
   constructor(public service: MydataserviceService,
               public dialog: MatDialog,
               public snackBar: MatSnackBar,
-              private authService: AuthService
+              private authService: AuthService,
+              private http: HttpClient
               ) { }
 
   async ngOnInit() {
@@ -81,74 +88,60 @@ export class AccessApprovalComponent implements OnInit {
       this.authService.log(error);
     }
 
-    this.updateBadges();
+    setTimeout(async () => {
+      await this.updateBadges();
+    }, 1000);
 
   }
 
-  updateBadges() {
+  async updateBadges() {
 
-    this.interval = setInterval(() => {
-      if (this.timeLeft > 0) {
+    this.chips.forEach(async (chip) => {
 
-        // code here
-        const id = 12 - this.timeLeft;
+      const distinction = chip.name;
+      const usertype = this.service.usertype;
+      const findtext = this.service.find;
+      const useroffice = this.service.useroffice;
+      const largemeter = 10;
+      let nextstep = 100;
 
-        const chip = this.chips.find(x => x.id === id);
-        const distinction = chip.name;
-        let nextstep = 100;
-        this.service.getApprovalTemplateforBadges(distinction, this.service.usertype)
-        .pipe(
-          switchMap((usertemplate: any) => {
-            nextstep = usertemplate.step;
-            return this.service.getProfilesforBadges(
-              this.service.find,
-              distinction,
-              nextstep,
-              this.service.useroffice);
-          })
-        )
-        .subscribe({
-          next: (res: any) => {
-            // tapos array find using distinction to update array item value
-            const item = this.chips.find(x => x.name === distinction);
-            const index = this.chips.indexOf(item);
-            // update badges properties lang
-            item.badge = res.totalDocs;
-            if (item.badge < 1) {
-              item.badgehidden = true;
-            }
-            if (item.badge >= 1 && item.badge <= 50) {
-              item.badgehidden = false;
-              item.badgecolor = 'accent';
-            }
-            if (item.badge >= 51 && item.badge <= 100) {
-              item.badgehidden = false;
-              item.badgecolor = 'primary';
-            }
-            if (item.badge > 100) {
-              item.badgehidden = false;
-              item.badgecolor = 'warn';
-            }
-            this.chips[index] = item;
-          },
-          complete: () => { }
-        });
-
-        // end code here
-
-        this.timeLeft--;
-
-      } else {
-        this.timeLeft = this.chips.length;
-        this.pauseTimer();
+      const body = {
+        distinction: distinction,
+        usertype: usertype
+      };
+      const approvaltemplateurl = '/api/approvaltemplate';
+      const approvaltemplate: Approvaltemplate = await this.http.post<Approvaltemplate>(approvaltemplateurl, body).toPromise();
+      if (approvaltemplate !== null) {
+        nextstep = approvaltemplate.step;
       }
-    }, 500);
 
+      // tslint:disable-next-line:max-line-length
+      const url = `/api/profile/accessapprovals?findtext=${findtext}&distinction=${distinction}&nextstep=${nextstep}&useroffice=${useroffice}&page=1&limit=1&newestfirst=${true}`;
+      const profile: any = await this.http.get<any>(url).toPromise();
+      if (profile !== null) {
+        // const item = this.chips.find(x => x.name === distinction);
+        const item = chip;
+        const index = this.chips.indexOf(item);
+        // update badges properties lang
+        item.badge = profile.totalDocs;
+        if (item.badge < 1) {
+          item.badgehidden = true;
+        }
+        if (item.badge >= 1 && item.badge <= largemeter) {
+          item.badgehidden = false;
+          item.badgecolor = 'accent';
+          item.badgesize = 'medium';
+        }
+        if (item.badge > largemeter) {
+          item.badgehidden = false;
+          item.badgecolor = 'accent';
+          item.badgesize = 'large';
+        }
+        this.chips[index] = item;
+      }
 
-  }
+    });
 
-  pauseTimer() {
-    clearInterval(this.interval);
   }
 
   onDistinctionChipClick(chipname) {

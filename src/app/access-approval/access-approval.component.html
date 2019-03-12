@@ -21,7 +21,9 @@
   </mat-chip-list> -->
   <div *ngFor="let chip of chips" class="example-button-row">
     <button mat-flat-button class="custom-button" color="primary"
-      [matBadge]="chip.badge" [matBadgeHidden]="chip.badgehidden" matBadgePosition="after" [matBadgeColor]="chip.badgecolor"
+      [matBadge]="chip.badge" [matBadgeHidden]="chip.badgehidden"
+      matBadgePosition="after above" [matBadgeColor]="chip.badgecolor"
+      [matBadgeSize]="chip.badgesize"
       (click)="onDistinctionChipClick(chip.name)">
       {{ chip.alias }}
     </button>

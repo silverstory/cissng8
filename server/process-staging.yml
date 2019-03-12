@@ -1,0 +1,11 @@
+apps:
+  - script   : index.js
+    name     : 'ciss-staging'
+    instances: 3
+    exec_mode: cluster
+    env_staging:
+      NODE_ENV: development
+      PORT    : 4444
+    env_production:
+      NODE_ENV: production
+      PORT    : 4000
