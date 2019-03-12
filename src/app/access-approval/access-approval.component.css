@@ -146,7 +146,22 @@ footer {
   margin-right: 10px;
 }
 
+/* Badges */
+
 .custom-button {
   border-radius: 16px;
   line-height: 32px;
 }
+
+.mat-basic-chip > div {
+  display: inline-block;
+  overflow: hidden;
+  line-height: 32px;
+  padding: 11px;
+}
+
+.allow-overflow {
+  overflow: inherit;
+}
+
+/* End Badges */

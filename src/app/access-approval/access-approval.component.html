@@ -17,12 +17,17 @@
     Newest first!
   </mat-slide-toggle>
   <!-- <mat-chip-list>
-    <mat-chip *ngFor="let chip of chips" color="primary" selected (click)="onDistinctionChipClick(chip.name)">{{ chip.alias }}</mat-chip>
+    <mat-chip *ngFor="let chip of chips"
+      class="allow-overflow" color="primary" selected
+      [matBadge]="chip.badge" [matBadgeHidden]="chip.badgehidden"
+      matBadgePosition="above after" [matBadgeColor]="chip.badgecolor"
+      [matBadgeSize]="chip.badgesize"
+      (click)="onDistinctionChipClick(chip.name)">{{ chip.alias }}</mat-chip>
   </mat-chip-list> -->
   <div *ngFor="let chip of chips" class="example-button-row">
     <button mat-flat-button class="custom-button" color="primary"
       [matBadge]="chip.badge" [matBadgeHidden]="chip.badgehidden"
-      matBadgePosition="after above" [matBadgeColor]="chip.badgecolor"
+      matBadgePosition="above after" [matBadgeColor]="chip.badgecolor"
       [matBadgeSize]="chip.badgesize"
       (click)="onDistinctionChipClick(chip.name)">
       {{ chip.alias }}
