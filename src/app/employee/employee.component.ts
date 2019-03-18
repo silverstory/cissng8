@@ -1,6 +1,12 @@
 // import { Component, OnInit, Input, ViewEncapsulation, HostBinding } from '@angular/core';
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 
+// approval templates
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { ApprovaltemplateObj } from '../approvaltemplate';
+import { Observable } from 'rxjs';
+// end approval templates
+
 // ** NEW ANIMATION ** //
 import {trigger, stagger, animate, style, group, query, transition, keyframes} from '@angular/animations';
 // import {trigger, stagger, animate, style, group, query as q, transition, keyframes} from '@angular/animations';
@@ -137,6 +143,14 @@ export class EmployeeComponent implements OnInit, OnDestroy {
   @Input() profile: Profile = null;
   navigationSubscription;
 
+  // approval templates
+  private api = '/api';
+  steps = [];
+  isLinear = true;
+  completedBa = [];
+  stepstext = [];
+  // end approval templates
+
   // tiles: Tile[] = [
   //   {text: '1', cols: 2, rows: 1, color: '#CFD8DC'},
   //   {text: '2', cols: 2, rows: 1, color: '#CFD8DC'},
@@ -146,6 +160,7 @@ export class EmployeeComponent implements OnInit, OnDestroy {
   // ];
 
   constructor(
+    private http: HttpClient,
     private route: ActivatedRoute,
     private router: Router,
     private profileService: ProfileService,
@@ -178,8 +193,9 @@ export class EmployeeComponent implements OnInit, OnDestroy {
     const id = this.route.snapshot.paramMap.get('id');
     this.profile = null;
     this.profileService.getProfile(id)
-      .subscribe(profile => {
-        this.profile = profile;
+      .subscribe(async profile => {
+        this.profile = await profile;
+        await this.getTemplates(profile);
         // this.tiles = [
         //   {text: '1', cols: 2, rows: 1, color: this.getTileAccess(this.profile.access.one, 'One') },
         //   {text: '2', cols: 2, rows: 1, color: this.getTileAccess(this.profile.access.two, 'Two')},
@@ -188,6 +204,33 @@ export class EmployeeComponent implements OnInit, OnDestroy {
         //   {text: '4', cols: 2, rows: 1, color: this.getTileAccess(this.profile.access.four, 'Four')},
         // ];
       });
+  }
+
+  async getTemplates(profile: Profile) {
+    // steps code here
+    // this.service.userapprovaltemplate.step
+    this.steps = await [];
+    this.completedBa = await [];
+    this.stepstext = await [];
+    // tslint:disable-next-line:max-line-length
+    const url = await `${this.api}/findapprovaltemplates?distinction=${profile.distinction}&page=1&limit=10`;
+    const templates: any = await this.http.get(url).toPromise();
+    if (templates !== null) {
+      const items = await templates.docs;
+      if (items !== undefined) {
+        await items.forEach(async item => {
+          await this.steps.push(await new ApprovaltemplateObj(item));
+          if (item.step < profile.nextstep || profile.accessapproval === 'Approved') {
+            await this.completedBa.push(true);
+            await this.stepstext.push(item.completedsteptext);
+          } else {
+            await this.completedBa.push(false);
+            await this.stepstext.push(item.activesteptext);
+          }
+        });
+      }
+    }
+    // end steps
   }
 
   getTileColor(tile) {

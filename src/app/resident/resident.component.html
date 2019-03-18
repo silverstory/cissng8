@@ -1,6 +1,16 @@
 <div class="container" [style.background-color]="getColor(profile.recordstatus)" *ngIf="profile">
   <mat-card class="parent-card" [@homeTransition]="profile">
     <div class="row">
+      <mat-horizontal-stepper [linear]="isLinear" [selectedIndex]="profile.nextstep" #stepper>
+        <ng-template matStepperIcon="edit">
+          <mat-icon>check</mat-icon>
+        </ng-template>
+        <mat-step *ngFor="let step of steps" [stepControl]="step.dialogbuttontext" [completed]="completedBa[step.step]" editable="false">
+          <ng-template matStepLabel>{{ stepstext[step.step] }}</ng-template>
+        </mat-step>
+      </mat-horizontal-stepper>
+    </div>
+    <div class="row">
       <div class="column">
         <mat-card class="column-card">
           <img mat-card-image src="{{profile.photothumbnailurl}}" alt="Photo">

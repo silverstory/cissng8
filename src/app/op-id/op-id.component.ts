@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 // import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ApprovaltemplateObj } from '../approvaltemplate';
 import { Observable } from 'rxjs';
 import { Ipwhitelist } from '../ipwhitelist';
 import { ValidateTokenService } from '../validate-token.service';
@@ -55,9 +56,15 @@ export class OPIDComponent implements OnInit, OnDestroy {
   navigationSubscription;
   client: String;
   phrase;
-  private api = '/api';
-
   token: String;
+
+  // approval templates
+  private api = '/api';
+  steps = [];
+  isLinear = true;
+  completedBa = [];
+  stepstext = [];
+  // end approval templates
 
   constructor(private http: HttpClient,
               private route: ActivatedRoute,
@@ -92,12 +99,13 @@ export class OPIDComponent implements OnInit, OnDestroy {
     // check if in the ip whitelist
     const ipurl = `${this.api}/ipwhitelist/c/${this.client}`;
     const ipwhitelist: Ipwhitelist = await this.http.get<Ipwhitelist>(ipurl).toPromise();
-    console.log(ipwhitelist);
+    // console.log(ipwhitelist);
     if (ipwhitelist !== null) {
       // show picture and status
       const phrase = this.route.snapshot.paramMap.get('text');
       const url = `${this.api}/opid/v/${phrase}`;
       this.profile = await this.http.get<Profile>(url).toPromise();
+      await this.getTemplates(this.profile);
     } else {
       const phrase = this.route.snapshot.paramMap.get('text');
       this.tmpProfile = null;
@@ -119,6 +127,33 @@ export class OPIDComponent implements OnInit, OnDestroy {
         });
       }
     }
+  }
+
+  async getTemplates(profile: Profile) {
+    // steps code here
+    // this.service.userapprovaltemplate.step
+    this.steps = await [];
+    this.completedBa = await [];
+    this.stepstext = await [];
+    // tslint:disable-next-line:max-line-length
+    const url = await `${this.api}/findapprovaltemplatesnoauth?distinction=${profile.distinction}&page=1&limit=10`;
+    const templates: any = await this.http.get(url).toPromise();
+    if (templates !== null) {
+      const items = await templates.docs;
+      if (items !== undefined) {
+        await items.forEach(async item => {
+          await this.steps.push(await new ApprovaltemplateObj(item));
+          if (item.step < profile.nextstep || profile.accessapproval === 'Approved') {
+            await this.completedBa.push(true);
+            await this.stepstext.push(item.completedsteptext);
+          } else {
+            await this.completedBa.push(false);
+            await this.stepstext.push(item.activesteptext);
+          }
+        });
+      }
+    }
+    // end steps
   }
 
   ngOnInit() { }
@@ -149,6 +184,7 @@ export class OPIDComponent implements OnInit, OnDestroy {
         const phrase = this.route.snapshot.paramMap.get('text');
         const url = `${this.api}/opid/v/${phrase}`;
         this.profile = await this.http.get<Profile>(url).toPromise();
+        await this.getTemplates(this.profile);
       } else {
         this.profile = null;
         // this.invalidToken = 'invalid token';

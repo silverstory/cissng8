@@ -96,10 +96,23 @@
             <span class="profile">Your 8-digit key: {{ profile.cisstoken }}</span>
           </div>
         </mat-card>
+        <mat-card class="column-card">
+          <mat-card-header>
+            <div mat-card-avatar><mat-icon aria-label=">ACCESS REQUEST STAGE">done_outline</mat-icon></div>
+            <mat-card-title>ACCESS REQUEST STAGE</mat-card-title>
+          </mat-card-header>
+          <div class="row">
+            <mat-vertical-stepper [linear]="isLinear" [selectedIndex]="profile.nextstep" #stepper>
+              <ng-template matStepperIcon="edit">
+                <mat-icon>check</mat-icon>
+              </ng-template>
+              <mat-step *ngFor="let step of steps" [stepControl]="step.dialogbuttontext" [completed]="completedBa[step.step]" editable="false">
+                <ng-template matStepLabel>{{ stepstext[step.step] }}</ng-template>
+              </mat-step>
+            </mat-vertical-stepper>
+          </div>
+        </mat-card>
       </div>
-      <!-- <div class="column">
-
-      </div> -->
     </div>
   </mat-card>
 </div>

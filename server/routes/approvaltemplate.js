@@ -13,4 +13,9 @@ router.get('/findapprovaltemplates', passport.authenticate('jwt', { session: fal
   approvaltemplateService.findTemplatesByDistinction(req, res, next);
 });
 
+// GET by Distinction No Auth Needed
+router.get('/findapprovaltemplatesnoauth', async (req, res, next) => {
+  approvaltemplateService.findTemplatesByDistinction(req, res, next);
+});
+
 module.exports = router;
