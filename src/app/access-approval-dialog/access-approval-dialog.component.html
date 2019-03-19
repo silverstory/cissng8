@@ -45,19 +45,19 @@
             <!-- <div mat-card-avatar><mat-icon color="primary">looks_one</mat-icon></div> -->
             <!-- <div mat-card-avatar><mat-icon color="primary">list</mat-icon></div> -->
             <div mat-card-avatar class="example-header-image-1"></div>
-            <mat-card-title>ACCESS PRESETS</mat-card-title>
+            <mat-card-title>ACCESS TEMPLATES</mat-card-title>
             <mat-card-subtitle>Select an access label</mat-card-subtitle>
           </mat-card-header>
           <br>
           <mat-card-content>
             <!-- <h2 class="example-h2">Access Presets</h2> -->
             <mat-radio-group class="nested">
-              <mat-radio-button class="example-margin" [checked]="passingThroughChecked" value="PASSING THROUGH" (change)="optionButtonChanged($event)" matTooltip="Visitors & Residents (no code selected)">PASSING THROUGH</mat-radio-button>
-              <mat-radio-button class="example-margin" [checked]="officialChecked" value="OFFICIAL" (change)="optionButtonChanged($event)" matTooltip="OP Officials (codes 1 and 2 are selected)">OFFICIAL</mat-radio-button>
-              <mat-radio-button class="example-margin" [checked]="rankAndFileChecked" value="RANK AND FILE" (change)="optionButtonChanged($event)" matTooltip="Rank and File OP Personnels (code 2 is selected)">RANK AND FILE</mat-radio-button>
-              <mat-radio-button class="example-margin" [checked]="uniformedOfficialChecked" value="UNIFORMED OFFICIAL" (change)="optionButtonChanged($event)" matTooltip="PSG Officials (all codes are selected)">UNIFORMED OFFICIAL</mat-radio-button>
-              <mat-radio-button class="example-margin" [checked]="uniformedPersonnelChecked" value="UNIFORMED PERSONNEL" (change)="optionButtonChanged($event)" matTooltip="PSG Personnels (codes 2 and 4 are selected)">UNIFORMED PERSONNEL</mat-radio-button>
-              <mat-radio-button class="example-margin" [checked]="customizedChecked" value="CUSTOMIZED" (change)="optionButtonChanged($event)" matTooltip="Manually select access codes">CUSTOMIZED / VIP</mat-radio-button>
+              <mat-radio-button class="example-margin" [checked]="passingThroughChecked" value="PASSING THROUGH" (change)="optionButtonChanged($event)" matTooltip="Visitors, Drivers & Barangay Residents">PASSING THROUGH</mat-radio-button>
+              <mat-radio-button class="example-margin" [checked]="officialChecked" value="OFFICIAL" (change)="optionButtonChanged($event)" matTooltip="OP Officials">OFFICIAL</mat-radio-button>
+              <mat-radio-button class="example-margin" [checked]="rankAndFileChecked" value="RANK AND FILE" (change)="optionButtonChanged($event)" matTooltip="Rank and File OP Personnels">RANK AND FILE</mat-radio-button>
+              <mat-radio-button class="example-margin" [checked]="uniformedOfficialChecked" value="UNIFORMED OFFICIAL" (change)="optionButtonChanged($event)" matTooltip="PSG Officials">UNIFORMED OFFICIAL</mat-radio-button>
+              <mat-radio-button class="example-margin" [checked]="uniformedPersonnelChecked" value="UNIFORMED PERSONNEL" (change)="optionButtonChanged($event)" matTooltip="PSG Personnels">UNIFORMED PERSONNEL</mat-radio-button>
+              <mat-radio-button class="example-margin" [checked]="customizedChecked" value="CUSTOMIZED" (change)="optionButtonChanged($event)" matTooltip="Manually select area access and color codes">CUSTOMIZED / VIP</mat-radio-button>
             </mat-radio-group>
           </mat-card-content>
         </mat-card>
@@ -81,45 +81,165 @@
           <mat-card-content>
             <!-- <h2 class="example-h2">Access Codes</h2> -->
             <div class="nested">
-              <mat-slide-toggle
-                  class="example-margin"
-                  [color]="oneColor"
-                  [checked]="oneChecked"
-                  [disabled]="oneDisabled"
-                  (change)="slideToggleOneChanged($event)"
-                  matTooltip="Code 1 is palace, pgh (critical areas)">
-                Code 1
-              </mat-slide-toggle>
+              <div class="accesscodes">
+                <mat-slide-toggle
+                    class="example-margin"
+                    [color]="oneColor"
+                    [checked]="oneChecked"
+                    [disabled]="oneDisabled"
+                    (change)="slideToggleOneChanged($event)"
+                    matTooltip="Code 1 is palace, pgh (critical areas)">
+                  Code 1
+                </mat-slide-toggle>
+                <div *ngIf="oneChecked === true" class="example-button-row">
+                  <button mat-icon-button (click)="oneClick('white')">
+                    <mat-icon [ngStyle]="{'color': 'silver'}">trip_origin</mat-icon>
+                  </button>
+                  <button mat-icon-button (click)="oneClick('blue')">
+                    <mat-icon [ngStyle]="{'color': 'blue'}">trip_origin</mat-icon>
+                  </button>
+                  <button mat-icon-button (click)="oneClick('green')">
+                    <mat-icon [ngStyle]="{'color': 'green'}">trip_origin</mat-icon>
+                  </button>
+                  <button mat-icon-button (click)="oneClick('red')">
+                    <mat-icon [ngStyle]="{'color': 'red'}">trip_origin</mat-icon>
+                  </button>
+                </div>
+                <div *ngIf="oneChecked === false" class="example-button-row">
+                  <button mat-icon-button disabled>
+                    <mat-icon>trip_origin</mat-icon>
+                  </button>
+                  <button mat-icon-button disabled>
+                    <mat-icon>trip_origin</mat-icon>
+                  </button>
+                  <button mat-icon-button disabled>
+                    <mat-icon>trip_origin</mat-icon>
+                  </button>
+                  <button mat-icon-button disabled>
+                    <mat-icon>trip_origin</mat-icon>
+                  </button>
+                </div>
+              </div>
 
-              <mat-slide-toggle
-                  class="example-margin"
-                  [color]="twoColor"
-                  [checked]="twoChecked"
-                  [disabled]="twoDisabled"
-                  (change)="slideToggleTwoChanged($event)"
-                  matTooltip="Code 2 is mabini, engr., other non-critical OP buildings">
-                Code 2
-              </mat-slide-toggle>
+              <div class="accesscodes">
+                <mat-slide-toggle
+                    class="example-margin"
+                    [color]="twoColor"
+                    [checked]="twoChecked"
+                    [disabled]="twoDisabled"
+                    (change)="slideToggleTwoChanged($event)"
+                    matTooltip="Code 2 is mabini, engr., other non-critical OP buildings">
+                  Code 2
+                </mat-slide-toggle>
+                <div *ngIf="twoChecked === true" class="example-button-row">
+                  <button mat-icon-button (click)="twoClick('white')">
+                    <mat-icon [ngStyle]="{'color': 'silver'}">trip_origin</mat-icon>
+                  </button>
+                  <button mat-icon-button (click)="twoClick('blue')">
+                    <mat-icon [ngStyle]="{'color': 'blue'}">trip_origin</mat-icon>
+                  </button>
+                  <button mat-icon-button (click)="twoClick('green')">
+                    <mat-icon [ngStyle]="{'color': 'green'}">trip_origin</mat-icon>
+                  </button>
+                  <button mat-icon-button (click)="twoClick('red')">
+                    <mat-icon [ngStyle]="{'color': 'red'}">trip_origin</mat-icon>
+                  </button>
+                </div>
+                <div *ngIf="twoChecked === false" class="example-button-row">
+                  <button mat-icon-button disabled>
+                    <mat-icon>trip_origin</mat-icon>
+                  </button>
+                  <button mat-icon-button disabled>
+                    <mat-icon>trip_origin</mat-icon>
+                  </button>
+                  <button mat-icon-button disabled>
+                    <mat-icon>trip_origin</mat-icon>
+                  </button>
+                  <button mat-icon-button disabled>
+                    <mat-icon>trip_origin</mat-icon>
+                  </button>
+                </div>
+              </div>
 
-              <mat-slide-toggle
-                  class="example-margin"
-                  [color]="threeColor"
-                  [checked]="threeChecked"
-                  [disabled]="threeDisabled"
-                  (change)="slideToggleThreeChanged($event)"
-                  matTooltip="Codes 3 is a PSG reserved code (PSG controlled areas)">
-                Code 3
-              </mat-slide-toggle>
+              <div class="accesscodes">
+                <mat-slide-toggle
+                    class="example-margin"
+                    [color]="threeColor"
+                    [checked]="threeChecked"
+                    [disabled]="threeDisabled"
+                    (change)="slideToggleThreeChanged($event)"
+                    matTooltip="Codes 3 is a PSG reserved code (PSG controlled areas)">
+                  Code 3
+                </mat-slide-toggle>
+                <div *ngIf="threeChecked === true" class="example-button-row">
+                  <button mat-icon-button (click)="threeClick('white')">
+                    <mat-icon [ngStyle]="{'color': 'silver'}">trip_origin</mat-icon>
+                  </button>
+                  <button mat-icon-button (click)="threeClick('blue')">
+                    <mat-icon [ngStyle]="{'color': 'blue'}">trip_origin</mat-icon>
+                  </button>
+                  <button mat-icon-button (click)="threeClick('green')">
+                    <mat-icon [ngStyle]="{'color': 'green'}">trip_origin</mat-icon>
+                  </button>
+                  <button mat-icon-button (click)="threeClick('red')">
+                    <mat-icon [ngStyle]="{'color': 'red'}">trip_origin</mat-icon>
+                  </button>
+                </div>
+                <div *ngIf="threeChecked === false" class="example-button-row">
+                  <button mat-icon-button disabled>
+                    <mat-icon>trip_origin</mat-icon>
+                  </button>
+                  <button mat-icon-button disabled>
+                    <mat-icon>trip_origin</mat-icon>
+                  </button>
+                  <button mat-icon-button disabled>
+                    <mat-icon>trip_origin</mat-icon>
+                  </button>
+                  <button mat-icon-button disabled>
+                    <mat-icon>trip_origin</mat-icon>
+                  </button>
+                </div>
+              </div>
 
-              <mat-slide-toggle
-                  class="example-margin"
-                  [color]="fourColor"
-                  [checked]="fourChecked"
-                  [disabled]="fourDisabled"
-                  (change)="slideToggleFourChanged($event)"
-                  matTooltip="Codes 4 is a PSG reserved code (PSG controlled areas)">
-                Code 4
-              </mat-slide-toggle>
+              <div class="accesscodes">
+                <mat-slide-toggle
+                    class="example-margin"
+                    [color]="fourColor"
+                    [checked]="fourChecked"
+                    [disabled]="fourDisabled"
+                    (change)="slideToggleFourChanged($event)"
+                    matTooltip="Codes 4 is a PSG reserved code (PSG controlled areas)">
+                  Code 4
+                </mat-slide-toggle>
+                <div *ngIf="fourChecked === true" class="example-button-row">
+                  <button mat-icon-button (click)="fourClick('white')">
+                    <mat-icon [ngStyle]="{'color': 'silver'}">trip_origin</mat-icon>
+                  </button>
+                  <button mat-icon-button (click)="fourClick('blue')">
+                    <mat-icon [ngStyle]="{'color': 'blue'}">trip_origin</mat-icon>
+                  </button>
+                  <button mat-icon-button (click)="fourClick('green')">
+                    <mat-icon [ngStyle]="{'color': 'green'}">trip_origin</mat-icon>
+                  </button>
+                  <button mat-icon-button (click)="fourClick('red')">
+                    <mat-icon [ngStyle]="{'color': 'red'}">trip_origin</mat-icon>
+                  </button>
+                </div>
+                <div *ngIf="fourChecked === false" class="example-button-row">
+                  <button mat-icon-button disabled>
+                    <mat-icon>trip_origin</mat-icon>
+                  </button>
+                  <button mat-icon-button disabled>
+                    <mat-icon>trip_origin</mat-icon>
+                  </button>
+                  <button mat-icon-button disabled>
+                    <mat-icon>trip_origin</mat-icon>
+                  </button>
+                  <button mat-icon-button disabled>
+                    <mat-icon>trip_origin</mat-icon>
+                  </button>
+                </div>
+              </div>
 
             </div>
           </mat-card-content>
@@ -145,13 +265,13 @@ Legend:
     <div>
       <mat-card class="column-card">
         <div class="row">
-          <div class="one-2-3-4" [style.background-color]="getTileAccess(data.profile.proviaccess.one, 'One')">1</div>
-          <div class="one-2-3-4" [style.background-color]="getTileAccess(data.profile.proviaccess.two, 'Two')">2</div>
+          <div class="one-2-3-4" [style.background-color]="data.profile.proviaccess.colorone">1</div>
+          <div class="one-2-3-4" [style.background-color]="data.profile.proviaccess.colortwo">2</div>
         </div>
         <img mat-card-image src="{{data.freezedProfile.photothumbnailurl}}" alt="Photo" style="height:250px; object-fit: contain;">
         <div class="row">
-          <div class="one-2-3-4" [style.background-color]="getTileAccess(data.profile.proviaccess.three, 'Three')">3</div>
-          <div class="one-2-3-4" [style.background-color]="getTileAccess(data.profile.proviaccess.four, 'Four')">4</div>
+          <div class="one-2-3-4" [style.background-color]="data.profile.proviaccess.colorthree">3</div>
+          <div class="one-2-3-4" [style.background-color]="data.profile.proviaccess.colorfour">4</div>
         </div>
       </mat-card>
     </div>
@@ -161,11 +281,11 @@ Legend:
 <div mat-dialog-actions align="end">
   <button mat-button (click)="onNoClick()">Cancel</button>&nbsp;&nbsp;
 
-  <!-- hr -->
-  <button mat-raised-button color="accent" *ngIf="user.usertype === 'OP-HRMO-DATA-OFFICER'" (click)="onButtonClick('Send Request')" [mat-dialog-close]="data" cdkFocusInitial>Send Request</button>
+  <!-- wala -->
+  <!-- <button mat-raised-button color="accent" *ngIf="user.usertype === 'OP-HRMO-DATA-OFFICER'" (click)="onButtonClick('Send Request')" [mat-dialog-close]="data" cdkFocusInitial>Send Request</button> -->
 
-  <!-- psg -->
-  <button mat-raised-button color="warn" *ngIf="user.usertype === 'PSG-DATA-OFFICER'" (click)="onButtonClick('Endorse Access')" [mat-dialog-close]="data" cdkFocusInitial>Endorse Access</button>
+  <!-- endorse -->
+  <button mat-raised-button color="accent" *ngIf="user.usertype === 'PSG-DATA-OFFICER'" (click)="onButtonClick('Endorse Access')" [mat-dialog-close]="data" cdkFocusInitial>Endorse Access</button>
 
   <!-- ciss manager -->
   <button mat-flat-button color="warn" *ngIf="user.usertype === 'PSG-CISS-MANAGER' && data.freezedProfile.accessapproval === 'Provisional'" (click)="onButtonClick('Deny Request')" [mat-dialog-close]="data">Deny Request</button>&nbsp;&nbsp;

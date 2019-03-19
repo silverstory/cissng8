@@ -30,13 +30,6 @@ export interface DialogData {
 })
 export class AccessApprovalDialogComponent implements OnInit {
 
-  colors = [
-    {name: 'White'},
-    {name: 'Blue'},
-    {name: 'Green'},
-    {name: 'Red'}
-  ];
-
   steps = [];
   isLinear = true;
   completedBa = [];
@@ -118,29 +111,29 @@ export class AccessApprovalDialogComponent implements OnInit {
 
   // tiles
 
-  getTileColor(tile) {
-    switch (tile) {
-      case 'One':
-        return 'lightblue';
-        case 'Two':
-        return 'lightgreen';
-        case 'Three':
-        return '#DDBDF1';
-        case 'Four':
-        return '#DDBDF1';
-      }
-  }
+  // getTileColor(tile) {
+  //   switch (tile) {
+  //     case 'One':
+  //       return 'lightblue';
+  //       case 'Two':
+  //       return 'lightgreen';
+  //       case 'Three':
+  //       return '#DDBDF1';
+  //       case 'Four':
+  //       return '#DDBDF1';
+  //     }
+  // }
 
-  getTileAccess(access, tile) {
-    switch (access) {
-      case 'selected':
-        return this.getTileColor(tile);
-      case 'notSelected':
-        return '#e6e6e6';
-      default:
-        return '#e6e6e6';
-    }
-  }
+  // getTileAccess(access, tile) {
+  //   switch (access) {
+  //     case 'selected':
+  //       return this.getTileColor(tile);
+  //     case 'notSelected':
+  //       return '#e6e6e6';
+  //     default:
+  //       return '#e6e6e6';
+  //   }
+  // }
 
   // GET BACKGROUND COLOR
 
@@ -164,13 +157,21 @@ export class AccessApprovalDialogComponent implements OnInit {
           this.user = user;
           // get profile values
           this.checkAccessOption(this.data.profile.personaccesslevel);
-          // disable toggles
-          this.disableToggles(this.data.profile.personaccesslevel);
+
+          // disable toggles not needed anymore
+          // this.disableToggles(this.data.profile.personaccesslevel);
+
           // check toggles. important: must check toggles after checkAccessOption
           this.oneChecked = this.isChecked(this.data.profile.proviaccess.one);
           this.twoChecked = this.isChecked(this.data.profile.proviaccess.two);
           this.threeChecked = this.isChecked(this.data.profile.proviaccess.three);
           this.fourChecked = this.isChecked(this.data.profile.proviaccess.four);
+
+          // re-paint colors again because it has been change from checkAccessOption()
+          this.data.profile.proviaccess.colorone = this.data.freezedProfile.proviaccess.colorone;
+          this.data.profile.proviaccess.colortwo = this.data.freezedProfile.proviaccess.colortwo;
+          this.data.profile.proviaccess.colorthree =  this.data.freezedProfile.proviaccess.colorthree;
+          this.data.profile.proviaccess.colorfour = this.data.freezedProfile.proviaccess.colorfour;
 
           // steps code here
           // this.service.userapprovaltemplate.step
@@ -234,24 +235,24 @@ export class AccessApprovalDialogComponent implements OnInit {
 
   optionButtonChanged(event: MatRadioChange) {
     this.data.profile.personaccesslevel = event.value;
-    this.disableToggles(event.value);
+    // this.disableToggles(event.value);
     this.checkToggles(event.value);
   }
 
-  disableToggles(level) {
-    if (level === 'CUSTOMIZED') {
-      this.disableSet(false, false, false, false);
-    } else {
-      this.disableSet(true, true, true, true);
-    }
-  }
+  // disableToggles(level) {
+  //   if (level === 'CUSTOMIZED') {
+  //     this.disableSet(false, false, false, false);
+  //   } else {
+  //     this.disableSet(true, true, true, true);
+  //   }
+  // }
 
-  disableSet(one, two, three, four) {
-    this.oneDisabled = one;
-    this.twoDisabled = two;
-    this.threeDisabled = three;
-    this.fourDisabled = four;
-  }
+  // disableSet(one, two, three, four) {
+  //   this.oneDisabled = one;
+  //   this.twoDisabled = two;
+  //   this.threeDisabled = three;
+  //   this.fourDisabled = four;
+  // }
 
   // check toggles here
   // PASSING THROUGH ( visitors & residents ) ( none selected)
@@ -263,29 +264,29 @@ export class AccessApprovalDialogComponent implements OnInit {
   checkToggles(level) {
     switch (level) {
       case 'PASSING THROUGH':
-        this.checkSet(false, false, false, false);
+        this.checkSet(false, false, false, false, 'lightgray', 'lightgray', 'lightgray', 'lightgray');
         break;
       case 'RANK AND FILE':
-        this.checkSet(false, true, false, false);
+        this.checkSet(true, true, false, false, 'white', 'red', 'lightgray', 'lightgray');
         break;
       case 'OFFICIAL':
-        this.checkSet(true, true, false, false);
+        this.checkSet(true, true, false, false, 'red', 'red', 'lightgray', 'lightgray');
         break;
       case 'UNIFORMED PERSONNEL':
-        this.checkSet(false, true, false, true);
+        this.checkSet(true, true, true, true, 'blue', 'white', 'red', 'green');
         break;
       case 'UNIFORMED OFFICIAL':
-        this.checkSet(true, true, true, true);
+        this.checkSet(true, true, true, true, 'green', 'blue', 'red', 'red');
         break;
       case 'CUSTOMIZED':
-        this.checkSet(false, false, false, false);
+        this.checkSet(false, false, false, false, 'lightgray', 'lightgray', 'lightgray', 'lightgray');
         break;
       default:
         break;
     }
   }
 
-  checkSet(one, two, three, four) {
+  checkSet(one, two, three, four, colorone, colortwo, colorthree, colorfour) {
     this.oneChecked = one;
     this.twoChecked = two;
     this.threeChecked = three;
@@ -294,30 +295,70 @@ export class AccessApprovalDialogComponent implements OnInit {
     this.data.profile.proviaccess.two = this.isSelected(two);
     this.data.profile.proviaccess.three = this.isSelected(three);
     this.data.profile.proviaccess.four = this.isSelected(four);
+    this.data.profile.proviaccess.colorone = colorone;
+    this.data.profile.proviaccess.colortwo = colortwo;
+    this.data.profile.proviaccess.colorthree = colorthree;
+    this.data.profile.proviaccess.colorfour = colorfour;
   }
 
   slideToggleOneChanged(event: MatSlideToggleChange) {
     this.oneChecked = event.checked;
     this.data.profile.proviaccess.one = this.isSelected(event.checked);
+    if (this.oneChecked === true) {
+      this.data.profile.proviaccess.colorone = 'white';
+    } else {
+      this.data.profile.proviaccess.colorone = 'lightgray';
+    }
   }
 
   slideToggleTwoChanged(event: MatSlideToggleChange) {
     this.twoChecked = event.checked;
     this.data.profile.proviaccess.two = this.isSelected(event.checked);
+    if (this.twoChecked === true) {
+      this.data.profile.proviaccess.colortwo = 'white';
+    } else {
+      this.data.profile.proviaccess.colortwo = 'lightgray';
+    }
   }
 
   slideToggleThreeChanged(event: MatSlideToggleChange) {
     this.threeChecked = event.checked;
     this.data.profile.proviaccess.three = this.isSelected(event.checked);
+    if (this.threeChecked === true) {
+      this.data.profile.proviaccess.colorthree = 'white';
+    } else {
+      this.data.profile.proviaccess.colorthree = 'lightgray';
+    }
   }
 
   slideToggleFourChanged(event: MatSlideToggleChange) {
     this.fourChecked = event.checked;
     this.data.profile.proviaccess.four = this.isSelected(event.checked);
+    if (this.fourChecked === true) {
+      this.data.profile.proviaccess.colorfour = 'white';
+    } else {
+      this.data.profile.proviaccess.colorfour = 'lightgray';
+    }
   }
 
   onButtonClick(action) {
     this.data.action = action;
+  }
+
+  oneClick(newcolor) {
+    this.data.profile.proviaccess.colorone = newcolor;
+  }
+
+  twoClick(newcolor) {
+    this.data.profile.proviaccess.colortwo = newcolor;
+  }
+
+  threeClick(newcolor) {
+    this.data.profile.proviaccess.colorthree = newcolor;
+  }
+
+  fourClick(newcolor) {
+    this.data.profile.proviaccess.colorfour = newcolor;
   }
 
   unfreezeProfile(p: Profile): Profile {
