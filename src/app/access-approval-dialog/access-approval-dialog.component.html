@@ -53,7 +53,7 @@
             <!-- <h2 class="example-h2">Access Presets</h2> -->
             <mat-radio-group class="nested">
               <mat-radio-button class="example-margin" [checked]="passingThroughChecked" value="PASSING THROUGH" (change)="optionButtonChanged($event)" matTooltip="Visitors, Drivers & Barangay Residents">PASSING THROUGH</mat-radio-button>
-              <mat-radio-button class="example-margin" [checked]="officialChecked" value="OFFICIAL" (change)="optionButtonChanged($event)" matTooltip="OP Officials">OFFICIAL</mat-radio-button>
+              <mat-radio-button class="example-margin" [checked]="officialChecked" value="OP OFFICIAL" (change)="optionButtonChanged($event)" matTooltip="OP Officials">OP OFFICIAL</mat-radio-button>
               <mat-radio-button class="example-margin" [checked]="rankAndFileChecked" value="RANK AND FILE" (change)="optionButtonChanged($event)" matTooltip="Rank and File OP Personnels">RANK AND FILE</mat-radio-button>
               <mat-radio-button class="example-margin" [checked]="uniformedOfficialChecked" value="UNIFORMED OFFICIAL" (change)="optionButtonChanged($event)" matTooltip="PSG Officials">UNIFORMED OFFICIAL</mat-radio-button>
               <mat-radio-button class="example-margin" [checked]="uniformedPersonnelChecked" value="UNIFORMED PERSONNEL" (change)="optionButtonChanged($event)" matTooltip="PSG Personnels">UNIFORMED PERSONNEL</mat-radio-button>
@@ -93,30 +93,30 @@
                 </mat-slide-toggle>
                 <div *ngIf="oneChecked === true" class="example-button-row">
                   <button mat-icon-button (click)="oneClick('white')">
-                    <mat-icon [ngStyle]="{'color': 'silver'}">trip_origin</mat-icon>
+                    <mat-icon [ngStyle]="{'color': 'silver'}">radio_button_unchecked</mat-icon>
                   </button>
                   <button mat-icon-button (click)="oneClick('blue')">
-                    <mat-icon [ngStyle]="{'color': 'blue'}">trip_origin</mat-icon>
+                    <mat-icon [ngStyle]="{'color': 'blue'}">check_box_outline_blank</mat-icon>
                   </button>
                   <button mat-icon-button (click)="oneClick('green')">
-                    <mat-icon [ngStyle]="{'color': 'green'}">trip_origin</mat-icon>
+                    <mat-icon [ngStyle]="{'color': 'green'}">radio_button_unchecked</mat-icon>
                   </button>
                   <button mat-icon-button (click)="oneClick('red')">
-                    <mat-icon [ngStyle]="{'color': 'red'}">trip_origin</mat-icon>
+                    <mat-icon [ngStyle]="{'color': 'red'}">check_box_outline_blank</mat-icon>
                   </button>
                 </div>
                 <div *ngIf="oneChecked === false" class="example-button-row">
                   <button mat-icon-button disabled>
-                    <mat-icon>trip_origin</mat-icon>
+                    <mat-icon>radio_button_unchecked</mat-icon>
                   </button>
                   <button mat-icon-button disabled>
-                    <mat-icon>trip_origin</mat-icon>
+                    <mat-icon>check_box_outline_blank</mat-icon>
                   </button>
                   <button mat-icon-button disabled>
-                    <mat-icon>trip_origin</mat-icon>
+                    <mat-icon>radio_button_unchecked</mat-icon>
                   </button>
                   <button mat-icon-button disabled>
-                    <mat-icon>trip_origin</mat-icon>
+                    <mat-icon>check_box_outline_blank</mat-icon>
                   </button>
                 </div>
               </div>
@@ -133,30 +133,30 @@
                 </mat-slide-toggle>
                 <div *ngIf="twoChecked === true" class="example-button-row">
                   <button mat-icon-button (click)="twoClick('white')">
-                    <mat-icon [ngStyle]="{'color': 'silver'}">trip_origin</mat-icon>
+                    <mat-icon [ngStyle]="{'color': 'silver'}">radio_button_unchecked</mat-icon>
                   </button>
                   <button mat-icon-button (click)="twoClick('blue')">
-                    <mat-icon [ngStyle]="{'color': 'blue'}">trip_origin</mat-icon>
+                    <mat-icon [ngStyle]="{'color': 'blue'}">check_box_outline_blank</mat-icon>
                   </button>
                   <button mat-icon-button (click)="twoClick('green')">
-                    <mat-icon [ngStyle]="{'color': 'green'}">trip_origin</mat-icon>
+                    <mat-icon [ngStyle]="{'color': 'green'}">radio_button_unchecked</mat-icon>
                   </button>
                   <button mat-icon-button (click)="twoClick('red')">
-                    <mat-icon [ngStyle]="{'color': 'red'}">trip_origin</mat-icon>
+                    <mat-icon [ngStyle]="{'color': 'red'}">check_box_outline_blank</mat-icon>
                   </button>
                 </div>
                 <div *ngIf="twoChecked === false" class="example-button-row">
                   <button mat-icon-button disabled>
-                    <mat-icon>trip_origin</mat-icon>
+                    <mat-icon>radio_button_unchecked</mat-icon>
                   </button>
                   <button mat-icon-button disabled>
-                    <mat-icon>trip_origin</mat-icon>
+                    <mat-icon>check_box_outline_blank</mat-icon>
                   </button>
                   <button mat-icon-button disabled>
-                    <mat-icon>trip_origin</mat-icon>
+                    <mat-icon>radio_button_unchecked</mat-icon>
                   </button>
                   <button mat-icon-button disabled>
-                    <mat-icon>trip_origin</mat-icon>
+                    <mat-icon>check_box_outline_blank</mat-icon>
                   </button>
                 </div>
               </div>
@@ -173,30 +173,30 @@
                 </mat-slide-toggle>
                 <div *ngIf="threeChecked === true" class="example-button-row">
                   <button mat-icon-button (click)="threeClick('white')">
-                    <mat-icon [ngStyle]="{'color': 'silver'}">trip_origin</mat-icon>
+                    <mat-icon [ngStyle]="{'color': 'silver'}">radio_button_unchecked</mat-icon>
                   </button>
                   <button mat-icon-button (click)="threeClick('blue')">
-                    <mat-icon [ngStyle]="{'color': 'blue'}">trip_origin</mat-icon>
+                    <mat-icon [ngStyle]="{'color': 'blue'}">check_box_outline_blank</mat-icon>
                   </button>
                   <button mat-icon-button (click)="threeClick('green')">
-                    <mat-icon [ngStyle]="{'color': 'green'}">trip_origin</mat-icon>
+                    <mat-icon [ngStyle]="{'color': 'green'}">radio_button_unchecked</mat-icon>
                   </button>
                   <button mat-icon-button (click)="threeClick('red')">
-                    <mat-icon [ngStyle]="{'color': 'red'}">trip_origin</mat-icon>
+                    <mat-icon [ngStyle]="{'color': 'red'}">check_box_outline_blank</mat-icon>
                   </button>
                 </div>
                 <div *ngIf="threeChecked === false" class="example-button-row">
                   <button mat-icon-button disabled>
-                    <mat-icon>trip_origin</mat-icon>
+                    <mat-icon>radio_button_unchecked</mat-icon>
                   </button>
                   <button mat-icon-button disabled>
-                    <mat-icon>trip_origin</mat-icon>
+                    <mat-icon>check_box_outline_blank</mat-icon>
                   </button>
                   <button mat-icon-button disabled>
-                    <mat-icon>trip_origin</mat-icon>
+                    <mat-icon>radio_button_unchecked</mat-icon>
                   </button>
                   <button mat-icon-button disabled>
-                    <mat-icon>trip_origin</mat-icon>
+                    <mat-icon>check_box_outline_blank</mat-icon>
                   </button>
                 </div>
               </div>
@@ -213,30 +213,30 @@
                 </mat-slide-toggle>
                 <div *ngIf="fourChecked === true" class="example-button-row">
                   <button mat-icon-button (click)="fourClick('white')">
-                    <mat-icon [ngStyle]="{'color': 'silver'}">trip_origin</mat-icon>
+                    <mat-icon [ngStyle]="{'color': 'silver'}">radio_button_unchecked</mat-icon>
                   </button>
                   <button mat-icon-button (click)="fourClick('blue')">
-                    <mat-icon [ngStyle]="{'color': 'blue'}">trip_origin</mat-icon>
+                    <mat-icon [ngStyle]="{'color': 'blue'}">check_box_outline_blank</mat-icon>
                   </button>
                   <button mat-icon-button (click)="fourClick('green')">
-                    <mat-icon [ngStyle]="{'color': 'green'}">trip_origin</mat-icon>
+                    <mat-icon [ngStyle]="{'color': 'green'}">radio_button_unchecked</mat-icon>
                   </button>
                   <button mat-icon-button (click)="fourClick('red')">
-                    <mat-icon [ngStyle]="{'color': 'red'}">trip_origin</mat-icon>
+                    <mat-icon [ngStyle]="{'color': 'red'}">check_box_outline_blank</mat-icon>
                   </button>
                 </div>
                 <div *ngIf="fourChecked === false" class="example-button-row">
                   <button mat-icon-button disabled>
-                    <mat-icon>trip_origin</mat-icon>
+                    <mat-icon>radio_button_unchecked</mat-icon>
                   </button>
                   <button mat-icon-button disabled>
-                    <mat-icon>trip_origin</mat-icon>
+                    <mat-icon>check_box_outline_blank</mat-icon>
                   </button>
                   <button mat-icon-button disabled>
-                    <mat-icon>trip_origin</mat-icon>
+                    <mat-icon>radio_button_unchecked</mat-icon>
                   </button>
                   <button mat-icon-button disabled>
-                    <mat-icon>trip_origin</mat-icon>
+                    <mat-icon>check_box_outline_blank</mat-icon>
                   </button>
                 </div>
               </div>
@@ -281,13 +281,10 @@ Legend:
 <div mat-dialog-actions align="end">
   <button mat-button (click)="onNoClick()">Cancel</button>&nbsp;&nbsp;
 
-  <!-- wala -->
-  <!-- <button mat-raised-button color="accent" *ngIf="user.usertype === 'OP-HRMO-DATA-OFFICER'" (click)="onButtonClick('Send Request')" [mat-dialog-close]="data" cdkFocusInitial>Send Request</button> -->
-
   <!-- endorse -->
-  <button mat-raised-button color="accent" *ngIf="user.usertype === 'PSG-DATA-OFFICER'" (click)="onButtonClick('Endorse Access')" [mat-dialog-close]="data" cdkFocusInitial>Endorse Access</button>
+  <button mat-raised-button color="accent" *ngIf="data.usertemplate.userisapprovalstage === 'No'" (click)="onButtonClick('Endorse Access')" [mat-dialog-close]="data" cdkFocusInitial>{{ data.usertemplate.dialogbuttontext }}</button>
 
   <!-- ciss manager -->
-  <button mat-flat-button color="warn" *ngIf="user.usertype === 'PSG-CISS-MANAGER' && data.freezedProfile.accessapproval === 'Provisional'" (click)="onButtonClick('Deny Request')" [mat-dialog-close]="data">Deny Request</button>&nbsp;&nbsp;
-  <button mat-raised-button color="primary" *ngIf="user.usertype === 'PSG-CISS-MANAGER' && data.freezedProfile.accessapproval === 'Provisional'" (click)="onButtonClick('Approve Request')" [mat-dialog-close]="data" cdkFocusInitial>Approve Request</button>
+  <button mat-flat-button color="warn" *ngIf="data.usertemplate.userisapprovalstage === 'Yes' && data.freezedProfile.accessapproval === 'Provisional'" (click)="onButtonClick('Deny Request')" [mat-dialog-close]="data">Deny Request</button>&nbsp;&nbsp;
+  <button mat-raised-button color="primary" *ngIf="data.usertemplate.userisapprovalstage === 'Yes' && data.freezedProfile.accessapproval === 'Provisional'" (click)="onButtonClick('Approve Request')" [mat-dialog-close]="data" cdkFocusInitial>Approve Request</button>
 </div>

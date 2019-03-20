@@ -85,15 +85,24 @@ const postProfile = async (req, res, next) => {
     const updated_profile = await Profile.Profile.findByIdAndUpdate({_id: find_profile._id}, _profile, { new: true });
     const profile = await Profile.Profile.findById({ _id: updated_profile._id });
 
-    if (profile.recordstatus === 'ACTIVE' && profile.accessapproval === 'Approved' && profile.blacklisted === false) {
-      // send token via SMS
-      const messageid = await sms.sendSMS(mobile, message);
-    }
-    if (messageid === null) {
-      console.log("error sending");
-    } else {
-      console.log(messageid);
-    }
+    // make this a scheduled sending and
+    // deploy it in something like cloud function
+
+    // const mobile = await profile.mobile;
+    // const qr_page = await profile.cissinqtext;
+    // const access_token = await profile.cisstoken;
+    // create message
+    // let message = `Your request for access to Malacanang has been approved. Your 8-digit access code is : ${access_token}. You can view or download your Gate Access QR Code anytime from this url : ${qr_page}. You can use either your QR Code or 8-digit code upon entering the Malacanang compound gates.`
+    // message = message.replace(/:/g, "%3A");
+    // message = message.replace(/\//g, "%2F");
+    // if (profile.recordstatus === 'ACTIVE' && profile.accessapproval === 'Approved' && profile.blacklisted === false) {
+    //   const messageid = await sms.sendSMS(mobile, message);
+    // }
+    // if (messageid === null) {
+    //   console.log("error sending");
+    // } else {
+    //   console.log(messageid);
+    // }
 
     return await res.json( profile );
 
@@ -119,37 +128,30 @@ const postProfile = async (req, res, next) => {
     saved_profile.cissinqtext = url;
     saved_profile.two_factor_secret = secret;
     // save the updated document
-    // const updated_profile = await Profile.findByIdAndUpdate({_id: saved_profile._id}, saved_profile);
     const updated_profile = await Profile.Profile.findByIdAndUpdate({_id: saved_profile._id}, saved_profile, { new: true });
     const profile = await Profile.Profile.findById({ _id: updated_profile._id });
+
+    // make this a scheduled sending and
+    // deploy it in something like cloud function
+
     // get mobile number
-    const mobile = await profile.mobile;
-    // get url
-    const qr_page = await profile.cissinqtext;
-    // get token
-    const access_token = await profile.cisstoken;
-    // create message
-
-    // colon : %3A
-    // \ : %5C
-    // / : %2F
-    //  /[\/]/g matches forward slashes.
-    //  /[\\]/g matches backward slashes.
-    //  /\//ig; //  Matches /
-
-    let message = `Your request for access to Malacanang has been approved. Your 8-digit access code is : ${access_token}. You can view or download your Gate Access QR Code anytime from this url : ${qr_page}. You can use either your QR Code or 8-digit code upon entering the Malacanang compound gates.`
-    message = message.replace(/:/g, "%3A");
-    message = message.replace(/\//g, "%2F");
-
-    if (profile.recordstatus === 'ACTIVE' && profile.accessapproval === 'Approved' && profile.blacklisted === false) {
-      // send token via SMS
-      const messageid = await sms.sendSMS(mobile, message);
-    }
-    if (messageid === null) {
-      console.log("error sending");
-    } else {
-      console.log(messageid);
-    }
+    // const mobile = await profile.mobile;
+    // // get url
+    // const qr_page = await profile.cissinqtext;
+    // // get token
+    // const access_token = await profile.cisstoken;
+    // // create message
+    // let message = `Your request for access to Malacanang has been approved. Your 8-digit access code is : ${access_token}. You can view or download your Gate Access QR Code anytime from this url : ${qr_page}. You can use either your QR Code or 8-digit code upon entering the Malacanang compound gates.`
+    // message = message.replace(/:/g, "%3A");
+    // message = message.replace(/\//g, "%2F");
+    // if (profile.recordstatus === 'ACTIVE' && profile.accessapproval === 'Approved' && profile.blacklisted === false) {
+    //   const messageid = await sms.sendSMS(mobile, message);
+    // }
+    // if (messageid === null) {
+    //   console.log("error sending");
+    // } else {
+    //   console.log(messageid);
+    // }
 
     return await res.json( profile );
   }
@@ -161,6 +163,14 @@ const postProfile = async (req, res, next) => {
     return await res.send( "Error: " + error );
   }
 }
+
+// regex's
+// colon : %3A
+// \ : %5C
+// / : %2F
+//  /[\/]/g matches forward slashes.
+//  /[\\]/g matches backward slashes.
+//  /\//ig; //  Matches /
 
 const getProfileByIdDist = async (req, res, next) => {
   try {

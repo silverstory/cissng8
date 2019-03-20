@@ -131,7 +131,6 @@ export class OPIDComponent implements OnInit, OnDestroy {
 
   async getTemplates(profile: Profile) {
     // steps code here
-    // this.service.userapprovaltemplate.step
     this.steps = await [];
     this.completedBa = await [];
     this.stepstext = await [];

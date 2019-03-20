@@ -15,6 +15,7 @@ export interface DialogData {
   profile: Profile;
   freezedProfile: Profile;
   action: string;
+  usertemplate: Approvaltemplate;
 }
 
 // PSG-GATE-OFFICER
@@ -174,7 +175,6 @@ export class AccessApprovalDialogComponent implements OnInit {
           this.data.profile.proviaccess.colorfour = this.data.freezedProfile.proviaccess.colorfour;
 
           // steps code here
-          // this.service.userapprovaltemplate.step
           this.steps = [];
           this.completedBa = [];
           this.service.getTemplates(this.data.profile.distinction, 1)
@@ -216,7 +216,7 @@ export class AccessApprovalDialogComponent implements OnInit {
       case 'RANK AND FILE':
         this.rankAndFileChecked = true;
         break;
-      case 'OFFICIAL':
+      case 'OP OFFICIAL':
         this.officialChecked = true;
         break;
       case 'UNIFORMED PERSONNEL':

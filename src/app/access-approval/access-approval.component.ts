@@ -38,6 +38,8 @@ export class AccessApprovalComponent implements OnInit {
     { id: 11, name: 'BRGYRESIDENT-PASSING-THRU', alias: 'PASSING THRU', badge: 0, badgehidden: true, badgecolor: 'accent', badgesize: 'medium' }
   ];
 
+  public usertemplate: Approvaltemplate;
+
   public timeLeft: number = this.chips.length;
   public interval;
 
@@ -183,7 +185,8 @@ export class AccessApprovalComponent implements OnInit {
       this.service.getApprovalTemplate()
       .pipe(
         map( (usertemplate: any) => {
-          this.service.userapprovaltemplate = usertemplate;
+          this.service.userapprovaltemplate = new ApprovaltemplateObj(usertemplate);
+          this.usertemplate = new ApprovaltemplateObj(usertemplate);
           this.service.nextstep = usertemplate.step;
         }),
         switchMap(profiles => this.service.getProfiles(this.page))
@@ -375,7 +378,8 @@ export class AccessApprovalComponent implements OnInit {
       data: {
         profile: this.profile,
         freezedProfile: p,
-        action: ''
+        action: '',
+        usertemplate: this.usertemplate
       }
     });
 
@@ -386,24 +390,19 @@ export class AccessApprovalComponent implements OnInit {
         case 'Cancelled':
         this.profile = p;
           break;
-        case 'Send Request':
-          // set accessaproval to Provisional
-          this.profile = result.profile;
-          this.profile.accessapproval = 'Provisional';
-          // update db with this.profile
-          this.saveProfile();
-          break;
         case 'Endorse Access':
           // set accessaproval to Provisional
           this.profile = result.profile;
           this.profile.accessapproval = 'Provisional';
-          // update db with this.profile
+          this.profile.nextstep = this.usertemplate.tosaveonprofilesnextstep;
+​          // update db with this.profile
           this.saveProfile();
           break;
         case 'Deny Request':
           // set accessaproval to Denied
           this.profile = this.unfreezeProfile(p);
           this.profile.accessapproval = 'Denied';
+          this.profile.nextstep = this.usertemplate.tosaveonprofilesnextstep;
           // update db with this.profile
           this.saveProfile();
           break;
@@ -413,6 +412,7 @@ export class AccessApprovalComponent implements OnInit {
           this.profile.access = this.profile.proviaccess;
           // set accessaproval to Approved
           this.profile.accessapproval = 'Approved';
+          this.profile.nextstep = this.usertemplate.tosaveonprofilesnextstep;
           // update db with this.profile
           this.saveProfile();
           break;
@@ -438,6 +438,7 @@ export class AccessApprovalComponent implements OnInit {
       complete: () => {
         // refresh infin8 list
         this.refreshInfin8List();
+        this.updateBadges();
       }
     });
   }
