@@ -168,14 +168,22 @@ export class VisitorComponent implements OnInit, OnDestroy {
   }
 
   getVisitorColor(status) {
-    switch (status) {
-      case 'APPROVED':
-        return '#B9F6CA';
-      case 'DENIED':
-        return '#E91E63';
-      default:
-        return '#E8EAF6';
+    if (status === 'Approved') {
+      return '#B9F6CA';
+    } else {
+      return '#E91E63';
     }
   }
+
+  // getVisitorColor(status) {
+  //   switch (status) {
+  //     case 'APPROVED':
+  //       return '#B9F6CA';
+  //     case 'DENIED':
+  //       return '#E91E63';
+  //     default:
+  //       return '#E8EAF6';
+  //   }
+  // }
 
 }

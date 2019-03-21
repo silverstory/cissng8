@@ -1,13 +1,13 @@
-<h1 mat-dialog-title>Access approval for {{data.freezedProfile.name.first}} {{data.freezedProfile.name.last}}</h1>
+<!-- <h1 mat-dialog-title>Access approval for {{data.freezedProfile.name.first}} {{data.freezedProfile.name.last}}</h1> -->
+<mat-horizontal-stepper mat-dialog-title [linear]="isLinear" [selectedIndex]="data.freezedProfile.nextstep" #stepper>
+  <ng-template matStepperIcon="edit">
+    <mat-icon>check</mat-icon>
+  </ng-template>
+  <mat-step *ngFor="let step of steps" [stepControl]="step.dialogbuttontext" [completed]="completedBa[step.step]" editable="false">
+    <ng-template matStepLabel>{{ step.step < data.freezedProfile.nextstep || data.freezedProfile.accessapproval === 'Approved' ? step.completedsteptext : step.activesteptext }}</ng-template>
+  </mat-step>
+</mat-horizontal-stepper>
 <div mat-dialog-content>
-  <mat-horizontal-stepper [linear]="isLinear" [selectedIndex]="data.freezedProfile.nextstep" #stepper>
-    <ng-template matStepperIcon="edit">
-      <mat-icon>check</mat-icon>
-    </ng-template>
-    <mat-step *ngFor="let step of steps" [stepControl]="step.dialogbuttontext" [completed]="completedBa[step.step]" editable="false">
-      <ng-template matStepLabel>{{ step.step < data.freezedProfile.nextstep || data.freezedProfile.accessapproval === 'Approved' ? step.completedsteptext : step.activesteptext }}</ng-template>
-    </mat-step>
-  </mat-horizontal-stepper>
   <!-- style="text-align: -webkit-center;" -->
   <div id="content">
   <!-- preface -->
@@ -21,13 +21,13 @@
         <mat-card-content>
           <div class="row">
             <ul>
-              <li *ngIf="user.usertype === 'PSG-CISS-MANAGER'">Mr/Ms. <b>{{ data.freezedProfile.name.last }}</b> is requesting to have access to these areas: <strong>{{ getAccess(data.freezedProfile.proviaccess.one, data.freezedProfile.proviaccess.two, data.freezedProfile.proviaccess.three, data.freezedProfile.proviaccess.four) }}</strong>.</li>
-              <li *ngIf="data.freezedProfile.access.one === 'notSelected' && data.freezedProfile.access.two === 'notSelected' && data.freezedProfile.access.three === 'notSelected' && data.freezedProfile.access.four === 'notSelected'">Currently, Mr/Ms. {{ data.freezedProfile.name.last }} has no access to any areas but can only pass thru J.P. Laurel Street. An approved appointment is required for him/her to enter any OP buildings.</li>
-              <li *ngIf="data.freezedProfile.access.one === 'selected' || data.freezedProfile.access.two === 'selected' || data.freezedProfile.access.three === 'selected' || data.freezedProfile.access.four === 'selected'">Currently, the areas: <strong>{{ getAccess(data.freezedProfile.access.one, data.freezedProfile.access.two, data.freezedProfile.access.three, data.freezedProfile.access.four) }}</strong> are accessible to Mr/Ms. {{ data.freezedProfile.name.last }}.</li>
-              <li>He/she is an <b [style.color]="getColor(data.freezedProfile.recordstatus)">{{ data.freezedProfile.recordstatus | uppercase }}</b>&nbsp;<b>{{ data.freezedProfile.distinction }}</b> who <span *ngIf="data.freezedProfile.recordstatus === 'ACTIVE'">currently</span><span *ngIf="data.freezedProfile.recordstatus === 'INACTIVE'">recently</span> holds the position <b>{{ data.freezedProfile.employee.position }}</b> at the <b>{{ data.freezedProfile.employee.office }}</b>.</li>
+              <li *ngIf="user.usertype === 'PSG-CISS-MANAGER'"><span *ngIf="data.freezedProfile.gender === 'male'">Mr. </span><span *ngIf="data.freezedProfile.gender === 'female'">Ms. </span><b>{{ data.freezedProfile.name.last }}</b> is requesting to have access to these areas: <strong>{{ getAccess(data.freezedProfile.proviaccess.one, data.freezedProfile.proviaccess.two, data.freezedProfile.proviaccess.three, data.freezedProfile.proviaccess.four) }}</strong>.</li>
+              <li *ngIf="data.freezedProfile.access.one === 'notSelected' && data.freezedProfile.access.two === 'notSelected' && data.freezedProfile.access.three === 'notSelected' && data.freezedProfile.access.four === 'notSelected'">Currently,<span *ngIf="data.freezedProfile.gender === 'male'">Mr. </span><span *ngIf="data.freezedProfile.gender === 'female'">Ms. </span> {{ data.freezedProfile.name.last }} has no access to any areas but can only pass thru J.P. Laurel Street. An approved appointment is required for <span *ngIf="data.freezedProfile.gender === 'male'">him </span><span *ngIf="data.freezedProfile.gender === 'female'">her </span> to enter any OP buildings.</li>
+              <li *ngIf="data.freezedProfile.access.one === 'selected' || data.freezedProfile.access.two === 'selected' || data.freezedProfile.access.three === 'selected' || data.freezedProfile.access.four === 'selected'">Currently, the areas: <strong>{{ getAccess(data.freezedProfile.access.one, data.freezedProfile.access.two, data.freezedProfile.access.three, data.freezedProfile.access.four) }}</strong> are accessible to <span *ngIf="data.freezedProfile.gender === 'male'">Mr. </span><span *ngIf="data.freezedProfile.gender === 'female'">Ms. </span> {{ data.freezedProfile.name.last }}.</li>
+              <li><span *ngIf="data.freezedProfile.gender === 'male'">He </span><span *ngIf="data.freezedProfile.gender === 'female'">She </span> is an <b [style.color]="getColor(data.freezedProfile.recordstatus)">{{ data.freezedProfile.recordstatus | uppercase }}</b>&nbsp;<b>{{ data.freezedProfile.distinction }}</b> who <span *ngIf="data.freezedProfile.recordstatus === 'ACTIVE'">currently</span><span *ngIf="data.freezedProfile.recordstatus === 'INACTIVE'">recently</span> holds the position <b>{{ data.freezedProfile.employee.position }}</b> at the <b>{{ data.freezedProfile.employee.office }}</b>.</li>
               <li>Based on the records, this person <span *ngIf="data.freezedProfile.blacklisted === true">has been blacklisted from entering or accessing Malacanang Complex roads</span><span *ngIf="data.freezedProfile.blacklisted === false">is allowed to access Malacanang Complex roads</span></li>
-              <li>His/her access is tagged as <b>{{ data.freezedProfile.personaccesslevel }}</b>.</li>
-              <li>And his/her most recent request for access was <span *ngIf="(data.freezedProfile.accessdatetagged | date:'EEEE d MMMM') === (today | date:'EEEE d MMMM')">today </span><span *ngIf="(data.freezedProfile.accessdatetagged | date:'EEEE d MMMM') !== (today | date:'EEEE d MMMM')">this past </span><b>{{ data.freezedProfile.accessdatetagged | date: 'MMMM dd yyyy @ hh:mm a' }}</b> which was <b>{{ data.freezedProfile.accessapproval | uppercase }}</b>.</li>
+              <li><span *ngIf="data.freezedProfile.gender === 'male'">His </span><span *ngIf="data.freezedProfile.gender === 'female'">Her </span> access is tagged as <b>{{ data.freezedProfile.personaccesslevel }}</b>.</li>
+              <li>And <span *ngIf="data.freezedProfile.gender === 'male'">his </span><span *ngIf="data.freezedProfile.gender === 'female'">her </span> most recent request for access was <span *ngIf="(data.freezedProfile.accessdatetagged | date:'EEEE d MMMM') === (today | date:'EEEE d MMMM')">today </span><span *ngIf="(data.freezedProfile.accessdatetagged | date:'EEEE d MMMM') !== (today | date:'EEEE d MMMM')">this past </span><b>{{ data.freezedProfile.accessdatetagged | date: 'MMMM dd yyyy @ hh:mm a' }}</b> which was <b>{{ data.freezedProfile.accessapproval | uppercase }}</b>.</li>
             </ul>
           </div>
         </mat-card-content>

@@ -269,7 +269,7 @@ export class AccessApprovalDialogComponent implements OnInit {
       case 'RANK AND FILE':
         this.checkSet(true, true, false, false, 'white', 'red', 'lightgray', 'lightgray');
         break;
-      case 'OFFICIAL':
+      case 'OP OFFICIAL':
         this.checkSet(true, true, false, false, 'red', 'red', 'lightgray', 'lightgray');
         break;
       case 'UNIFORMED PERSONNEL':

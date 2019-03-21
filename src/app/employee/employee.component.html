@@ -1,14 +1,16 @@
 <div class="container" [style.background-color]="getColor(profile.recordstatus)" *ngIf="profile">
   <mat-card class="parent-card" [@homeTransition]="profile">
     <div class="row">
-      <mat-horizontal-stepper [linear]="isLinear" [selectedIndex]="profile.nextstep" #stepper>
-        <ng-template matStepperIcon="edit">
-          <mat-icon>check</mat-icon>
-        </ng-template>
-        <mat-step *ngFor="let step of steps" [stepControl]="step.dialogbuttontext" [completed]="completedBa[step.step]" editable="false">
-          <ng-template matStepLabel>{{ stepstext[step.step] }}</ng-template>
-        </mat-step>
-      </mat-horizontal-stepper>
+      <div class="stepcolumn">
+        <mat-horizontal-stepper [linear]="isLinear" [selectedIndex]="profile.nextstep" #stepper>
+          <ng-template matStepperIcon="edit">
+            <mat-icon>check</mat-icon>
+          </ng-template>
+          <mat-step *ngFor="let step of steps" [stepControl]="step.dialogbuttontext" [completed]="completedBa[step.step]" editable="false">
+            <ng-template matStepLabel>{{ stepstext[step.step] }}</ng-template>
+          </mat-step>
+        </mat-horizontal-stepper>
+      </div>
     </div>
     <div class="row">
       <div class="column">
@@ -27,13 +29,13 @@
           </mat-grid-list>
           </mat-card-content> -->
           <div class="row">
-            <div class="one-2-3-4" [style.background-color]="getTileAccess(profile.access.one, 'One')">1</div>
-            <div class="one-2-3-4" [style.background-color]="getTileAccess(profile.access.two, 'Two')">2</div>
+            <div class="one-2-3-4" [style.background-color]="profile.access.colorone">1</div>
+            <div class="one-2-3-4" [style.background-color]="profile.access.colortwo">2</div>
           </div>
           <img mat-card-image src="{{profile.photothumbnailurl}}" alt="Photo"> <!-- style="width:100%;height:275px;" -->
           <div class="row">
-            <div class="one-2-3-4" [style.background-color]="getTileAccess(profile.access.three, 'Three')">3</div>
-            <div class="one-2-3-4" [style.background-color]="getTileAccess(profile.access.four, 'Four')">4</div>
+            <div class="one-2-3-4" [style.background-color]="profile.access.colorthree">3</div>
+            <div class="one-2-3-4" [style.background-color]="profile.access.colorfour">4</div>
           </div>
           <!-- <mat-card-actions>
             <button mat-raised-button color="accent">VERIFY</button>
@@ -45,6 +47,7 @@
           <mat-card-header>
             <div mat-card-avatar><mat-icon aria-label="EMPLOYEE NAME">person</mat-icon></div>
             <mat-card-title>EMPLOYEE NAME</mat-card-title>
+            <mat-card-subtitle>{{ profile.gender | uppercase }}</mat-card-subtitle>
           </mat-card-header>
           <br>
           <div class="row">
@@ -69,21 +72,22 @@
           <mat-card-header>
             <div mat-card-avatar><mat-icon aria-label="ACCESS RESTRICTION">verified_user</mat-icon></div>
             <mat-card-title>ACCESS RESTRICTION</mat-card-title>
+            <mat-card-subtitle>Most recent action: {{ profile.accessdatetagged | date: 'MMMM dd yyyy @ hh:mm a' }}</mat-card-subtitle>
           </mat-card-header>
           <br>
           <div class="row">
             <mat-form-field class="full-width-input">
-              <input matInput placeholder="Distinction" readonly [(ngModel)]="profile.distinction" style="width:100%;font-weight:bold;font-size:large;color: #424242;">
+              <input matInput placeholder="Employment Status" readonly [(ngModel)]="profile.recordstatus" style="width:100%;font-weight:bold;font-size:large;color: #424242;">
             </mat-form-field>
           </div>
           <div class="row">
             <mat-form-field class="full-width-input">
-              <input matInput placeholder="Access Level" readonly [(ngModel)]="profile.personaccesslevel" style="width:100%;font-weight:bold;font-size:large;color: #424242;">
+              <input matInput placeholder="Recent Access Request Status" readonly [(ngModel)]="profile.accessapproval" style="width:100%;font-weight:bold;font-size:large;color: #424242;">
             </mat-form-field>
           </div>
           <div class="row">
             <mat-form-field class="full-width-input">
-              <input matInput placeholder="Status" readonly [(ngModel)]="profile.recordstatus" style="width:100%;font-weight:bold;font-size:large;color: #424242;">
+              <input matInput placeholder="Blacklisted" readonly [(ngModel)]="profile.blacklisted" style="width:100%;font-weight:bold;font-size:large;color: #424242;">
             </mat-form-field>
           </div>
         </mat-card>
@@ -91,13 +95,14 @@
       <div class="column">
         <mat-card class="column-card">
           <mat-card-header>
-            <div mat-card-avatar><mat-icon aria-label="DESIGNATION AND OFFICE">location_city</mat-icon></div>
-            <mat-card-title>DESIGNATION AND OFFICE</mat-card-title>
+            <div mat-card-avatar><mat-icon aria-label="OFFICE AND RANK">location_city</mat-icon></div>
+            <mat-card-title>OFFICE AND RANK</mat-card-title>
+            <mat-card-subtitle>TYPE: {{ profile.distinction | uppercase }}</mat-card-subtitle>
           </mat-card-header>
           <br>
           <div class="row">
             <mat-form-field class="full-width-input">
-              <input matInput placeholder="Employee ID" readonly [(ngModel)]="profile.profileid" style="width:100%;font-weight:bold;font-size:large;color: #424242;">
+              <input matInput placeholder="Access Level" readonly [(ngModel)]="profile.personaccesslevel" style="width:100%;font-weight:bold;font-size:large;color: #424242;">
             </mat-form-field>
           </div>
           <div class="row">
