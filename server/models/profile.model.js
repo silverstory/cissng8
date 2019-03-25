@@ -284,27 +284,32 @@ profilesPaginated = async (findText, distinction, nextstep, useroffice, page, li
     nextstep: nextstep
   };
   if (useroffice !== 'NONE') {
-    switch (distinction) {
-      case 'OPEMPLOYEE':
-        qry = {
-          accessapproval: findText,
-          distinction: distinction,
-          nextstep: nextstep,
-          "employee.office": useroffice
-        };
-        break;
-      case 'OPVISITOR':
-        qry = {
-          accessapproval: findText,
-          distinction: distinction,
-          nextstep: nextstep,
-          "visitor.visitordestination": useroffice
-        };
-        break;
-      default:
-        break;
-    }
+
+    if (distinction.includes('OPEMPLOYEE')) {
+      qry = {
+        accessapproval: findText,
+        distinction: distinction,
+        nextstep: nextstep,
+        "employee.office": useroffice
+      };
+    } else if (distinction.includes('OPVISITOR')) {
+      qry = {
+        accessapproval: findText,
+        distinction: distinction,
+        nextstep: nextstep,
+        "visitor.visitordestination": useroffice
+      };
+    } else if (distinction === 'BRGYRESIDENT') {
+      qry = {
+        accessapproval: findText,
+         distinction: distinction,
+         nextstep: nextstep,
+         "resident.barangay": useroffice
+       };
+    } else { }
+
   } else { }
+
   query = qry;
   const isTrueSet = (newestFirst === 'true');
   const sortOrder = isTrueSet === true ? -1 : 1;

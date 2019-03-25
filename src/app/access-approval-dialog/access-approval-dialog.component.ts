@@ -58,6 +58,18 @@ export class AccessApprovalDialogComponent implements OnInit {
   uniformedOfficialChecked = false;
   customizedChecked = false;
 
+  public face_icons = [
+    'OPEMPLOYEE',
+    'BRGYRESIDENT-PSG',
+    'OPVISITOR-PRRD-GUEST',
+    'OPVISITOR-VIP',
+    'OPVISITOR-GENERAL-GUEST',
+    'BRGYRESIDENT',
+    'BRGYRESIDENT-RTVM',
+    'OPVISITOR',
+    'OPVISITOR-SECURITY-CLEARANCE'
+  ];
+
   // public user$: Observable<User>;
   public user: User;
 
@@ -67,6 +79,17 @@ export class AccessApprovalDialogComponent implements OnInit {
     public dialogRef: MatDialogRef<AccessApprovalDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
     private authService: AuthService) { }
+
+  setFaceIcon(distinction: String, gender: String): String {
+    let icon: String = 'DEFAULT_' + gender.toUpperCase();
+    const found = this.face_icons.find(element => element === distinction);
+    if (found === undefined) {
+      icon = 'DEFAULT_' + gender.toUpperCase();
+    } else {
+      icon = distinction + '_' + gender.toUpperCase();
+    }
+    return icon;
+  }
 
   onNoClick(): void {
     this.data.action = 'Cancelled';

@@ -49,7 +49,7 @@
     <div>
       <mat-card class="example-card" (click)="OnMatCardClickEvent(i)">
         <mat-card-header>
-          <div mat-card-avatar class="example-header-image"></div>
+          <div mat-card-avatar [ngStyle]="{'background-image': 'url(../assets/face_icon/'+ setFaceIcon(i.distinction, i.gender) + '.svg)'}" class="example-header-image"></div>
           <mat-card-title>{{ i.name.first }} {{ i.name.last }}</mat-card-title>
           <mat-card-subtitle>{{ i.distinction }}</mat-card-subtitle>
         </mat-card-header>

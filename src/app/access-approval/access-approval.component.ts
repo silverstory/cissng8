@@ -12,6 +12,7 @@ import { MatSnackBar } from '@angular/material';
 import { template } from '@angular/core/src/render3';
 
 import { HttpClient , HttpHeaders  } from '@angular/common/http';
+import { UrlHandlingStrategy } from '@angular/router';
 
 @Component({
   selector: 'app-access-approval',
@@ -36,6 +37,18 @@ export class AccessApprovalComponent implements OnInit {
     { id: 10, name: 'OPVISITOR-SECURITY-CLEARANCE', alias: 'SECURITY CLEARANCE', badge: 0, badgehidden: true, badgecolor: 'accent', badgesize: 'medium' },
     // tslint:disable-next-line:max-line-length
     { id: 11, name: 'BRGYRESIDENT-PASSING-THRU', alias: 'PASSING THRU', badge: 0, badgehidden: true, badgecolor: 'accent', badgesize: 'medium' }
+  ];
+
+  public face_icons = [
+    'OPEMPLOYEE',
+    'BRGYRESIDENT-PSG',
+    'OPVISITOR-PRRD-GUEST',
+    'OPVISITOR-VIP',
+    'OPVISITOR-GENERAL-GUEST',
+    'BRGYRESIDENT',
+    'BRGYRESIDENT-RTVM',
+    'OPVISITOR',
+    'OPVISITOR-SECURITY-CLEARANCE'
   ];
 
   public usertemplate: Approvaltemplate;
@@ -94,6 +107,17 @@ export class AccessApprovalComponent implements OnInit {
       await this.updateBadges();
     }, 1000);
 
+  }
+
+  setFaceIcon(distinction: String, gender: String): String {
+    let icon: String = 'DEFAULT_' + gender.toUpperCase();
+    const found = this.face_icons.find(element => element === distinction);
+    if (found === undefined) {
+      icon = 'DEFAULT_' + gender.toUpperCase();
+    } else {
+      icon = distinction + '_' + gender.toUpperCase();
+    }
+    return icon;
   }
 
   async updateBadges() {

@@ -21,9 +21,13 @@ font-size: 0.9em;
 line-height: 2em;
 }
 
-.example-header-image {
+/* .example-header-image {
 background-image: url('https://www.freeiconspng.com/uploads/flat-face-icon-23.png');
 background-size: cover;
+} */
+
+.example-header-image {
+  background-size: cover;
 }
 
 .content-center {
