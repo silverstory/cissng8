@@ -67,7 +67,9 @@ export class AccessApprovalDialogComponent implements OnInit {
     'BRGYRESIDENT',
     'BRGYRESIDENT-RTVM',
     'OPVISITOR',
-    'OPVISITOR-SECURITY-CLEARANCE'
+    'OPVISITOR-SECURITY-CLEARANCE',
+    'OPEMPLOYEE-VIP',
+    'OPVISITOR-VIP'
   ];
 
   // public user$: Observable<User>;

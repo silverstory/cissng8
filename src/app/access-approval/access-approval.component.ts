@@ -36,7 +36,9 @@ export class AccessApprovalComponent implements OnInit {
     // tslint:disable-next-line:max-line-length
     { id: 10, name: 'OPVISITOR-SECURITY-CLEARANCE', alias: 'SECURITY CLEARANCE', badge: 0, badgehidden: true, badgecolor: 'accent', badgesize: 'medium' },
     // tslint:disable-next-line:max-line-length
-    { id: 11, name: 'BRGYRESIDENT-PASSING-THRU', alias: 'PASSING THRU', badge: 0, badgehidden: true, badgecolor: 'accent', badgesize: 'medium' }
+    { id: 11, name: 'BRGYRESIDENT-PASSING-THRU', alias: 'PASSING THRU', badge: 0, badgehidden: true, badgecolor: 'accent', badgesize: 'medium' },
+    { id: 12, name: 'OPEMPLOYEE-VIP', alias: 'VIP EMPLOYEE', badge: 0, badgehidden: true, badgecolor: 'accent', badgesize: 'medium' },
+    { id: 13, name: 'OPVISITOR-VIP', alias: 'VIP VISITOR', badge: 0, badgehidden: true, badgecolor: 'accent', badgesize: 'medium' }
   ];
 
   public face_icons = [
@@ -48,7 +50,9 @@ export class AccessApprovalComponent implements OnInit {
     'BRGYRESIDENT',
     'BRGYRESIDENT-RTVM',
     'OPVISITOR',
-    'OPVISITOR-SECURITY-CLEARANCE'
+    'OPVISITOR-SECURITY-CLEARANCE',
+    'OPEMPLOYEE-VIP',
+    'OPVISITOR-VIP'
   ];
 
   public usertemplate: Approvaltemplate;
