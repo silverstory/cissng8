@@ -8,7 +8,7 @@ RUN mkdir /home/node/.npm-global ; \
   chown -R node:node /home/node/.npm-global
 ENV PATH=/home/node/.npm-global/bin:$PATH
 ENV NPM_CONFIG_PREFIX=/home/node/.npm-global
-RUN npm install --silent --no-progress -g @angular/cli@6.0.8
+RUN npm install --silent --no-progress -g @angular/cli@7.3.9
 WORKDIR /home/node/app
 COPY ["package.json", "package-lock.json", "./"]
 RUN npm install --silent
@@ -28,5 +28,5 @@ FROM node:8.11.3-alpine
 WORKDIR /usr/src/app
 COPY --from=node-server /usr/src /usr/src
 COPY --from=client-app /home/node/app /usr/src
-EXPOSE 3000
-CMD ["node", "index"]
+EXPOSE 80
+CMD ["node", "app"]

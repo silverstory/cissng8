@@ -45,4 +45,4 @@ spec:
           - name: CISS_SMS_TOKEN
             value: "ciss-sms-token"
           ports:
-          - containerPort: 3000
+          - containerPort: 80
