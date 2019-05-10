@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: ciss
-          image: iameprel/ciss:0.1.9
+          image: iameprel/ciss:latest
           resources:
             requests:
               cpu: 100m
