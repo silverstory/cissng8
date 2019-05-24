@@ -21,11 +21,11 @@ module.exports = () => {
     passport.session(),
     // only disable csrf if using
     // containerized app on cluster
-    csrf(),
-    async (req, res, next) => {
-      res.cookie('XSRF-TOKEN', req.csrfToken());
-      return next();
-    }
+    // csrf(),
+    // async (req, res, next) => {
+    //   res.cookie('XSRF-TOKEN', req.csrfToken());
+    //   return next();
+    // }
   ];
   return middleware;
 };
