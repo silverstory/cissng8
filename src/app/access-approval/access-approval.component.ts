@@ -9,7 +9,6 @@ import { User } from '../auth/user';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatSlideToggleChange } from '@angular/material';
 import { switchMap, map, tap, mergeMap } from 'rxjs/operators';
 import { MatSnackBar } from '@angular/material';
-import { template } from '@angular/core/src/render3';
 
 import { HttpClient , HttpHeaders  } from '@angular/common/http';
 import { UrlHandlingStrategy } from '@angular/router';

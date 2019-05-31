@@ -7,7 +7,7 @@ import { HttpClient, HttpHeaders, HttpRequest } from '@angular/common/http';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { catchError, map, tap } from 'rxjs/operators';
 import { MessageService } from '../message.service';
-import { RequestOptions } from '@angular/http';
+
 
 import decode from 'jwt-decode';
 
