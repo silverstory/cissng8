@@ -1,14 +1,19 @@
 // import { Component, OnInit, Input, ViewEncapsulation, HostBinding } from '@angular/core';
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
-
 // approval templates
+import { MydataserviceService } from '../mydataservice.service';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
+import { Approvaltemplate, ApprovaltemplateObj } from '../approvaltemplate';
+import { AccessApprovalDialogComponent } from '../access-approval-dialog/access-approval-dialog.component';
+import { AuthService } from '../auth/auth.service';
+import { switchMap, map, tap, mergeMap } from 'rxjs/operators';
+// content
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { ApprovaltemplateObj } from '../approvaltemplate';
 import { Observable } from 'rxjs';
 // end approval templates
 
 // ** NEW ANIMATION ** //
-import {trigger, stagger, animate, style, group, query, transition, keyframes} from '@angular/animations';
+import { trigger, stagger, animate, style, group, query, transition, keyframes } from '@angular/animations';
 // import {trigger, stagger, animate, style, group, query as q, transition, keyframes} from '@angular/animations';
 // const query = (s, a, o= {optional: true}) => q(s, a, o);
 
@@ -28,13 +33,13 @@ export const homeTransition = trigger('homeTransition', [
     query('.column', style({ opacity: 0 }), { optional: true }),
     query('.column', stagger(100, [
       style({ transform: 'translateY(100px)' }),
-      animate('0.33s cubic-bezier(.75,-0.48,.26,1.52)', style({transform: 'translateY(0px)', opacity: 1})),
+      animate('0.33s cubic-bezier(.75,-0.48,.26,1.52)', style({ transform: 'translateY(0px)', opacity: 1 })),
     ]), { optional: true }),
   ]),
   transition(':leave', [
     query('.column', stagger(100, [
       style({ transform: 'translateY(0px)', opacity: 1 }),
-      animate('0.33s cubic-bezier(.75,-0.48,.26,1.52)', style({transform: 'translateY(100px)', opacity: 0})),
+      animate('0.33s cubic-bezier(.75,-0.48,.26,1.52)', style({ transform: 'translateY(100px)', opacity: 0 })),
     ]), { optional: true }),
   ])
 ]);
@@ -129,8 +134,9 @@ export const homeTransition = trigger('homeTransition', [
   templateUrl: './employee.component.html',
   styleUrls: ['./employee.component.css'],
   // ** NEW ANIMATION ** //
-  animations: [ homeTransition ],
+  animations: [homeTransition],
   // tslint:disable-next-line:use-host-property-decorator
+  // tslint:disable-next-line:no-host-metadata-property
   host: {
     '[@homeTransition]': ''
   }
@@ -142,6 +148,8 @@ export class EmployeeComponent implements OnInit, OnDestroy {
 
   @Input() profile: Profile = null;
   navigationSubscription;
+
+  public usertemplate: Approvaltemplate;
 
   // approval templates
   private api = '/api';
@@ -160,6 +168,10 @@ export class EmployeeComponent implements OnInit, OnDestroy {
   // ];
 
   constructor(
+    public service: MydataserviceService,
+    public dialog: MatDialog,
+    private authService: AuthService,
+    public snackBar: MatSnackBar,
     private http: HttpClient,
     private route: ActivatedRoute,
     private router: Router,
@@ -176,14 +188,37 @@ export class EmployeeComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    // try {
+
+    // } catch (error) {
+    //   this.authService.log(error);
+    // }
+    this.authService.getProfile()
+      .pipe(
+        map((user: any) => {
+          this.service.usertype = user.usertype;
+          this.service.useroffice = user.useroffice;
+          const dist: string = String(this.profile.distinction);
+          this.service.distinction = dist;
+        }),
+        switchMap(userapprovaltemplate => this.service.getApprovalTemplate())
+      )
+      .subscribe({
+        next: (usertemplate: any) => {
+          this.service.nextstep = usertemplate.step;
+          this.usertemplate = new ApprovaltemplateObj(usertemplate);
+        },
+        complete: () => { }
+      });
+  }
 
   ngOnDestroy() {
     // avoid memory leaks here by cleaning up after ourselves. If we
     // don't then we will continue to run our initialiseInvites()
     // method on every navigationEnd event.
     if (this.navigationSubscription) {
-       this.navigationSubscription.unsubscribe();
+      this.navigationSubscription.unsubscribe();
     }
   }
 
@@ -236,13 +271,13 @@ export class EmployeeComponent implements OnInit, OnDestroy {
     switch (tile) {
       case 'One':
         return 'lightblue';
-        case 'Two':
+      case 'Two':
         return 'lightgreen';
-        case 'Three':
+      case 'Three':
         return '#DDBDF1';
-        case 'Four':
+      case 'Four':
         return '#DDBDF1';
-      }
+    }
   }
 
   getTileAccess(access, tile) {
@@ -267,6 +302,95 @@ export class EmployeeComponent implements OnInit, OnDestroy {
       default:
         return '#E8EAF6';
     }
+  }
+
+  // Adding Access Request and Approval Functionality
+
+  OnMatCardClickEvent(): void {
+    if (this.service.nextstep === this.profile.nextstep) {
+      if (this.service.useroffice !== 'NONE') {
+        if (this.service.useroffice === this.profile.employee.office) {
+          // visitor.visitordestination   for visitors
+          // resident.barangay            for residents
+          this.openDialog();
+        }
+      } else {
+        this.openDialog();
+      }
+    }
+  }
+
+  openDialog(): void {
+    const p: Profile = this.service.createFreezedProfile(this.profile);
+    const dialogRef = this.dialog.open(AccessApprovalDialogComponent, {
+      // this should not be 700px and must implement css grid styling
+      // width: '100%',
+      width: 'calc(100%)',
+      data: {
+        profile: this.profile,
+        freezedProfile: p,
+        action: '',
+        usertemplate: this.usertemplate
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      // console.log('The dialog was closed ', result);
+      // result.action here
+      switch (result.action) {
+        case 'Cancelled':
+          this.profile = p;
+          break;
+        case 'Endorse Access':
+          // set accessaproval to Provisional
+          this.profile = result.profile;
+          this.profile.accessapproval = 'Provisional';
+          this.profile.nextstep = this.usertemplate.tosaveonprofilesnextstep;
+          // update db with this.profile
+          this.saveProfile();
+          break;
+        case 'Deny Request':
+          // set accessaproval to Denied
+          this.profile = this.service.unfreezeProfile(p);
+          this.profile.accessapproval = 'Denied';
+          this.profile.nextstep = this.usertemplate.tosaveonprofilesnextstep;
+          // update db with this.profile
+          this.saveProfile();
+          break;
+        case 'Approve Request':
+          // set access to proviaccess
+          this.profile = result.profile;
+          this.profile.access = this.profile.proviaccess;
+          // set accessaproval to Approved
+          this.profile.accessapproval = 'Approved';
+          this.profile.nextstep = this.usertemplate.tosaveonprofilesnextstep;
+          // update db with this.profile
+          this.saveProfile();
+          break;
+        case '':
+          this.profile = p;
+          break;
+        default:
+          this.profile = p;
+          break;
+      }
+    });
+  }
+
+  saveProfile(): void {
+    this.service.saveProfile(this.profile)
+      .pipe(tap((res: any) => res))
+      .subscribe({
+        next: (res: any) => {
+          this.snackBar.open('Success!', 'Profile updated.', {
+            duration: 5000,
+          });
+        },
+        complete: () => {
+          // refresh to updated profile
+          this.getProfile();
+        }
+      });
   }
 
 }
