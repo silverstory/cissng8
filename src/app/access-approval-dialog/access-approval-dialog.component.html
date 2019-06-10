@@ -4,7 +4,7 @@
     <mat-icon>check</mat-icon>
   </ng-template>
   <mat-step *ngFor="let step of steps" [stepControl]="step.dialogbuttontext" [completed]="completedBa[step.step]" editable="false">
-    <ng-template matStepLabel>{{ step.step < data.freezedProfile.nextstep || data.freezedProfile.accessapproval === 'Approved' ? step.completedsteptext : step.activesteptext }}</ng-template>
+    <ng-template matStepLabel>{{ step.step < data.freezedProfile.nextstep || data.freezedProfile.accessapproval === 'Distributed' ? step.completedsteptext : step.activesteptext }}</ng-template>
   </mat-step>
 </mat-horizontal-stepper>
 <div mat-dialog-content>
@@ -297,13 +297,20 @@ Legend:
     <!-- end color access preview -->
   </div>
 </div>
+<div mat-dialog-actions align="center">
+  <br />
+  <button mat-raised-button color="primary" *ngIf="data.usertemplate.step === 0">Print Request Form for <span *ngIf="data.freezedProfile.gender === 'male'">Mr. </span><span *ngIf="data.freezedProfile.gender === 'female'">Ms. </span>{{ data.freezedProfile.name.last }}</button>
+  <br />
+</div>
 <div mat-dialog-actions align="end">
   <button mat-button (click)="onNoClick()">Cancel</button>&nbsp;&nbsp;
 
   <!-- endorse -->
-  <button mat-raised-button color="accent" *ngIf="data.usertemplate.userisapprovalstage === 'No'" (click)="onButtonClick('Endorse Access')" [mat-dialog-close]="data" cdkFocusInitial>{{ data.usertemplate.dialogbuttontext }}</button>
+  <button mat-raised-button color="accent" *ngIf="data.usertemplate.userisapprovalstage === 'No' && (!data.usertemplate.usertype.includes('ID-PRINTING-OFFICER') && !data.usertemplate.usertype.includes('ID-DISTRIBUTION-OFFICER'))" (click)="onButtonClick('Endorse Access')" [mat-dialog-close]="data" cdkFocusInitial>{{ data.usertemplate.dialogbuttontext }}</button>
 
   <!-- ciss manager -->
   <button mat-flat-button color="warn" *ngIf="data.usertemplate.userisapprovalstage === 'Yes' && data.freezedProfile.accessapproval === 'Provisional'" (click)="onButtonClick('Deny Request')" [mat-dialog-close]="data">Deny Request</button>&nbsp;&nbsp;
   <button mat-raised-button color="primary" *ngIf="data.usertemplate.userisapprovalstage === 'Yes' && data.freezedProfile.accessapproval === 'Provisional'" (click)="onButtonClick('Approve Request')" [mat-dialog-close]="data" cdkFocusInitial>Approve Request</button>
+
+  <button mat-raised-button color="primary" *ngIf="(data.usertemplate.usertype.includes('ID-PRINTING-OFFICER') || data.usertemplate.usertype.includes('ID-DISTRIBUTION-OFFICER')) && (data.freezedProfile.accessapproval === 'Approved' || data.freezedProfile.accessapproval === 'Printed')" (click)="onButtonClick(data.usertemplate.dialogbuttontext)" [mat-dialog-close]="data" cdkFocusInitial>{{ data.usertemplate.dialogbuttontext }}</button>
 </div>

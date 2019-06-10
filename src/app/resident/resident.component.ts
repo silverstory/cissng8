@@ -153,7 +153,7 @@ export class ResidentComponent implements OnInit, OnDestroy {
       if (items !== undefined) {
         await items.forEach(async item => {
           await this.steps.push(await new ApprovaltemplateObj(item));
-          if (item.step < profile.nextstep || profile.accessapproval === 'Approved') {
+          if (item.step < profile.nextstep || profile.accessapproval === 'Distributed') {
             await this.completedBa.push(true);
             await this.stepstext.push(item.completedsteptext);
           } else {

@@ -1,9 +1,11 @@
 <mat-toolbar color="accent" style="background: #E0F7FA">
   <span class="demo-toolbar">
+    <button mat-fab color="primary" (click)="OnAccessTypeClickEvent('New Record')">New</button>&nbsp;
     <button mat-fab color="primary" (click)="OnAccessTypeClickEvent('Provisional')">Provi</button>&nbsp;
     <button mat-fab color="accent" (click)="OnAccessTypeClickEvent('Approved')">Apprvd</button>&nbsp;
+    <button mat-fab color="primary" (click)="OnAccessTypeClickEvent('Printed')">Prnted</button>&nbsp;
+    <button mat-fab color="accent" (click)="OnAccessTypeClickEvent('Distributed')">Dist</button>&nbsp;
     <button mat-fab color="warn" (click)="OnAccessTypeClickEvent('Denied')">Denied</button>&nbsp;
-    <button mat-fab color="primary" (click)="OnAccessTypeClickEvent('New Record')">New</button>&nbsp;
     &nbsp;&nbsp;LIST OF {{ service.find | uppercase }} ACCESS ( {{ current_distinction_alias | uppercase }} )
   </span>
 </mat-toolbar>

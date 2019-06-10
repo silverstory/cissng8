@@ -429,7 +429,7 @@ export class AccessApprovalComponent implements OnInit {
           // set accessaproval to Denied
           this.profile = this.unfreezeProfile(p);
           this.profile.accessapproval = 'Denied';
-          this.profile.nextstep = this.usertemplate.tosaveonprofilesnextstep;
+          this.profile.nextstep = 0;
           // update db with this.profile
           this.saveProfile();
           break;
@@ -443,6 +443,29 @@ export class AccessApprovalComponent implements OnInit {
           // update db with this.profile
           this.saveProfile();
           break;
+          case 'ID Printed':
+            // set access to proviaccess
+            this.profile = result.profile;
+            this.profile.access = this.profile.proviaccess;
+            // set accessaproval to Printed
+            this.profile.accessapproval = 'Printed';
+            this.profile.nextstep = this.usertemplate.tosaveonprofilesnextstep;
+            // update db with this.profile
+            this.saveProfile();
+          break;
+          case 'ID Distributed':
+            // set access to proviaccess
+            this.profile = result.profile;
+            this.profile.access = this.profile.proviaccess;
+            // set accessaproval to Distributed
+            this.profile.accessapproval = 'Distributed';
+            this.profile.nextstep = this.usertemplate.tosaveonprofilesnextstep;
+            if (!p.distinction.includes('OPVISITOR')) {
+              this.profile.recordstatus = 'ACTIVE';
+            }
+            // update db with this.profile
+            this.saveProfile();
+            break;
         case '':
           this.profile = p;
           break;

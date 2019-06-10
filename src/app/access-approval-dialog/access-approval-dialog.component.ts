@@ -202,6 +202,12 @@ export class AccessApprovalDialogComponent implements OnInit {
           // steps code here
           this.steps = [];
           this.completedBa = [];
+          let finishText = '';
+          if (this.data.freezedProfile.distinction.includes('OPVISITOR')) {
+            finishText = 'Approved';
+          } else {
+            finishText = 'Distributed';
+          }
           this.service.getTemplates(this.data.profile.distinction, 1)
           .pipe(
             tap((res: any) => res)
@@ -212,7 +218,7 @@ export class AccessApprovalDialogComponent implements OnInit {
               if (items !== undefined) {
                 items.forEach(item => {
                   this.steps.push(new ApprovaltemplateObj(item));
-                  if (item.step < this.data.freezedProfile.nextstep || this.data.freezedProfile.accessapproval === 'Approved') {
+                  if (item.step < this.data.freezedProfile.nextstep || this.data.freezedProfile.accessapproval === finishText) {
                     this.completedBa.push( true );
                   } else {
                     this.completedBa.push( false );
