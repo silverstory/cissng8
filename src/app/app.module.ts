@@ -42,6 +42,7 @@ import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.compo
 import { AccessApprovalDialogComponent } from './access-approval-dialog/access-approval-dialog.component';
 
 import { QRCodeModule } from 'angularx-qrcode';
+import { RequestFormDialogComponent } from './request-form-dialog/request-form-dialog.component';
 
 // the second parameter 'fr' is optional
 // registerLocaleData(localeFr, 'fr');
@@ -66,7 +67,8 @@ registerLocaleData(localeEnPh, 'en-PH', localeEnPhExtra);
     OPIDComponent,
     AccessApprovalComponent,
     AccessApprovalDialogComponent,
-    LoadingSpinnerComponent
+    LoadingSpinnerComponent,
+    RequestFormDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -79,7 +81,7 @@ registerLocaleData(localeEnPh, 'en-PH', localeEnPhExtra);
     AppMaterialModule,
     QRCodeModule
   ],
-  entryComponents: [AccessApprovalComponent, AccessApprovalDialogComponent],
+  entryComponents: [AccessApprovalComponent, AccessApprovalDialogComponent, RequestFormDialogComponent],
   providers: [
     { provide: LOCALE_ID, useValue: 'en-PH' },
     ProfileService,

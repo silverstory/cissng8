@@ -297,9 +297,9 @@ Legend:
     <!-- end color access preview -->
   </div>
 </div>
-<div mat-dialog-actions align="center">
+<div *ngIf="data.usertemplate.step === 0" mat-dialog-actions align="center">
   <br />
-  <button mat-raised-button color="primary" *ngIf="data.usertemplate.step === 0">Print Request Form for <span *ngIf="data.freezedProfile.gender === 'male'">Mr. </span><span *ngIf="data.freezedProfile.gender === 'female'">Ms. </span>{{ data.freezedProfile.name.last }}</button>
+  <button mat-raised-button color="primary" (click)="OnPrintRequestFormEvent()">Open Request Form for <span *ngIf="data.freezedProfile.gender === 'male'">Mr. </span><span *ngIf="data.freezedProfile.gender === 'female'">Ms. </span>{{ data.freezedProfile.name.last }}</button>
   <br />
 </div>
 <div mat-dialog-actions align="end">

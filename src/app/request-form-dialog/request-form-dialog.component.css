@@ -1,0 +1,248 @@
+/* Custom CSS Classes */
+
+.demo-toolbar {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+mat-toolbar-row {
+  justify-content: space-between;
+}
+
+.example-card {
+flex: 100%;
+/* font-family: Roboto, sans-serif, 'Nunito Semibold'; */
+}
+
+.example-card p {
+font-size: 1.1em;
+line-height: 2em;
+}
+
+.example-card ul {
+  list-style-position: inside;
+  padding-left: 0;
+  padding-right: 0;
+  text-align: left;
+}
+
+.example-card li {
+font-size: 1.1em;
+line-height: 2em;
+}
+
+/* .example-header-image {
+background-image: url('https://www.freeiconspng.com/uploads/flat-face-icon-23.png');
+background-size: cover;
+} */
+
+.example-header-image {
+  background-size: cover;
+}
+
+.example-header-image-1 {
+background-image: url('https://www.freeiconspng.com/uploads/email-flat-icon-png-26.png');
+background-size: cover;
+}
+
+.example-header-image-2 {
+background-image: url('https://www.freeiconspng.com/uploads/flat-mac-icon-15.png');
+background-size: cover;
+}
+
+.content-center {
+  text-align: -webkit-center;
+}
+
+/* CSS GRID  */
+/* iphone */
+#content{
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  grid-gap: 10px;
+  max-width: 100%;  /* 960px; */
+  margin: 0 auto;
+}
+/* ipad */
+@media screen and (min-width: 760px) {
+  #content{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 10px;
+    max-width: 100%; /* 960px; */
+    margin: 5 auto;
+  }
+}
+/* macbook 1366+ or 1280+ */
+@media screen and (min-width: 1360px) {
+  #content{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 10px;
+    max-width: 100%; /* 960px; */
+    margin: 5 auto;
+  }
+}
+#content div {
+  /* background: #3bbced; */
+  padding: 10px;
+  font-family: Lato;
+  /* background-color: #FCE4EC; */
+  /* #E0F7FA */
+  /* margin: 2em auto; */
+}
+#content div:nth-child(even){
+  /* background: #777; */
+  padding: 10px;
+  font-family: Lato;
+}
+
+/* nested */
+/* iphone */
+.nested{
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 10px;
+  /*grid-column: span 3;*/
+}
+/* ipad and macbook */
+@media screen and (min-width: 1024px) {
+  .nested{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 10px;
+    /*grid-column: span 3;*/
+  }
+}
+
+.nested p{
+  border: 1px solid #fff;
+  margin: 10;
+}
+.nested div{
+  padding: 10px;
+}
+.nested mat-radio-button{
+  margin: 5px;
+}
+.nested mat-slide-toggle{
+  margin: 0;
+}
+
+ /* footers loading and alerts */
+
+ .tag {
+  font-size: 2.2em;
+  text-align: -webkit-center;
+}
+
+/* from employee component css */
+.column-card {
+  flex: 100%;
+}
+
+.row {
+  display: flex;
+}
+
+.one-2-3-4 {
+  flex: 50%;
+  font-size: 1.1em;
+  font-weight: bold;
+  font-family: Roboto, Arial, sans-serif;
+  margin: 0 .025rem 0px .025rem;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 40px;
+  height: 40px;
+  background-color: #e6e6e6;
+  border-style: solid;
+  border-width: thin;
+  border-color: darkgray;
+}
+
+.example-radio-group {
+  display: inline-flex;
+  flex-direction: column;
+  height: auto;
+}
+
+.example-radio-button {
+  margin: 10;
+}
+
+.example-selected-value {
+  margin: 15px 0;
+}
+
+.example-h2 {
+  margin: 10px;
+}
+
+.example-section {
+  display: flex;
+  align-content: center;
+  align-items: center;
+  height: 60px;
+}
+
+.example-margin {
+  margin: 10px;
+}
+
+pre{
+  margin: 10px;
+}
+
+.accesscodes {
+  display: grid;
+  max-width: 100%;
+  grid-template-columns: 1fr;
+  grid-gap: 10px;
+}
+.accesscodes mat-slide-toggle {
+  padding: 0;
+  margin: 0;
+}
+.accesscodes div {
+  padding: 0;
+  margin: 0 0 0 -20px;
+}
+
+.example-button-row button,
+.example-button-row a {
+  margin: 0 0 0 0;
+}
+
+.profile {
+  font: inherit;
+  width: 100%;
+  font-weight: bold;
+  font-size: large;
+  text-align: center;
+}
+.container {
+  display: flex;
+  flex-direction: column;
+  font-size: large;
+  max-width: 1000px;
+}
+
+.column-card {
+  flex: 100%;
+  /* max-width: 100%; */
+}
+
+.column {
+  flex: 100%; /* 25%; */
+  padding: 5px;
+  margin: 10px 0 10px 0;
+}
+
+.profile-column {
+  flex: 33%;
+  padding: 5px;
+  margin: 10px 0 10px 0;
+  max-width: 300px;
+}

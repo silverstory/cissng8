@@ -1,0 +1,184 @@
+<div mat-dialog-content>
+  <div class="container">
+    <div class="row">
+      <div class="column">
+        <div class="row">
+          <div>
+            <mat-card class="example-card">
+              <mat-card-header>
+                <div mat-card-avatar class="example-header-image-1"></div>
+                <mat-card-title>OP CISS REQUEST FORM</mat-card-title>
+                <mat-card-subtitle>Request For ID Printing / Re-printing and Request Access Restrictions
+                </mat-card-subtitle>
+              </mat-card-header>
+              <br>
+              <mat-card-content>
+                <mat-radio-group class="nested">
+                  <mat-radio-button value="1" class="example-margin">PRINTING OF OP ID</mat-radio-button>
+                  <mat-radio-button value="2" class="example-margin">PRINTING OF NON-OP and BARANGAY ID
+                  </mat-radio-button>
+                  <mat-radio-button value="3" class="example-margin">RE-PRINTING OF OP ID</mat-radio-button>
+                  <mat-radio-button value="4" class="example-margin">RE-PRINTING OF NON-OP and BARANGAY ID
+                  </mat-radio-button>
+                  <mat-radio-button value="5" class="example-margin">REQUEST FOR NEW ACCESS RESTRICTIONS
+                  </mat-radio-button>
+                  <mat-radio-button value="6" class="example-margin">REQUEST FOR VISITOR ACCESS</mat-radio-button>
+                </mat-radio-group>
+              </mat-card-content>
+            </mat-card>
+          </div>
+        </div>
+        <br />
+        <div class="row">
+          <div class="profile-column">
+            <mat-card class="column-card">
+              <!-- <div class="row">
+                  <div class="one-2-3-4" [style.background-color]="data.profile.proviaccess.colorone">
+                    1</div>
+                  <div class="one-2-3-4" [style.background-color]="data.profile.proviaccess.colortwo">
+                    2</div>
+                </div> -->
+              <img mat-card-image src="{{data.freezedProfile.photothumbnailurl}}" alt="Photo"
+                style="height:300px; object-fit: contain;">
+              <div class="row">
+                <span class="profile">{{ data.freezedProfile.name.first | uppercase }}
+                  {{ data.freezedProfile.name.middle | slice:0:1 | uppercase }}.
+                  {{ data.freezedProfile.name.last | uppercase }}</span>
+              </div>
+              <!-- <div class="row">
+                  <div class="one-2-3-4" [style.background-color]="data.profile.proviaccess.colorthree">
+                    3</div>
+                  <div class="one-2-3-4" [style.background-color]="data.profile.proviaccess.colorfour">
+                    4</div>
+                </div> -->
+            </mat-card>
+          </div>
+          <div class="profile-column">
+            <mat-card class="example-card">
+              <mat-card-header>
+                <div mat-card-avatar
+                  [ngStyle]="{'background-image': 'url(../assets/face_icon/'+ setFaceIcon(data.freezedProfile.distinction, data.freezedProfile.gender) + '.svg)'}"
+                  class="example-header-image"></div>
+                <mat-card-title>{{ data.freezedProfile.distinction }}</mat-card-title>
+              </mat-card-header>
+              <mat-card-content>
+                <mat-card class="column-card" *ngIf="data.freezedProfile.distinction === 'OPEMPLOYEE'">
+                  <mat-card-header>
+                    <div mat-card-avatar>
+                      <mat-icon aria-label="DESIGNATION AND OFFICE">location_city</mat-icon>
+                    </div>
+                    <mat-card-title>DESIGNATION AND OFFICE</mat-card-title>
+                  </mat-card-header>
+                  <div class="row">
+                    <span class="profile">{{ data.freezedProfile.employee.position | uppercase }}</span>
+                  </div>
+                  <br />
+                  <div class="row">
+                    <span class="profile">{{ data.freezedProfile.employee.office | uppercase }}</span>
+                  </div>
+                </mat-card>
+                <mat-card class="column-card" *ngIf="data.freezedProfile.distinction === 'BRGYRESIDENT'">
+                  <mat-card-header>
+                    <div mat-card-avatar>
+                      <mat-icon aria-label="RESIDENCE LOCATION">location_city</mat-icon>
+                    </div>
+                    <mat-card-title>RESIDENCE LOCATION</mat-card-title>
+                  </mat-card-header>
+                  <div class="row">
+                    <span class="profile">Barangay {{ data.freezedProfile.resident.barangay | uppercase }}</span>
+                  </div>
+                  <br />
+                  <div class="row">
+                    <span class="profile">{{ data.freezedProfile.resident.district | uppercase }}</span>
+                  </div>
+                </mat-card>
+              </mat-card-content>
+            </mat-card>
+          </div>
+          <div class="profile-column">
+            <mat-card class="example-card">
+              <mat-card-header>
+                <div mat-card-avatar>
+                  <mat-icon aria-label="SECURITY KEY">vpn_key</mat-icon>
+                </div>
+                <mat-card-title>SECURITY KEY</mat-card-title>
+              </mat-card-header>
+              <div class="row">
+                <qrcode [qrdata]="data.freezedProfile.cissinqtext" [size]="200" [level]="'M'"
+                  style="width: 50%;padding: 20px;"></qrcode>
+              </div>
+              <br />
+              <div class="row">
+                <span class="profile">Data Subject's 8-digit key {{ data.freezedProfile.cisstoken }}</span>
+              </div>
+            </mat-card>
+          </div>
+        </div>
+        <br />
+        <div class="row">
+          <div class="row">
+            <mat-vertical-stepper [linear]="isLinear" [selectedIndex]="data.freezedProfile.nextstep" #stepper>
+              <ng-template matStepperIcon="edit">
+                <mat-icon>check</mat-icon>
+              </ng-template>
+              <mat-step *ngFor="let step of steps" [stepControl]="step.dialogbuttontext" [completed]="false"
+                editable="false">
+                <ng-template matStepLabel>{{ step.completedsteptext }} ___________________ &#8592; Sign Here
+                </ng-template>
+              </mat-step>
+            </mat-vertical-stepper>
+          </div>
+          <br />
+          <div class="row">
+            <blockquote></blockquote>
+            <br />
+            <small>
+              <pre>
+OP Privacy Consent
+
+“By using this form, I hereby give my consent to
+OP to process, including, but not limited to the
+collection, recording, storage and use, the
+personal information for the intended purpose,
+consistent with the OP Privacy Notice.”
+
+“WHAT WE COLLECT”
+We may collect the following Personal Information:
+1. First Name               6. Appointment Status
+2. Middle Name              7. Gender
+3. Last Name                8. Mobile Number
+4. Position                 9. Photo
+5. Office                   10. OP ID, Resident ID
+
+“Such information is referred to throughout OP
+policyas “personal information” or “data”. By
+accessing and/or using OP CISS when you
+manually and electronically submit to us your
+application and requests your consent to us the
+collecting, processing, storing in the ways set
+out in OP Privacy Policy. If you have any concerns
+about providing data to us or having it used in
+any matter permitted in the OP Privacy Policy you
+should not sign this form.”
+
+
+
+
+
+      ______________________________
+      PRINT NAME, DATE and SIGNATURE
+              (DATA SUBJECT)
+              </pre>
+            </small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div mat-dialog-actions align="center">
+  <button mat-raised-button color="primary" *ngIf="data.usertemplate.step === 0">Create Request Form (PDF) for <span
+      *ngIf="data.freezedProfile.gender === 'male'">Mr. </span><span *ngIf="data.freezedProfile.gender === 'female'">Ms.
+    </span>{{ data.freezedProfile.name.last }}</button>&nbsp;&nbsp;
+  <button mat-button (click)="onNoClick()">Cancel</button>
+</div>

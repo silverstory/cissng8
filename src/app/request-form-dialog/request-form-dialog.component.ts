@@ -3,7 +3,7 @@ import { MydataserviceService } from '../mydataservice.service';
 import { Profile, ProfileObj } from '../profile';
 import { Approvaltemplate, ApprovaltemplateObj } from '../approvaltemplate';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { RequestFormDialogComponent } from '../request-form-dialog/request-form-dialog.component';
+
 import { AuthService } from '../auth/auth.service';
 import { User } from '../auth/user';
 
@@ -18,18 +18,13 @@ export interface DialogData {
   usertemplate: Approvaltemplate;
 }
 
-// PSG-GATE-OFFICER
-// PSG-DATA-OFFICER
-// HRMO-DATA-OFFICER
-// PSG-CISS-MANAGER
-
 @Component({
-  selector: 'app-access-approval-dialog',
-  templateUrl: './access-approval-dialog.component.html',
-  styleUrls: ['./access-approval-dialog.component.css'],
+  selector: 'app-request-form-dialog',
+  templateUrl: './request-form-dialog.component.html',
+  styleUrls: ['./request-form-dialog.component.css'],
   providers: [MydataserviceService]
 })
-export class AccessApprovalDialogComponent implements OnInit {
+export class RequestFormDialogComponent implements OnInit {
 
   steps = [];
   isLinear = true;
@@ -77,14 +72,10 @@ export class AccessApprovalDialogComponent implements OnInit {
 
   public today = new Date();
 
-  profile: Profile;
-  public usertemplate: Approvaltemplate;
-
   constructor(public service: MydataserviceService,
-              public dialog: MatDialog,
-              public dialogRef: MatDialogRef<AccessApprovalDialogComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: DialogData,
-              private authService: AuthService) { }
+    public dialogRef: MatDialogRef<RequestFormDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData,
+    private authService: AuthService) { }
 
   setFaceIcon(distinction: String, gender: String): String {
     let icon: String = 'DEFAULT_' + gender.toUpperCase();
@@ -98,7 +89,7 @@ export class AccessApprovalDialogComponent implements OnInit {
   }
 
   onNoClick(): void {
-    this.data.action = 'Cancelled';
+    // this.data.action = 'Cancelled';
     this.dialogRef.close();
   }
 
@@ -139,8 +130,6 @@ export class AccessApprovalDialogComponent implements OnInit {
     }
   }
 
-  // tiles
-
   // GET BACKGROUND COLOR
 
   getColor(status) {
@@ -155,8 +144,6 @@ export class AccessApprovalDialogComponent implements OnInit {
   }
 
   async ngOnInit() {
-    this.usertemplate = this.data.usertemplate;
-    this.profile = this.data.freezedProfile;
     try {
       this.data.profile = new ProfileObj(this.service.unfreezeProfile(this.data.profile));
       await this.authService.getProfile()
@@ -199,17 +186,15 @@ export class AccessApprovalDialogComponent implements OnInit {
                 if (items !== undefined) {
                   items.forEach(item => {
                     this.steps.push(new ApprovaltemplateObj(item));
-                    if (item.step < this.data.freezedProfile.nextstep || this.data.freezedProfile.accessapproval === finishText) {
-                      this.completedBa.push(true);
-                    } else {
-                      this.completedBa.push(false);
-                    }
+                    // if (item.step < this.data.freezedProfile.nextstep || this.data.freezedProfile.accessapproval === finishText) {
+                    //   this.completedBa.push(true);
+                    // } else {
+                    //   this.completedBa.push(false);
+                    // }
                   });
                 }
               },
               complete: () => {
-                // this._done.next(true);
-                // this._loading.next(false);
               }
             });
           // end steps
@@ -356,55 +341,6 @@ export class AccessApprovalDialogComponent implements OnInit {
 
   fourClick(newcolor) {
     this.data.profile.proviaccess.colorfour = newcolor;
-  }
-
-  OnPrintRequestFormEvent(): void {
-    this.openDialog();
-  }
-
-  openDialog(): void {
-    const p: Profile = this.service.createFreezedProfile(this.profile);
-    const dialogRef = this.dialog.open(RequestFormDialogComponent, {
-      // this should not be 700px and must implement css grid styling
-      // width: '100%',
-      width: 'calc(100%)',
-      data: {
-        profile: this.profile,
-        freezedProfile: p,
-        action: '',
-        usertemplate: this.usertemplate
-      }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      // result.action here
-      switch (result.action) {
-        case 'Cancelled':
-          // this.profile = p;
-          break;
-        case 'Endorse Access':
-          // this.profile = result.profile;
-          break;
-        case 'Deny Request':
-          // this.profile = this.service.unfreezeProfile(p);
-          break;
-        case 'Approve Request':
-          // this.profile = result.profile;
-          break;
-        case 'ID Printed':
-          // this.profile = result.profile;
-          break;
-        case 'ID Distributed':
-          // this.profile = result.profile;
-          break;
-        case '':
-          // this.profile = p;
-          break;
-        default:
-          // this.profile = p;
-          break;
-      }
-    });
   }
 
 }
