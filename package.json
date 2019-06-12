@@ -40,6 +40,7 @@
     "hammerjs": "^2.0.8",
     "json-schema": "^0.2.3",
     "jwt-decode": "^2.2.0",
+    "ngx-export-as": "^1.2.5",
     "ngx-infinite-scroll": "^7.1.0",
     "npm": "^6.9.0",
     "rxjs": "^6.5.2",

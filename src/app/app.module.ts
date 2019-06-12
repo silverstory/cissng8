@@ -44,6 +44,8 @@ import { AccessApprovalDialogComponent } from './access-approval-dialog/access-a
 import { QRCodeModule } from 'angularx-qrcode';
 import { RequestFormDialogComponent } from './request-form-dialog/request-form-dialog.component';
 
+import { ExportAsModule } from 'ngx-export-as';
+
 // the second parameter 'fr' is optional
 // registerLocaleData(localeFr, 'fr');
 // registerLocaleData(localeFr, 'fr-FR', localeFrExtra);
@@ -79,7 +81,8 @@ registerLocaleData(localeEnPh, 'en-PH', localeEnPhExtra);
     BrowserAnimationsModule,
     InfiniteScrollModule,
     AppMaterialModule,
-    QRCodeModule
+    QRCodeModule,
+    ExportAsModule
   ],
   entryComponents: [AccessApprovalComponent, AccessApprovalDialogComponent, RequestFormDialogComponent],
   providers: [

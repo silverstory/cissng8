@@ -11,6 +11,8 @@ import { switchMap, map, tap } from 'rxjs/operators';
 
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatRadioChange, MatSlideToggleChange } from '@angular/material';
 
+import { ExportAsService, ExportAsConfig, SupportedExtensions } from 'ngx-export-as';
+
 export interface DialogData {
   profile: Profile;
   freezedProfile: Profile;
@@ -72,10 +74,32 @@ export class RequestFormDialogComponent implements OnInit {
 
   public today = new Date();
 
+  config: ExportAsConfig = {
+    type: 'pdf',
+    elementId: 'divToPrint',
+    options: {
+      jsPDF: {
+        orientation: 'portrait'
+      }
+    }
+  };
+
   constructor(public service: MydataserviceService,
     public dialogRef: MatDialogRef<RequestFormDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
-    private authService: AuthService) { }
+    private authService: AuthService,
+    private exportAsService: ExportAsService) { }
+
+  exportAs(type: SupportedExtensions, opt?: string) {
+    this.config.type = type;
+    if (opt) {
+      this.config.options.jsPDF.orientation = opt;
+    }
+    this.exportAsService.save(this.config, 'myFile');
+    // this.exportAsService.get(this.config).subscribe(content => {
+    //   console.log(content);
+    // });
+  }
 
   setFaceIcon(distinction: String, gender: String): String {
     let icon: String = 'DEFAULT_' + gender.toUpperCase();
