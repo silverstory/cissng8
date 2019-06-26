@@ -45,6 +45,9 @@ import { QRCodeModule } from 'angularx-qrcode';
 import { RequestFormDialogComponent } from './request-form-dialog/request-form-dialog.component';
 
 import { ExportAsModule } from 'ngx-export-as';
+import { PrintLayoutComponent } from './print-layout/print-layout.component';
+import { InvoiceComponent } from './invoice/invoice.component';
+import { TiteComponent } from './tite/tite.component';
 
 // the second parameter 'fr' is optional
 // registerLocaleData(localeFr, 'fr');
@@ -70,7 +73,10 @@ registerLocaleData(localeEnPh, 'en-PH', localeEnPhExtra);
     AccessApprovalComponent,
     AccessApprovalDialogComponent,
     LoadingSpinnerComponent,
-    RequestFormDialogComponent
+    RequestFormDialogComponent,
+    PrintLayoutComponent,
+    InvoiceComponent,
+    TiteComponent
   ],
   imports: [
     BrowserModule,

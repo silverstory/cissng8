@@ -1,7 +1,9 @@
 /* Application-wide Styles */
-
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
-
+@media print {
+  .isPrinting > * { display: none; }
+  .isPrinting app-print-layout { display: block; }
+}
 /* h1 {
     color: #369;
     font-family: Arial, Helvetica, sans-serif;

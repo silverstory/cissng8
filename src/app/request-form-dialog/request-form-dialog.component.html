@@ -17,7 +17,7 @@
               </mat-card-header>
               <br>
               <mat-card-content>
-                <mat-radio-group class="nested">
+                <mat-radio-group class="nested" style="font-size: 11px;">
                   <mat-radio-button value="1" class="example-margin">PRINTING OF OP ID</mat-radio-button>
                   <mat-radio-button value="2" class="example-margin">PRINTING OF NON-OP and BARANGAY ID
                   </mat-radio-button>
@@ -37,7 +37,7 @@
           <!-- <div class="profile-column">
             <mat-card class="column-card">
               <img mat-card-image src="{{data.freezedProfile.photothumbnailurl}}" alt="Photo"
-                style="height:300px; object-fit: contain;">
+                style="height:250px; max-width:200px; object-fit: contain;">
               <div class="row">
                 <span class="profile">{{ data.freezedProfile.name.first | uppercase }}
                   {{ data.freezedProfile.name.middle | slice:0:1 | uppercase }}.
@@ -95,7 +95,7 @@
         </div>
         <br />
         <div class="row">
-          <div class="row">
+          <div class="row" style="font-size: 11px;">
             <mat-vertical-stepper [linear]="isLinear" [selectedIndex]="data.freezedProfile.nextstep" #stepper>
               <ng-template matStepperIcon="edit">
                 <mat-icon>check</mat-icon>
@@ -110,9 +110,10 @@
           </div>
           <br />
           <div class="row">
-            <small>
+            <font color="black">
               <small>
-                <pre>
+                <small>
+                  <pre>
 Office of the President Data Privacy Consent
 
 “By signing this form, I hereby give my consent to Office
@@ -145,9 +146,10 @@ should not sign this form.”
    ____________________________________
       PRINT NAME, DATE and SIGNATURE
               (DATA SUBJECT)
-              </pre>
+                  </pre>
+                </small>
               </small>
-            </small>
+            </font>
           </div>
         </div>
       </div>

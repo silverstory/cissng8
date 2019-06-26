@@ -1,4 +1,4 @@
-import { NgModule }             from '@angular/core';
+import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
@@ -12,17 +12,46 @@ import { AuthGuard } from './auth/auth.guard';
 import { ProfileNotFoundComponent } from './profile-not-found/profile-not-found.component';
 import { OPIDComponent } from './op-id/op-id.component';
 import { AccessApprovalComponent } from './access-approval/access-approval.component';
+import { InvoiceComponent } from './invoice/invoice.component';
+import { PrintLayoutComponent } from './print-layout/print-layout.component';
+import { TiteComponent } from './tite/tite.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthGuard], pathMatch: 'full' },
+  { path: 'print',
+    outlet: 'print',
+    component: PrintLayoutComponent,
+    children: [
+      { path: 'invoice/:invoiceIds', component: InvoiceComponent }
+    ]
+  },
+  { path: 'tite', component: TiteComponent, pathMatch: 'full' },
   { path: 'OP-ID/:text', component: OPIDComponent, data: { state: 'op-id' }, runGuardsAndResolvers: 'paramsChange' },
   { path: 'login', component: LoginComponent, pathMatch: 'full' },
   { path: 'signup', component: SignupComponent, pathMatch: 'full' },
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard], pathMatch: 'full' },
   { path: 'access-approval', component: AccessApprovalComponent, canActivate: [AuthGuard], pathMatch: 'full' },
-  { path: 'employee/:id', component: EmployeeComponent, data: { state: 'employee' }, canActivate: [AuthGuard], runGuardsAndResolvers: 'paramsChange' },
-  { path: 'visitor/:id', component: VisitorComponent, data: { state: 'visitor' }, canActivate: [AuthGuard], runGuardsAndResolvers: 'paramsChange' },
-  { path: 'resident/:id', component: ResidentComponent, data: { state: 'resident' }, canActivate: [AuthGuard], runGuardsAndResolvers: 'paramsChange' },
+  {
+    path: 'employee/:id',
+    component: EmployeeComponent,
+    data: { state: 'employee' },
+    canActivate: [AuthGuard],
+    runGuardsAndResolvers: 'paramsChange'
+  },
+  {
+    path: 'visitor/:id',
+    component: VisitorComponent,
+    data: { state: 'visitor' },
+    canActivate: [AuthGuard],
+    runGuardsAndResolvers: 'paramsChange'
+  },
+  {
+    path: 'resident/:id',
+    component: ResidentComponent,
+    data: { state: 'resident' },
+    canActivate: [AuthGuard],
+    runGuardsAndResolvers: 'paramsChange'
+  },
   { path: 'profilenotfound', component: ProfileNotFoundComponent, data: { state: 'profilenotfound' }, canActivate: [AuthGuard] },
   { path: '**', component: PageNotFoundComponent }
 ];

@@ -6,6 +6,7 @@ import { routerTransition } from './router.animations';
 // import 'rxjs/add/operator/filter';
 // import 'rxjs/add/operator/map';
 // import 'rxjs/add/operator/mergeMap';
+import { PrintService } from './print.service';
 
 @Component({
   selector: 'app-root',
@@ -17,7 +18,10 @@ import { routerTransition } from './router.animations';
 // export class AppComponent implements OnInit {
   export class AppComponent {
   // @HostBinding('@routerTransition') routerTransition = true; // dinagdag lang
-  title = 'ciss';
+  title = 'op-ciss';
+
+  constructor(public printService: PrintService) { }
+
   // id = '';
   // state = '';
   // constructor(private router: Router,
