@@ -1,4 +1,73 @@
 <div class="invoice" *ngFor="let invoice of invoiceIds; let i = index">
-  <h1>Invoice Num. {{ invoice }}</h1>
-  Amount: {{ (invoiceDetails[i] | async)?.amount }}
+
+  <h1 mat-dialog-title>Request Form for {{ (invoiceDetails[i] | async)?.name | uppercase }}</h1>
+  <br>
+  {{ (invoiceDetails[i] | async)?.location1 }}
+  <br>
+  {{ (invoiceDetails[i] | async)?.location2 }}
+  <br><br>
+  Request For ID Printing / Re-printing and Request Access Restrictions
+  <br><br>
+  <table style="width:100%">
+    <tr>
+      <th>PRINTING</th>
+      <th>RE-PRINTING</th>
+      <th>ACCESS REQUEST</th>
+    </tr>
+    <tr>
+      <td><mat-radio-button value="1">PRINTING OF OP ID</mat-radio-button></td>
+      <td><mat-radio-button value="3">RE-PRINTING OF OP ID</mat-radio-button></td>
+      <td><mat-radio-button value="5">REQUEST FOR NEW ACCESS</mat-radio-button></td>
+    </tr>
+    <tr>
+      <td><mat-radio-button value="2">PRINTING OF BRGY ID / OTHERS</mat-radio-button></td>
+      <td><mat-radio-button value="4">RE-PRINTING OF BRGY ID / OTHERS</mat-radio-button></td>
+      <td><mat-radio-button value="6">REQUEST FOR VISIT ACCESS</mat-radio-button></td>
+    </tr>
+  </table>
+  <br>
+  <strong>SCAN THIS KEY</strong>
+  <br><br>
+  <qrcode [qrdata]="(invoiceDetails[i] | async)?.qr" [size]="300" [level]="'M'"></qrcode>
+  <br><br>
+<pre>
+Office of the President Data Privacy Consent
+
+“By signing this form, I hereby give my consent to Office
+of the President to process, including, but not limited
+to the collection, recording, storage and use, the
+personal information for the intended purpose, consistent
+with the Office of the President (OP) Privacy Notice.”
+
+“WHAT WE COLLECT”
+We may collect the following Personal Information:
+1. First Name               6. Appointment Status
+2. Middle Name              7. Gender
+3. Last Name                8. Mobile Number
+4. Position                 9. Photo
+5. Office                   10. OP ID, Resident ID
+
+“Such information is referred to throughout Office of the
+President (OP) Privacy Policy as “personal information”
+or “data”. When you manually and electronically submit to
+us your application, by signing this form, you grant your
+consent to us the collecting, processing, storing in the
+ways set out in OP Privacy Policy. If you have any issues
+or concerns about providing data to us or having it used
+in any matter permitted in the OP Privacy Policy you
+should not sign this form.”
+
+
+
+
+
+    ____________________________________
+      PRINT NAME, DATE and SIGNATURE
+              (DATA SUBJECT)
+                  </pre>
+
+  <!-- <br><br>
+  Token Code. {{ invoice }}
+  ProfileID: {{ (invoiceDetails[i] | async)?.id_num }} -->
+
 </div>

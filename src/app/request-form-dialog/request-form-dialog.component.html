@@ -1,8 +1,8 @@
-<h1 mat-dialog-title>Request Form for <span *ngIf="data.freezedProfile.gender === 'male'">Mr. </span>
+<h4 mat-dialog-title>Request Form for <span *ngIf="data.freezedProfile.gender === 'male'">Mr. </span>
   <span *ngIf="data.freezedProfile.gender === 'female'">Ms. </span>
   {{ data.freezedProfile.name.first | uppercase }}
   {{ data.freezedProfile.name.middle | slice:0:1 | uppercase }}.
-  {{ data.freezedProfile.name.last | uppercase }}</h1>
+  {{ data.freezedProfile.name.last | uppercase }}</h4>
 <div mat-dialog-content>
   <div id="divToPrint" class="container">
     <div class="row">

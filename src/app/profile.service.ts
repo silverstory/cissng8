@@ -49,6 +49,19 @@ export class ProfileService {
     );
   }
 
+  // GET http://localhost:3000/api/profile/get/99997777
+  /** GET profile by cisstoken. Will 404 if id not found */
+  getProfileByToken(token: string): Observable<Profile> {
+    const url = `${this.api}/profile/token/${token}`;
+    return this.http.get<Profile>(url).pipe(
+      tap( ( profile: Profile ) => {
+        // no code needed here. just emiting values to subscriber.
+        this.log(`fetched profile token=${token}`);
+      }),
+      catchError(this.handleError<Profile>(`getProfile id=${token}`))
+    );
+  }
+
   /** Log a ProfileService message with the MessageService */
   public log(message: string) {
     this.messageService.add('ProfileService: ' + message);

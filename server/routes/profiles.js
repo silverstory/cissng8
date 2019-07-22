@@ -3,6 +3,11 @@ const router = express.Router();
 const passport = require('passport');
 const profileService = require('../services/profile.service');
 
+// get by cisstoken
+router.get('/profile/token/:token', passport.authenticate('jwt',{session:false}), async (req, res, next) => {
+  profileService.getProfileByCissToken(req, res, next);
+});
+
 // Access Approval
 router.get('/profile/accessapprovals/', passport.authenticate('jwt',{session:false}), async (req, res, next) => {
   await profileService.getAccessApprovals(req, res, next);

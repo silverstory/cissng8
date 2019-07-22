@@ -86,6 +86,13 @@ export class AccessApprovalDialogComponent implements OnInit {
               @Inject(MAT_DIALOG_DATA) public data: DialogData,
               private authService: AuthService) { }
 
+  goToLink() {
+    const array: Array<any> = [this.data.freezedProfile.cisstoken];
+    const token = array.join('-');
+    const url = `/print/${token}`;
+    window.open(url, '_blank');
+  }
+
   setFaceIcon(distinction: String, gender: String): String {
     let icon: String = 'DEFAULT_' + gender.toUpperCase();
     const found = this.face_icons.find(element => element === distinction);

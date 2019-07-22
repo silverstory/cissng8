@@ -47,7 +47,7 @@ import { RequestFormDialogComponent } from './request-form-dialog/request-form-d
 import { ExportAsModule } from 'ngx-export-as';
 import { PrintLayoutComponent } from './print-layout/print-layout.component';
 import { InvoiceComponent } from './invoice/invoice.component';
-import { TiteComponent } from './tite/tite.component';
+import { PrintComponent } from './print/print.component';
 
 // the second parameter 'fr' is optional
 // registerLocaleData(localeFr, 'fr');
@@ -76,7 +76,7 @@ registerLocaleData(localeEnPh, 'en-PH', localeEnPhExtra);
     RequestFormDialogComponent,
     PrintLayoutComponent,
     InvoiceComponent,
-    TiteComponent
+    PrintComponent
   ],
   imports: [
     BrowserModule,

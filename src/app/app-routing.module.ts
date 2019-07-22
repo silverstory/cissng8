@@ -14,7 +14,7 @@ import { OPIDComponent } from './op-id/op-id.component';
 import { AccessApprovalComponent } from './access-approval/access-approval.component';
 import { InvoiceComponent } from './invoice/invoice.component';
 import { PrintLayoutComponent } from './print-layout/print-layout.component';
-import { TiteComponent } from './tite/tite.component';
+import { PrintComponent } from './print/print.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthGuard], pathMatch: 'full' },
@@ -25,7 +25,13 @@ const routes: Routes = [
       { path: 'invoice/:invoiceIds', component: InvoiceComponent }
     ]
   },
-  { path: 'tite', component: TiteComponent, pathMatch: 'full' },
+  {
+    path: 'print/:token',
+    component: PrintComponent,
+    canActivate: [AuthGuard],
+    data: { state: 'op-id' },
+    runGuardsAndResolvers: 'paramsChange'
+  },
   { path: 'OP-ID/:text', component: OPIDComponent, data: { state: 'op-id' }, runGuardsAndResolvers: 'paramsChange' },
   { path: 'login', component: LoginComponent, pathMatch: 'full' },
   { path: 'signup', component: SignupComponent, pathMatch: 'full' },

@@ -7,6 +7,23 @@ const shortId = require('./shortid-generator');
 const twofactor = require('./twofactor.service');
 const sms = require('./sms.service');
 
+const getProfileByCissToken = async (req, res, next) => {
+  try {
+    let profile = null;
+    const cursor = await Profile.Profile.find({cisstoken: req.params.token}, { _id: 0 }).limit(1).cursor();
+    profile = await cursor.next();
+    if ( profile != null ) {
+      return await res.json( profile );
+    } else {
+      return await res.send("Profile not found!");
+    }
+
+  } catch (error) {
+    console.log("Error: " + error);
+    return await res.send( "Error: " + error );
+  }
+}
+
 const getAccessApprovals = async (req, res, next) => {
   try {
     const result = await
@@ -261,5 +278,6 @@ module.exports = {
   getProfile,
   deleteProfileByIdDist,
   getAccessApprovals,
-  getResidentByName
+  getResidentByName,
+  getProfileByCissToken
 };
