@@ -8,7 +8,7 @@ RUN mkdir /home/node/.npm-global ; \
   chown -R node:node /home/node/.npm-global
 ENV PATH=/home/node/.npm-global/bin:$PATH
 ENV NPM_CONFIG_PREFIX=/home/node/.npm-global
-RUN npm install --silent --no-progress -g @angular/cli@8.0.1
+RUN npm install --silent --no-progress -g @angular/cli@8.1.1
 WORKDIR /home/node/app
 COPY ["package.json", "package-lock.json", "./"]
 RUN npm install --silent
