@@ -11,7 +11,7 @@ ENV NPM_CONFIG_PREFIX=/home/node/.npm-global
 RUN npm install --silent --no-progress -g yarn@latest
 RUN npm install --silent --no-progress -g @angular/cli@8.2.0
 WORKDIR /home/node/app
-COPY ["package.json", "yarn.lock", "./"]
+COPY ["package.json", "./"]
 RUN yarn install --silent
 COPY . .
 RUN ng build --prod --build-optimizer
@@ -20,7 +20,7 @@ RUN npm cache clean --force
 # Node server
 FROM node:12.7.0-alpine as node-server
 WORKDIR /usr/src/app
-COPY ["./server/package.json", "./server/yarn.lock", "./"]
+COPY ["./server/package.json", "./"]
 RUN yarn install --production && mv node_modules ../
 COPY ./server /usr/src/app
 
