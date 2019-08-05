@@ -8,21 +8,11 @@ RUN mkdir /home/node/.npm-global ; \
   chown -R node:node /home/node/.npm-global
 ENV PATH=/home/node/.npm-global/bin:$PATH
 ENV NPM_CONFIG_PREFIX=/home/node/.npm-global
-# bcoz of this err: The command '/bin/sh -c npm install' returned a non-zero code: 1
-RUN npm install npm@latest -g
-RUN npm install yarn@latest -g
-# NG
-RUN npm install --no-progress -g @angular/cli@8.2.0
+RUN npm install --silent --no-progress -g yarn@latest
+RUN npm install --silent --no-progress -g @angular/cli@8.2.0
 WORKDIR /home/node/app
-COPY ["package.json", "package-lock.json", "./"]
-# COPY package.json ./
-# bcoz of this err: The command '/bin/sh -c npm install' returned a non-zero code: 1
-# RUN npm cache clean --force
-# RUN rm -rf ~/.npm
-# RUN rm -rf node_modules
-# RUN rm -f package-lock.json
-# npm install
-RUN yarn install
+COPY ["package.json", "yarn.lock", "./"]
+RUN yarn install --silent
 COPY . .
 RUN ng build --prod --build-optimizer
 RUN npm cache clean --force
@@ -30,7 +20,7 @@ RUN npm cache clean --force
 # Node server
 FROM node:12.7.0-alpine as node-server
 WORKDIR /usr/src/app
-COPY ["./server/package.json", "./server/package-lock.json", "./"]
+COPY ["./server/package.json", "./server/yarn.lock", "./"]
 RUN yarn install --production && mv node_modules ../
 COPY ./server /usr/src/app
 
