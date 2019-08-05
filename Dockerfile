@@ -8,9 +8,18 @@ RUN mkdir /home/node/.npm-global ; \
   chown -R node:node /home/node/.npm-global
 ENV PATH=/home/node/.npm-global/bin:$PATH
 ENV NPM_CONFIG_PREFIX=/home/node/.npm-global
+# bcoz of this err: The command '/bin/sh -c npm install' returned a non-zero code: 1
+RUN npm install npm@latest -g
+# NG
 RUN npm install --no-progress -g @angular/cli@8.2.0
 WORKDIR /home/node/app
 COPY ["package.json", "package-lock.json", "./"]
+# bcoz of this err: The command '/bin/sh -c npm install' returned a non-zero code: 1
+RUN npm cache clean --force
+RUN rm -rf ~/.npm
+RUN rm -rf node_modules
+RUN rm -f package-lock.json
+# npm install
 RUN npm install
 COPY . .
 RUN ng build --prod --build-optimizer
