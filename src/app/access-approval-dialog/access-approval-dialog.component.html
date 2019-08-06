@@ -287,7 +287,7 @@ Legend:
           <div class="one-2-3-4" [style.background-color]="data.profile.proviaccess.colorone">1</div>
           <div class="one-2-3-4" [style.background-color]="data.profile.proviaccess.colortwo">2</div>
         </div>
-        <img mat-card-image src="{{data.freezedProfile.photothumbnailurl}}" alt="Photo" style="height:250px; object-fit: contain;">
+        <img mat-card-image [src]="service.transformPBU(data.freezedProfile.photothumbnailurl)" alt="Photo" style="height:250px; object-fit: contain;">
         <div class="row">
           <div class="one-2-3-4" [style.background-color]="data.profile.proviaccess.colorthree">3</div>
           <div class="one-2-3-4" [style.background-color]="data.profile.proviaccess.colorfour">4</div>

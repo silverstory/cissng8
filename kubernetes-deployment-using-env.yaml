@@ -44,5 +44,7 @@ spec:
             value: "twilio-from-number"
           - name: CISS_SMS_TOKEN
             value: "ciss-sms-token"
+          - name: PHOTO_BASE_URL
+            value: "photo-base-url"
           ports:
           - containerPort: 80

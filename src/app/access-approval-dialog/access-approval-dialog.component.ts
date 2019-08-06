@@ -26,8 +26,8 @@ export interface DialogData {
 @Component({
   selector: 'app-access-approval-dialog',
   templateUrl: './access-approval-dialog.component.html',
-  styleUrls: ['./access-approval-dialog.component.css'],
-  providers: [MydataserviceService]
+  styleUrls: ['./access-approval-dialog.component.css']
+  // providers: [MydataserviceService]
 })
 export class AccessApprovalDialogComponent implements OnInit {
 

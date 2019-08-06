@@ -1,7 +1,7 @@
 // import { Component, OnInit, Input, ViewEncapsulation, HostBinding } from '@angular/core';
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
-// approval templates
 import { MydataserviceService } from '../mydataservice.service';
+// approval templates
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
 import { Approvaltemplate, ApprovaltemplateObj } from '../approvaltemplate';
 import { AccessApprovalDialogComponent } from '../access-approval-dialog/access-approval-dialog.component';

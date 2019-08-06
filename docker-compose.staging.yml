@@ -15,6 +15,7 @@ services:
       TWILIO_AUTH_TOKEN: your-twilio-auth-token
       TWILIO_FROM_NUMBER: your-twilio-from-number
       CISS_SMS_TOKEN: your-ciss-sms-token
+      PHOTO_BASE_URL: your-photo-base-url
     networks:
       - webnet
   web:

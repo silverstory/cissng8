@@ -18,8 +18,21 @@ export class MydataserviceService {
   public limit = 8; // limit must be atleast 8 and above
   public newestFirst = true;
   private api = '/api';
+  public image_source = '';
 
   constructor(private http: HttpClient) { }
+
+  transformPBU(fullURL: any): any {
+    let image: string;
+    if (this.image_source === '') {
+      image = fullURL;
+    } else {
+      const old_pbu = fullURL.replace(/(http(s)?:\/\/)|(\/.*){1}/g, '');
+      const result = fullURL.replace(old_pbu, this.image_source);
+      image = result;
+    }
+    return image;
+  }
 
   getProfiles(page: number) {
     // tslint:disable-next-line:max-line-length

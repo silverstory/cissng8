@@ -16,8 +16,8 @@ import { UrlHandlingStrategy } from '@angular/router';
 @Component({
   selector: 'app-access-approval',
   templateUrl: './access-approval.component.html',
-  styleUrls: ['./access-approval.component.css'],
-  providers: [MydataserviceService]
+  styleUrls: ['./access-approval.component.css']
+  // providers: [MydataserviceService]
 })
 export class AccessApprovalComponent implements OnInit {
 

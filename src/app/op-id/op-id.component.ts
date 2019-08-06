@@ -1,4 +1,5 @@
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+import { MydataserviceService } from '../mydataservice.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 // import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ApprovaltemplateObj } from '../approvaltemplate';
@@ -66,7 +67,8 @@ export class OPIDComponent implements OnInit, OnDestroy {
   stepstext = [];
   // end approval templates
 
-  constructor(private http: HttpClient,
+  constructor(public service: MydataserviceService,
+              private http: HttpClient,
               private route: ActivatedRoute,
               private router: Router,
               private location: Location,

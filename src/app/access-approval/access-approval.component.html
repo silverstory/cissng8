@@ -55,7 +55,7 @@
           <mat-card-title>{{ i.name.first }} {{ i.name.last }}</mat-card-title>
           <mat-card-subtitle>{{ i.distinction }}</mat-card-subtitle>
         </mat-card-header>
-        <img mat-card-image src="{{ i.photothumbnailurl }}" alt="Photo">
+        <img mat-card-image [src]="service.transformPBU(i.photothumbnailurl)" alt="Photo">
         <mat-card-content>
           <p>
             <b *ngIf="i.distinction.includes('OPEMPLOYEE')">{{ i.employee.position }}</b>

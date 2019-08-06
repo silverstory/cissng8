@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
-
+import { MydataserviceService } from '../mydataservice.service';
 // approval templates
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ApprovaltemplateObj } from '../approvaltemplate';
@@ -101,6 +101,7 @@ export class VisitorComponent implements OnInit, OnDestroy {
   // end approval templates
 
   constructor(
+    public service: MydataserviceService,
     private http: HttpClient,
     private route: ActivatedRoute,
     private router: Router,
