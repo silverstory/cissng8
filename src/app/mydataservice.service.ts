@@ -23,15 +23,22 @@ export class MydataserviceService {
   constructor(private http: HttpClient) { }
 
   transformPBU(fullURL: any): any {
-    let image: string;
+    let result: string;
     if (this.image_source === '') {
-      image = fullURL;
+      result = fullURL;
     } else {
-      const old_pbu = fullURL.replace(/(http(s)?:\/\/)|(\/.*){1}/g, '');
-      const result = fullURL.replace(old_pbu, this.image_source);
-      image = result;
+
+      const img_src = this.image_source; // 'https@//example.com/'
+      const new_img_src = img_src.replace('@', ':');
+      const newUrl = fullURL.replace(/(https?:|)(^|\/\/)(.*?\/)/g, new_img_src);
+
+      // example of supplying the hostname only without a protocol (http(s)://)
+      // var OldText = "http://local.something.com:85/auth/signin";
+      // var NewText = OldText.replace (/(https?:\/\/)(.*?)(:*)/g, '$1' + 'example.com' + '$3');
+
+      result = newUrl;
     }
-    return image;
+    return result;
   }
 
   getProfiles(page: number) {

@@ -41,6 +41,7 @@ const httpOptions = {
   styleUrls: ['./op-id.component.css'],
   animations: [ homeTransition ],
   // tslint:disable-next-line:use-host-property-decorator
+  // tslint:disable-next-line:no-host-metadata-property
   host: {
     '[@homeTransition]': ''
   }
@@ -58,6 +59,7 @@ export class OPIDComponent implements OnInit, OnDestroy {
   client: String;
   phrase;
   token: String;
+  profile_picture: any;
 
   // approval templates
   private api = '/api';
@@ -107,6 +109,8 @@ export class OPIDComponent implements OnInit, OnDestroy {
       const phrase = this.route.snapshot.paramMap.get('text');
       const url = `${this.api}/opid/v/${phrase}`;
       this.profile = await this.http.get<Profile>(url).toPromise();
+      this.profile_picture = await this.service.transformPBU(this.profile.photothumbnailurl);
+      console.log(this.profile_picture);
       await this.getTemplates(this.profile);
     } else {
       const phrase = this.route.snapshot.paramMap.get('text');
@@ -185,6 +189,7 @@ export class OPIDComponent implements OnInit, OnDestroy {
         const phrase = this.route.snapshot.paramMap.get('text');
         const url = `${this.api}/opid/v/${phrase}`;
         this.profile = await this.http.get<Profile>(url).toPromise();
+        this.profile_picture = await this.service.transformPBU(this.profile.photothumbnailurl);
         await this.getTemplates(this.profile);
       } else {
         this.profile = null;

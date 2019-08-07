@@ -1,6 +1,8 @@
 // import { Component, ViewEncapsulation, HostBinding } from '@angular/core';
 // import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { MydataserviceService } from './mydataservice.service';
+import { HttpClient } from '@angular/common/http';
 import { routerTransition } from './router.animations';
 // import { Router, NavigationStart, NavigationEnd, NavigationError, ActivatedRoute } from '@angular/router';
 // import 'rxjs/add/operator/filter';
@@ -10,17 +12,19 @@ import { PrintService } from './print.service';
 
 @Component({
   selector: 'app-root',
-  animations: [ routerTransition ],
+  animations: [routerTransition],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
   // encapsulation: ViewEncapsulation.None
 })
 // export class AppComponent implements OnInit {
-  export class AppComponent {
+export class AppComponent implements OnInit {
   // @HostBinding('@routerTransition') routerTransition = true; // dinagdag lang
   title = 'op-ciss';
 
-  constructor(public printService: PrintService) { }
+  constructor(public printService: PrintService,
+              private http: HttpClient,
+              public service: MydataserviceService) { }
 
   // id = '';
   // state = '';
@@ -40,6 +44,14 @@ import { PrintService } from './print.service';
   //     .mergeMap((route) => route.data)
   //     .subscribe((event) => this.state = event['state'] + '-' + this.id );
   // }
+
+  async ngOnInit() {
+    // set image_source
+    const url = await '/api/pbu';
+    const image_source: any = await this.http.get(url).toPromise();
+    const true_host: any = image_source.image_source;
+    this.service.image_source = true_host;
+  }
 
   getState(outlet) {
 
