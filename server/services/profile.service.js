@@ -57,11 +57,11 @@ const postProfile = async (req, res, next) => {
   // `distinction` and save it to a const [base_url]
   const _profile = req.body;
   let base_url = '';
-  if ( _profile.distinction == 'OPEMPLOYEE' ) {
+  if ( _profile.distinction.includes('OPEMPLOYEE') ) {
     base_url = 'https://op-proper.gov.ph/OP-ID/';
-  } else if ( _profile.distinction == 'OPVISITOR' ) {
+  } else if ( _profile.distinction.includes('OPVISITOR') ) {
     base_url = 'https://op-proper.gov.ph/OP-ID/';
-  } else if ( _profile.distinction == 'BRGYRESIDENT' ) {
+  } else if ( _profile.distinction.includes('BRGYRESIDENT') ) {
     base_url = 'https://op-proper.gov.ph/OP-ID/';
   } else {
   }

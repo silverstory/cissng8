@@ -27,7 +27,8 @@ const createTwilioSMS = async (number, sms) => {
 
 const createSMS = async (number, sms) => {
   try {
-    const base_url = 'http://210.213.193.148:3000/api/sms?';
+    // 'http://210.213.193.148/api/sms?';
+    const base_url = 'http://192.168.23.52/api/sms?';
     const token = await `token=${config.CISS_SMS_TOKEN}`;
     number = await number.replace('+63', '0');
     const toNumber = `&number=${number}`;
