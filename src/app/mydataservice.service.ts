@@ -18,13 +18,13 @@ export class MydataserviceService {
   public limit = 8; // limit must be atleast 8 and above
   public newestFirst = true;
   private api = '/api';
-  public image_source = '';
+  public image_source = '-';
 
   constructor(private http: HttpClient) { }
 
   transformPBU(fullURL: any): any {
     let result: string;
-    if (this.image_source === '') {
+    if (this.image_source === '-') {
       result = fullURL;
     } else {
 
