@@ -191,7 +191,7 @@ const ProfileSchema = new Schema({
   },
   gender: {
     type: String,
-    default: 'not set'
+    default: 'male'
   },
   nextstep: {
     type: Number,
