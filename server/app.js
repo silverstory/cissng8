@@ -62,6 +62,8 @@ const approvaltemplate = require('./routes/approvaltemplate');
 app.use('/api', approvaltemplate);
 const assets = require('./routes/assets');
 app.use('/api', assets);
+const sms = require('./routes/sms');
+app.use('/api', sms);
 
 // try to implement this line if it'll solve resource not found if :3000/{path}
 // app.get('*', (req, res) => {

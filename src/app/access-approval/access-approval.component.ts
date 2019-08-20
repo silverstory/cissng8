@@ -1,5 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MydataserviceService } from '../mydataservice.service';
+import { SmsServiceService } from '../sms-service.service';
 import { Profile, ProfileObj } from '../profile';
 import { Approvaltemplate, ApprovaltemplateObj } from '../approvaltemplate';
 import { BehaviorSubject, Observable, from } from 'rxjs';
@@ -10,7 +11,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatSlideToggleChange } from '
 import { switchMap, map, tap, mergeMap } from 'rxjs/operators';
 import { MatSnackBar } from '@angular/material';
 
-import { HttpClient , HttpHeaders  } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { UrlHandlingStrategy } from '@angular/router';
 
 @Component({
@@ -86,11 +87,12 @@ export class AccessApprovalComponent implements OnInit {
   // end for new approval workflow
 
   constructor(public service: MydataserviceService,
-              public dialog: MatDialog,
-              public snackBar: MatSnackBar,
-              private authService: AuthService,
-              private http: HttpClient
-              ) { }
+    public smsService: SmsServiceService,
+    public dialog: MatDialog,
+    public snackBar: MatSnackBar,
+    private authService: AuthService,
+    private http: HttpClient
+  ) { }
 
   async ngOnInit() {
     this._loading.next(true);
@@ -210,25 +212,25 @@ export class AccessApprovalComponent implements OnInit {
     if (this.hasNextPage === true) {
 
       this.service.getApprovalTemplate()
-      .pipe(
-        map( (usertemplate: any) => {
-          this.service.userapprovaltemplate = new ApprovaltemplateObj(usertemplate);
-          this.usertemplate = new ApprovaltemplateObj(usertemplate);
-          this.service.nextstep = usertemplate.step;
-        }),
-        switchMap(profiles => this.service.getProfiles(this.page))
-      )
-      .subscribe({
-        next: (res: any) => {
-          this.hasNextPage = res.hasNextPage;
-          this.nextPage = res.nextPage;
-          this.onProfileSuccess(res.docs);
-        },
-        complete: () => {
-          if (this.hasNextPage === false) { this._done.next(true); }
-          this._loading.next(false);
-        }
-      });
+        .pipe(
+          map((usertemplate: any) => {
+            this.service.userapprovaltemplate = new ApprovaltemplateObj(usertemplate);
+            this.usertemplate = new ApprovaltemplateObj(usertemplate);
+            this.service.nextstep = usertemplate.step;
+          }),
+          switchMap(profiles => this.service.getProfiles(this.page))
+        )
+        .subscribe({
+          next: (res: any) => {
+            this.hasNextPage = res.hasNextPage;
+            this.nextPage = res.nextPage;
+            this.onProfileSuccess(res.docs);
+          },
+          complete: () => {
+            if (this.hasNextPage === false) { this._done.next(true); }
+            this._loading.next(false);
+          }
+        });
 
       // // old working without approval template march 2019
       // // this.service.getProfiles(this.page)
@@ -287,9 +289,9 @@ export class AccessApprovalComponent implements OnInit {
     switch (value) {
       case 'notSelected':
         return '';
-        case 'selected':
-        return `Code ${code} ` ;
-      }
+      case 'selected':
+        return `Code ${code} `;
+    }
   }
 
   openDialog(): void {
@@ -311,14 +313,14 @@ export class AccessApprovalComponent implements OnInit {
       // result.action here
       switch (result.action) {
         case 'Cancelled':
-        this.profile = p;
+          this.profile = p;
           break;
         case 'Endorse Access':
           // set accessaproval to Provisional
           this.profile = result.profile;
           this.profile.accessapproval = 'Provisional';
           this.profile.nextstep = this.usertemplate.tosaveonprofilesnextstep;
-​          // update db with this.profile
+          // update db with this.profile
           this.saveProfile();
           break;
         case 'Deny Request':
@@ -339,34 +341,34 @@ export class AccessApprovalComponent implements OnInit {
           // update db with this.profile
           this.saveProfile();
           break;
-          case 'ID Printed':
-            // set access to proviaccess
-            this.profile = result.profile;
-            this.profile.access = this.profile.proviaccess;
-            // set accessaproval to Printed
-            this.profile.accessapproval = 'Printed';
-            this.profile.nextstep = this.usertemplate.tosaveonprofilesnextstep;
-            // update db with this.profile
-            this.saveProfile();
+        case 'ID Printed':
+          // set access to proviaccess
+          this.profile = result.profile;
+          this.profile.access = this.profile.proviaccess;
+          // set accessaproval to Printed
+          this.profile.accessapproval = 'Printed';
+          this.profile.nextstep = this.usertemplate.tosaveonprofilesnextstep;
+          // update db with this.profile
+          this.saveProfile();
           break;
-          case 'ID Distributed':
-            // set access to proviaccess
-            this.profile = result.profile;
-            this.profile.access = this.profile.proviaccess;
-            // set accessaproval to Distributed
-            this.profile.accessapproval = 'Distributed';
-            this.profile.nextstep = this.usertemplate.tosaveonprofilesnextstep;
-            if (!p.distinction.includes('OPVISITOR')) {
-              this.profile.recordstatus = 'ACTIVE';
-            }
-            // update db with this.profile
-            this.saveProfile();
-            break;
+        case 'ID Distributed':
+          // set access to proviaccess
+          this.profile = result.profile;
+          this.profile.access = this.profile.proviaccess;
+          // set accessaproval to Distributed
+          this.profile.accessapproval = 'Distributed';
+          this.profile.nextstep = this.usertemplate.tosaveonprofilesnextstep;
+          if (!p.distinction.includes('OPVISITOR')) {
+            this.profile.recordstatus = 'ACTIVE';
+          }
+          // update db with this.profile
+          this.saveProfile();
+          break;
         case '':
           this.profile = p;
           break;
         default:
-        this.profile = p;
+          this.profile = p;
           break;
       }
     });
@@ -374,19 +376,48 @@ export class AccessApprovalComponent implements OnInit {
 
   saveProfile(): void {
     this.service.saveProfile(this.profile)
-    .pipe( tap((res: any) => res) )
-    .subscribe({
-      next: (res: any) => {
-        this.snackBar.open('Success!', 'Profile updated.', {
-          duration: 5000,
+      .pipe(tap((res: any) => res))
+      .subscribe({
+        next: (res: any) => {
+          const name = this.profile.gender === 'male' ? `Mr. ${this.profile.name.last}` : `Ms. ${this.profile.name.last}`;
+          if (this.profile.accessapproval === 'Approved') {
+            this.sendSMS(this.profile.mobile, `Good day ${name}!
+ Your access request to Malacanang / OP Proper has been approved.
+ You can view your Virtual ID using this link: ${this.profile.cissinqtext}`);
+          } else if (this.profile.accessapproval === 'Denied') {
+            this.sendSMS(this.profile.mobile, `Dear ${name},
+ We regret to inform you that due to security concerns, your access request to Malacanang / OP Proper has been denied.`);
+          } else {
+            this.snackBar.open('Success!', 'Profile updated.', {
+              duration: 5000,
+            });
+          }
+          if (this.service.usertype === 'ID-PRINTING-OFFICER') {
+            this.sendSMS(this.profile.mobile, `Good day ${name}!
+ Your new OP ID / Malacanang Control ID is already printed.
+ You may claim your new OP ID / Malacanang Control ID from your respective ID Distribution Office after 24 hours.`);
+          }
+        },
+        complete: () => {
+          // refresh infin8 list
+          this.refreshInfin8List();
+          this.updateBadges();
+        }
+      });
+  }
+
+  async sendSMS(mobile: String, message: String) {
+    const smsResponse: any = await this.smsService.sendSMS(mobile, message);
+    if (smsResponse.success) {
+      this.snackBar.open(`Notification sent to ${this.profile.name.first} ${this.profile.name.last}'s mobile number.`,
+        'Sending notification succeeded.', {
+          duration: 7000,
         });
-      },
-      complete: () => {
-        // refresh infin8 list
-        this.refreshInfin8List();
-        this.updateBadges();
-      }
-    });
+    } else {
+      this.snackBar.open('Sending notification failed!', 'Something went wrong :(', {
+        duration: 7000,
+      });
+    }
   }
 
   OnMatCardClickEvent(item: any): void {

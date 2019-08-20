@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { MydataserviceService } from '../mydataservice.service';
+import { SmsServiceService } from '../sms-service.service';
 // approval templates
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
 import { Approvaltemplate, ApprovaltemplateObj } from '../approvaltemplate';
@@ -110,6 +111,7 @@ export class VisitorComponent implements OnInit, OnDestroy {
 
   constructor(
     public service: MydataserviceService,
+    public smsService: SmsServiceService,
     private http: HttpClient,
     private route: ActivatedRoute,
     private router: Router,
@@ -268,7 +270,7 @@ export class VisitorComponent implements OnInit, OnDestroy {
           // set accessaproval to Denied
           this.profile = this.service.unfreezeProfile(p);
           this.profile.accessapproval = 'Denied';
-          this.profile.nextstep = this.usertemplate.tosaveonprofilesnextstep;
+          this.profile.nextstep = 0;
           // update db with this.profile
           this.saveProfile();
           break;
@@ -297,15 +299,39 @@ export class VisitorComponent implements OnInit, OnDestroy {
       .pipe(tap((res: any) => res))
       .subscribe({
         next: (res: any) => {
-          this.snackBar.open('Success!', 'Profile updated.', {
-            duration: 5000,
-          });
+          const name = this.profile.gender === 'male' ? `Mr. ${this.profile.name.last}` : `Ms. ${this.profile.name.last}`;
+          if (this.profile.accessapproval === 'Approved') {
+            this.sendSMS(this.profile.mobile, `Good day ${name}!
+ Your visit request to Malacanang has been approved.
+ You can view your Virtual Visitor Pass using this link: ${this.profile.cissinqtext}`);
+          } else if (this.profile.accessapproval === 'Denied') {
+            this.sendSMS(this.profile.mobile, `Dear ${name},
+ We regret to inform you that due to security reasons, your visit request to Malacanang has been denied.`);
+          } else {
+            this.snackBar.open('Success!', 'Profile updated.', {
+              duration: 5000,
+            });
+          }
         },
         complete: () => {
           // refresh to updated profile
           this.getProfile();
         }
       });
+  }
+
+  async sendSMS(mobile: String, message: String) {
+    const smsResponse: any = await this.smsService.sendSMS(mobile, message);
+    if (smsResponse.success) {
+      this.snackBar.open(`Approval notification sent to ${this.profile.name.first} ${this.profile.name.last}'s mobile number.`,
+        'Sending notification succeeded.', {
+          duration: 7000,
+        });
+    } else {
+      this.snackBar.open('Sending notification failed!', 'Something went wrong :(', {
+        duration: 7000,
+      });
+    }
   }
 
 }

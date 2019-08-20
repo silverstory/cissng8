@@ -27,15 +27,12 @@ export class MydataserviceService {
     if (this.image_source === '-') {
       result = fullURL;
     } else {
-
       const img_src = this.image_source; // 'https@//example.com/'
       const new_img_src = img_src.replace('@', ':');
       const newUrl = fullURL.replace(/(https?:|)(^|\/\/)(.*?\/)/g, new_img_src);
-
       // example of supplying the hostname only without a protocol (http(s)://)
       // var OldText = "http://local.something.com:85/auth/signin";
       // var NewText = OldText.replace (/(https?:\/\/)(.*?)(:*)/g, '$1' + 'example.com' + '$3');
-
       result = newUrl;
     }
     return result;
