@@ -14,7 +14,7 @@ export class SmsServiceService {
   constructor(private httpClient: HttpClient) { }
 
   async sendSMS(mobile: String, message: String) {
-    const base_url = 'http://localhost/api/sms/send?';
+    const base_url = '/api/sms/send?';
     mobile = mobile.replace('+63', '0');
     const toMobile = `mobile=${mobile}`;
     const textMessage = `&message=${message}`;
