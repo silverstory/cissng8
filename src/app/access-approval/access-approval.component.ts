@@ -41,6 +41,33 @@ export class AccessApprovalComponent implements OnInit {
     { id: 13, name: 'OPVISITOR-VIP', alias: 'VIP VISITOR', badge: 0, badgehidden: true, badgecolor: 'accent', badgesize: 'medium' }
   ];
 
+  public statuschips = [
+    {
+      id: 1, name: 'New Record', alias: 'New', badge: 0, badgehidden: true,
+      chipcolor: 'primary', badgecolor: 'accent', badgesize: 'medium'
+    },
+    {
+      id: 2, name: 'Provisional', alias: 'Provi', badge: 0, badgehidden: true,
+      chipcolor: 'warn', badgecolor: 'primary', badgesize: 'medium'
+    },
+    {
+      id: 3, name: 'Approved', alias: 'Apprvd', badge: 0, badgehidden: true,
+      chipcolor: 'accent', badgecolor: 'warn', badgesize: 'medium'
+    },
+    {
+      id: 4, name: 'Printed', alias: 'Printed', badge: 0, badgehidden: true,
+      chipcolor: 'primary', badgecolor: 'accent', badgesize: 'medium'
+    },
+    {
+      id: 5, name: 'Distributed', alias: 'Dist', badge: 0, badgehidden: true,
+      chipcolor: 'accent', badgecolor: 'warn', badgesize: 'medium'
+    },
+    {
+      id: 6, name: 'Denied', alias: 'Denied', badge: 0, badgehidden: true,
+      chipcolor: 'warn', badgecolor: 'primary', badgesize: 'medium'
+    },
+  ];
+
   public face_icons = [
     'OPEMPLOYEE',
     'BRGYRESIDENT-PSG',
@@ -109,6 +136,7 @@ export class AccessApprovalComponent implements OnInit {
     }
 
     setTimeout(async () => {
+      await this.updateStatusBadges();
       await this.updateBadges();
     }, 1000);
 
@@ -133,7 +161,7 @@ export class AccessApprovalComponent implements OnInit {
       const usertype = this.service.usertype;
       const findtext = this.service.find;
       const useroffice = this.service.useroffice;
-      const largemeter = 100;
+      const largemeter = 99;
       let nextstep = 100;
 
       const body = {
@@ -196,6 +224,70 @@ export class AccessApprovalComponent implements OnInit {
     this.hasNextPage = true;
     this.getProfiles();
   }
+
+  // status badge updater
+  async updateStatusBadges() {
+
+    const largemeter = 99;
+    const usertype = this.service.usertype;
+    const useroffice = this.service.useroffice;
+
+    // iterate through statuses using
+    for await (const statuschip of this.statuschips) {
+
+      // initialize count = 0;
+      let count = 0;
+      const findtext = statuschip.name;
+
+      // iterate through each distinction passing the
+      // loop item status as parameter to the api call
+      for await (const chip of this.chips) {
+
+        // get approval template
+        const distinction = chip.name;
+        let nextstep = 100;
+
+        const body = {
+          distinction: distinction,
+          usertype: usertype
+        };
+        const approvaltemplateurl = '/api/approvaltemplate';
+        const approvaltemplate: Approvaltemplate = await this.http.post<Approvaltemplate>(approvaltemplateurl, body).toPromise();
+        if (approvaltemplate !== null) {
+          nextstep = approvaltemplate.step;
+        }
+
+        // tslint:disable-next-line:max-line-length
+        const url = `/api/profile/accessapprovals?findtext=${findtext}&distinction=${distinction}&nextstep=${nextstep}&useroffice=${useroffice}&page=1&limit=1&newestfirst=${true}`;
+        const profile: any = await this.http.get<any>(url).toPromise();
+        if (profile !== null) {
+          count += profile.totalDocs;
+        }
+
+      } // end iterate through each distinction
+
+      // update status badge
+      const item = statuschip;
+
+      const index = this.statuschips.indexOf(item);
+      // update badges properties lang
+      item.badge = count;
+      if (item.badge < 1) {
+        item.badgehidden = true;
+      }
+      if (item.badge >= 1 && item.badge <= largemeter) {
+        item.badgehidden = false;
+        item.badgesize = 'medium';
+      }
+      if (item.badge > largemeter) {
+        item.badgehidden = false;
+        item.badgesize = 'large';
+      }
+      this.statuschips[index] = item;
+
+    } // end statuses iteration
+
+  } // end status badge updater
 
   // docs {Array} - Array of documents
   // totalDocs {Number} - Total number of documents in collection that match a query
@@ -401,6 +493,7 @@ export class AccessApprovalComponent implements OnInit {
         complete: () => {
           // refresh infin8 list
           this.refreshInfin8List();
+          this.updateStatusBadges();
           this.updateBadges();
         }
       });
