@@ -148,7 +148,15 @@ export class OPIDComponent implements OnInit, OnDestroy {
       if (items !== undefined) {
         await items.forEach(async item => {
           await this.steps.push(await new ApprovaltemplateObj(item));
-          if (item.step < profile.nextstep || profile.accessapproval === 'Approved') {
+          let completeFlag = 'Distributed';
+          if (profile.distinction.includes('OPEMPLOYEE')) {
+            completeFlag = 'Distributed';
+          } else if (profile.distinction.includes('BRGYRESIDENT')) {
+            completeFlag = 'Distributed';
+          } else if (profile.distinction.includes('OPVISITOR')) {
+            completeFlag = 'Approved';
+          }
+          if (item.step < profile.nextstep || profile.accessapproval === completeFlag) {
             await this.completedBa.push(true);
             await this.stepstext.push(item.completedsteptext);
           } else {
