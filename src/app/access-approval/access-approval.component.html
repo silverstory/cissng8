@@ -17,8 +17,18 @@
       </button>
       &nbsp;
     </div>
+    &nbsp;&nbsp;
 
-    &nbsp;&nbsp;LIST OF {{ service.find | uppercase }} ACCESS ( {{ current_distinction_alias | uppercase }} )
+    <!-- LIST OF {{ service.find | uppercase }} ACCESS ( {{ current_distinction_alias | uppercase }} ) -->
+    <ng-container [ngSwitch]="selectedAnimation">
+      <ng-container *ngSwitchCase="'swing'">
+        <div class="list-item" [@swingInAndOut] *ngFor="let title of titles">{{ title }}</div>
+      </ng-container>
+      <ng-container *ngSwitchCase="'slideFromRight'">
+        <div class="list-item" [@enterAndLeaveFromRight] *ngFor="let title of titles">{{ title }}</div>
+      </ng-container>
+    </ng-container>
+
   </span>
 </mat-toolbar>
 <!-- <section class="example-section"> -->

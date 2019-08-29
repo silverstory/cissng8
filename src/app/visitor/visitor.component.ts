@@ -300,6 +300,9 @@ export class VisitorComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (res: any) => {
           const name = this.profile.gender === 'male' ? `Mr. ${this.profile.name.last}` : `Ms. ${this.profile.name.last}`;
+          this.snackBar.open('Profile information changed!', 'Profile updated.', {
+            duration: 5000,
+          });
           if (this.profile.accessapproval === 'Approved') {
             this.sendSMS(this.profile.mobile, `Good day ${name}!
  Your visit request to Malacanang has been approved.
@@ -307,11 +310,7 @@ export class VisitorComponent implements OnInit, OnDestroy {
           } else if (this.profile.accessapproval === 'Denied') {
             this.sendSMS(this.profile.mobile, `Dear ${name},
  We regret to inform you that due to security reasons, your visit request to Malacanang has been denied.`);
-          } else {
-            this.snackBar.open('Success!', 'Profile updated.', {
-              duration: 5000,
-            });
-          }
+          } else { }
         },
         complete: () => {
           // refresh to updated profile

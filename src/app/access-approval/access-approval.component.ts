@@ -14,11 +14,31 @@ import { MatSnackBar } from '@angular/material';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { UrlHandlingStrategy } from '@angular/router';
 
+import { transition, trigger, useAnimation } from '@angular/animations';
+import { slideFadeIn, slideFadeOut, useSlideFadeInAnimation, useSlideFadeOutAnimation } from '../../animations';
+import {
+  bounceInAndOut, enterAndLeaveFromLeft, enterAndLeaveFromRight, fadeInAndOut,
+  fadeInThenOut, growInShrinkOut, swingInAndOut
+} from '../../triggers';
+
 @Component({
   selector: 'app-access-approval',
   templateUrl: './access-approval.component.html',
-  styleUrls: ['./access-approval.component.css']
-  // providers: [MydataserviceService]
+  styleUrls: ['./access-approval.component.css'],
+  animations: [
+    // The following are pre-built triggers - Use these to add animations with the least work
+    growInShrinkOut, fadeInThenOut, swingInAndOut, fadeInAndOut,
+    enterAndLeaveFromLeft, enterAndLeaveFromRight, bounceInAndOut,
+
+    // The following is a custom trigger using animations from the package
+    // Use this approach if you need to customize the animation or use your own states
+    trigger('enterFromLeftLeaveToRight', [
+      // this transition uses a function that returns an animation with custom parameters
+      transition(':enter', useSlideFadeInAnimation('300ms', '20px')),
+      // This transition uses useAnimation and passes the parameters directly - accomplishing the same thing as the above function
+      transition(':leave', useAnimation(slideFadeOut, { params: { time: '2000ms', endPos: '100px' } })),
+    ]),
+  ],
 })
 export class AccessApprovalComponent implements OnInit {
 
@@ -112,6 +132,9 @@ export class AccessApprovalComponent implements OnInit {
   current_approvalstatus = 'Provisional';
   current_distinction_alias = 'OP EMPLOYEE';
   // end for new approval workflow
+
+  selectedAnimation = 'slideFromRight';
+  titles: String[] = [ `LIST OF ${ this.service.find.toUpperCase() } STATUS INVOLVING ${ this.current_distinction_alias.toUpperCase() }` ];
 
   constructor(public service: MydataserviceService,
     public smsService: SmsServiceService,
@@ -211,6 +234,8 @@ export class AccessApprovalComponent implements OnInit {
     this.current_distinction = chipname;
     const chip = this.chips.find(c => c.name === chipname);
     this.current_distinction_alias = chip.alias;
+    const x = `LIST OF ${ this.service.find.toUpperCase() } STATUS INVOLVING ${ this.current_distinction_alias.toUpperCase() }`;
+    this.titles = [ x ];
     this.refreshInfin8List();
   }
 
@@ -472,6 +497,9 @@ export class AccessApprovalComponent implements OnInit {
       .subscribe({
         next: (res: any) => {
           const name = this.profile.gender === 'male' ? `Mr. ${this.profile.name.last}` : `Ms. ${this.profile.name.last}`;
+          this.snackBar.open('Profile information changed!', 'Profile updated.', {
+            duration: 5000,
+          });
           if (this.profile.accessapproval === 'Approved') {
             this.sendSMS(this.profile.mobile, `Good day ${name}!
  Your access request to Malacanang / OP Proper has been approved.
@@ -479,11 +507,7 @@ export class AccessApprovalComponent implements OnInit {
           } else if (this.profile.accessapproval === 'Denied') {
             this.sendSMS(this.profile.mobile, `Dear ${name},
  We regret to inform you that due to security concerns, your access request to Malacanang / OP Proper has been denied.`);
-          } else {
-            this.snackBar.open('Success!', 'Profile updated.', {
-              duration: 5000,
-            });
-          }
+          } else { }
           if (this.service.usertype === 'ID-PRINTING-OFFICER') {
             this.sendSMS(this.profile.mobile, `Good day ${name}!
  Your new OP ID / Malacanang Control ID is already printed.
@@ -521,6 +545,8 @@ export class AccessApprovalComponent implements OnInit {
   OnAccessTypeClickEvent(type: string): void {
     this.service.find = type;
     this.current_approvalstatus = type;
+    const x = `LIST OF ${ this.service.find.toUpperCase() } STATUS INVOLVING ${ this.current_distinction_alias.toUpperCase() }`;
+    this.titles = [ x ];
     this.refreshInfin8List();
     this.updateBadges();
   }
