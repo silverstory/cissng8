@@ -61,7 +61,12 @@
     <!-- end preface -->
     <!-- radio and toggle on nested grid -->
     <!-- *ngIf="!(user.usertype === 'PSG-CISS-MANAGER' && data.data.freezedProfile.accessapproval === 'Provisional')" -->
-    <div>
+
+    <!-- If ID-PRINTING-OFFICER or ID-DISTRIBUTION-OFFICER, hide the access restriction div -->
+    <div *ngIf="!((data.usertemplate.usertype.includes('ID-PRINTING-OFFICER') ||
+                   data.usertemplate.usertype.includes('ID-DISTRIBUTION-OFFICER')) &&
+                  (data.freezedProfile.accessapproval === 'Approved' ||
+                   data.freezedProfile.accessapproval === 'Printed'))">
       <!-- <div class="row"> -->
         <mat-card class="example-card">
           <mat-card-header>
