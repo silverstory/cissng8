@@ -204,13 +204,17 @@ export class AccessApprovalDialogComponent implements OnInit {
               next: (res: any) => {
                 const items = res.docs;
                 if (items !== undefined) {
+                  let previousStep = -1;
                   items.forEach(item => {
-                    this.steps.push(new ApprovaltemplateObj(item));
-                    if (item.step < this.data.freezedProfile.nextstep || this.data.freezedProfile.accessapproval === finishText) {
-                      this.completedBa.push(true);
-                    } else {
-                      this.completedBa.push(false);
+                    if (item.step > previousStep) {
+                      this.steps.push(new ApprovaltemplateObj(item));
+                      if (item.step < this.data.freezedProfile.nextstep || this.data.freezedProfile.accessapproval === finishText) {
+                        this.completedBa.push(true);
+                      } else {
+                        this.completedBa.push(false);
+                      }
                     }
+                    previousStep = item.step;
                   });
                 }
               },

@@ -134,7 +134,10 @@ export class AccessApprovalComponent implements OnInit {
   // end for new approval workflow
 
   selectedAnimation = 'slideFromRight';
-  titles: String[] = [ `LIST OF ${ this.service.find.toUpperCase() } STATUS INVOLVING ${ this.current_distinction_alias.toUpperCase() }` ];
+  // SHOWING THE LIST OP EMPLOYEES WITH APPROVED STATUS
+  titles: String[] = [`SHOWING THE LIST OF
+  ${ this.current_distinction_alias.toUpperCase()}S
+  WITH ${ this.service.find.toUpperCase()} STATUS`];
 
   constructor(public service: MydataserviceService,
     public smsService: SmsServiceService,
@@ -234,7 +237,9 @@ export class AccessApprovalComponent implements OnInit {
     this.current_distinction = chipname;
     const chip = this.chips.find(c => c.name === chipname);
     this.current_distinction_alias = chip.alias;
-    const x = `LIST OF ${ this.service.find.toUpperCase() } STATUS INVOLVING ${ this.current_distinction_alias.toUpperCase() }`;
+    const x = `SHOWING THE LIST OF
+    ${ this.current_distinction_alias.toUpperCase()}S
+    WITH ${ this.service.find.toUpperCase()} STATUS`;
     this.titles = [ x ];
     this.refreshInfin8List();
   }
@@ -545,7 +550,9 @@ export class AccessApprovalComponent implements OnInit {
   OnAccessTypeClickEvent(type: string): void {
     this.service.find = type;
     this.current_approvalstatus = type;
-    const x = `LIST OF ${ this.service.find.toUpperCase() } STATUS INVOLVING ${ this.current_distinction_alias.toUpperCase() }`;
+    const x = `SHOWING THE LIST OF
+    ${ this.current_distinction_alias.toUpperCase()}S
+    WITH ${ this.service.find.toUpperCase()} STATUS`;
     this.titles = [ x ];
     this.refreshInfin8List();
     this.updateBadges();

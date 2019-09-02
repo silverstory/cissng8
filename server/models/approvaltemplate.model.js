@@ -37,6 +37,11 @@ const ApprovaltemplateSchema = new Schema({
   dialogbuttontext : {
     type: String,
     required: [true, 'DialogButtonText is required']
+  },
+  showonstepper : {
+    type: String,
+    default: 'No',
+    required: [true, 'ShowOnStepper is required']
   }
 })
 
@@ -51,7 +56,8 @@ const Approvaltemplate = mongoose.model('Approvaltemplate', ApprovaltemplateSche
 
 findTemplatesByDistinction = async (distinction, page, limit) => {
   const query = {
-    distinction: distinction
+    distinction: distinction,
+    showonstepper: "Yes"
   };
   const sortOrder = 1;
   const options = {

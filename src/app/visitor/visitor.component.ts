@@ -186,15 +186,19 @@ export class VisitorComponent implements OnInit, OnDestroy {
     if (templates !== null) {
       const items = await templates.docs;
       if (items !== undefined) {
+        let previousStep = -1;
         await items.forEach(async item => {
-          await this.steps.push(await new ApprovaltemplateObj(item));
-          if (item.step < profile.nextstep || profile.accessapproval === 'Approved') {
-            await this.completedBa.push(true);
-            await this.stepstext.push(item.completedsteptext);
-          } else {
-            await this.completedBa.push(false);
-            await this.stepstext.push(item.activesteptext);
+          if (item.step > previousStep) {
+            await this.steps.push(await new ApprovaltemplateObj(item));
+            if (item.step < profile.nextstep || profile.accessapproval === 'Approved') {
+              await this.completedBa.push(true);
+              await this.stepstext.push(item.completedsteptext);
+            } else {
+              await this.completedBa.push(false);
+              await this.stepstext.push(item.activesteptext);
+            }
           }
+          previousStep = item.step;
         });
       }
     }

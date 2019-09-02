@@ -8,6 +8,7 @@ export interface Approvaltemplate {
   activesteptext: String;
   completedsteptext: String;
   dialogbuttontext: String;
+  showonstepper: String;
 }
 
 export class ApprovaltemplateObj implements Approvaltemplate {
@@ -20,6 +21,7 @@ export class ApprovaltemplateObj implements Approvaltemplate {
   activesteptext: String;
   completedsteptext: String;
   dialogbuttontext: String;
+  showonstepper: String;
 
   constructor(item?: Approvaltemplate) {
       if (item !== undefined) {
