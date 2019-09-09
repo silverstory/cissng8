@@ -1,0 +1,24 @@
+{
+    "name" : {
+        "first" : "Xi",
+        "middle" : "Jin",
+        "last" : "Ping"
+    },
+    "profileid" : "the-event-code",
+    "mobile" : "+639271991817",
+    "email" : "c@c.com",
+    "distinction" : "EVENT-GUEST || EVENT-VIP",
+    "personaccesslevel" : "PASSING THROUGH",
+    "recordstatus" : "ACTIVE",
+    "photothumbnailurl" : "https://images.pexels.com/photos/459880/pexels-photo-459880.jpeg",
+    "event": {
+        "guestid": "the-event-guestid-field-from-event-guests-collection",
+        "guestaffiliation": "Peoples Republic of China",
+        "eventid": "the-eventid-field-from-events-collection",
+        "eventname": "event-name-or-title-here",
+        "eventdetails": "event-remarks-here",
+        "eventcreator": "the first two chars of eventcode e.g. AO || PO",
+        "timeofevent": "2018-05-30T02:33:10.815Z",
+        "gueststatus": "Approved"
+      }
+}

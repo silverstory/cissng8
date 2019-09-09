@@ -33,6 +33,16 @@ export interface Profile {
     timeofappointment: Date;
     visitstatus: String;
   };
+  event: {
+    guestid: String;
+    guestaffiliation: String;
+    eventid: String;
+    eventname: String;
+    eventdetails: String;
+    eventcreator: String;
+    timeofevent: Date;
+    gueststatus: String;
+  };
   datecreated: Date;
   dateupdated: Date;
   two_factor_temp_secret: String;
@@ -100,6 +110,16 @@ export class ProfileObj implements Profile {
     visitordestination: String;
     timeofappointment: Date;
     visitstatus: String;
+  };
+  event: {
+    guestid: String;
+    guestaffiliation: String;
+    eventid: String;
+    eventname: String;
+    eventdetails: String;
+    eventcreator: String;
+    timeofevent: Date;
+    gueststatus: String;
   };
   datecreated: Date;
   dateupdated: Date;

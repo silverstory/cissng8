@@ -1,0 +1,84 @@
+on events
+
+vegas qr code will used in ciss
+instead of ciss generated qr code
+
+ciss 8-digit code will remain ciss generated
+
+group cards on approval component using this
+
+https://stackblitz.com/edit/angular-groupby-jbse6a
+
+
+vegas adjustments
+
+put event id in profileid and
+
+guestid in visitorid
+
+
+ciss adjustments
+
+qr code will come from vegas not generated
+
+8-digit code stays ciss generated
+
+
+para sa events, mag add ka ng dalawang user
+na ang usertype EVENT-MANAGER
+tapos ang useroffice nila, AO tsaka PO
+
+Sila head ng AO o PO office na ang role
+sa ciss ay taga endorse ng event guest
+sa PSG
+
+tapos sa approval component
+
+if dist includes EVENT && usertype also includes EVENT then
+the current view can change the textfield matPrefix
+
+if usertype is ( PG, S2, CO, GC )
+show textfield that has no matPrefix
+PSG must provide the whole eventcode 'AO1234'
+then the app will replace AO to AS or PO to PS
+
+Example:
+'AO1234' or 'PO1234' to 'AS1234' or 'PS1234'
+
+And the API in the back-end will then revert this change
+to be able to find correct eventcode
+
+para sa events parin, kapag ang distinction includes ( 'EVENT' )
+
+ito gamitin mo pang toggle ng all events at specific event:
+
+https://material.angular.io/components/button-toggle/examples
+
+caption: Event Filter: All Events, By Event Code
+
+kapag may event code na na-provide sa app
+
+gamitin ito : https://stackblitz.com/edit/angular-gvzbv1
+
+yung useroffice na galing sa users table, yung ang gamitin
+mo sa matPrefix
+tapos i-concat mo yung sa 4-digit na i-susupply sa textbox
+
+example product: 'AO1234'
+
+tapos i-supply mo sa useroffice field ng profilesPaginated API
+
+ang product value na nacombine mo
+
+
+regex
+
+^((\s)*([a-zA-Z]{2}))([0-9]{4})?$
+
+
+will match
+
+AO1234
+
+
+console.log(/^((\s)*([a-zA-Z]{2}))([0-9]{4})?$/.test('AO1234')); // true

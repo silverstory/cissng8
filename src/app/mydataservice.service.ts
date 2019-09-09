@@ -88,6 +88,7 @@ export class MydataserviceService {
       employee,
       resident,
       visitor,
+      event,
       datecreated,
       dateupdated,
       two_factor_temp_secret,
@@ -137,6 +138,16 @@ export class MydataserviceService {
         visitordestination: visitor.visitordestination,
         timeofappointment: visitor.timeofappointment,
         visitstatus: visitor.visitstatus
+      }) : {},
+      event: event !== undefined ? Object.freeze({
+        guestid: event.guestid,
+        guestaffiliation: event.guestaffiliation,
+        eventid: event.eventid,
+        eventname: event.eventname,
+        eventdetails: event.eventdetails,
+        eventcreator: event.eventcreator,
+        timeofevent: event.timeofevent,
+        gueststatus: event.gueststatus
       }) : {},
       datecreated: datecreated,
       dateupdated: dateupdated,
@@ -192,6 +203,7 @@ export class MydataserviceService {
       employee,
       resident,
       visitor,
+      event,
       datecreated,
       dateupdated,
       two_factor_temp_secret,
@@ -242,6 +254,16 @@ export class MydataserviceService {
         timeofappointment: visitor.timeofappointment,
         visitstatus: visitor.visitstatus
       } : {},
+      event: event !== undefined ? Object.freeze({
+        guestid: event.guestid,
+        guestaffiliation: event.guestaffiliation,
+        eventid: event.eventid,
+        eventname: event.eventname,
+        eventdetails: event.eventdetails,
+        eventcreator: event.eventcreator,
+        timeofevent: event.timeofevent,
+        gueststatus: event.gueststatus
+      }) : {},
       datecreated: datecreated,
       dateupdated: dateupdated,
       two_factor_temp_secret: two_factor_temp_secret,

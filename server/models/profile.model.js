@@ -101,6 +101,32 @@ const ProfileSchema = new Schema({
       type: String
     }
   },
+  event: {
+    guestid: {
+      type: String
+    },
+    guestaffiliation: {
+      type: String
+    },
+    eventid: {
+      type: String
+    },
+    eventname: {
+      type: String
+    },
+    eventdetails: {
+      type: String
+    },
+    eventcreator: {
+      type: String
+    },
+    timeofevent: {
+      type: Date
+    },
+    gueststatus: {
+      type: String
+    }
+  },
   datecreated: {
     type: Date,
     // `Date.now()` returns the current unix timestamp as a number
@@ -209,12 +235,21 @@ const ProfileSchema = new Schema({
     type: Boolean,
     default: false
   }
-},
-{
-    collection: 'profiles',
-    read: 'nearest'
+}, {
+  collection: 'profiles',
+  read: 'nearest'
 });
-ProfileSchema.index( { cisscode: 'text', cisstoken: 'text', cissinqtext: 'text' }, { weights: { cisscode: 3, cisstoken: 2, cissinqtext: 1 }} );
+ProfileSchema.index({
+  cisscode: 'text',
+  cisstoken: 'text',
+  cissinqtext: 'text'
+}, {
+  weights: {
+    cisscode: 3,
+    cisstoken: 2,
+    cissinqtext: 1
+  }
+});
 ProfileSchema.index({
   accessdatetagged: 1,
   accessapproval: 1,
@@ -277,7 +312,7 @@ profilesPaginated = async (findText, distinction, nextstep, useroffice, page, li
   //   return error;
   // }
 
-  let query = { };
+  let query = {};
   let qry = {
     accessapproval: findText,
     distinction: distinction,
@@ -299,26 +334,66 @@ profilesPaginated = async (findText, distinction, nextstep, useroffice, page, li
         nextstep: nextstep,
         "visitor.visitordestination": useroffice
       };
-    } else if (distinction === 'BRGYRESIDENT') {
+    } else if (distinction.includes('BRGYRESIDENT')) {
       qry = {
         accessapproval: findText,
-         distinction: distinction,
-         nextstep: nextstep,
-         "resident.barangay": useroffice
-       };
-    } else { }
+        distinction: distinction,
+        nextstep: nextstep,
+        "resident.barangay": useroffice
+      };
+    } else if (distinction.includes('EVENT')) {
+      const eventcode = useroffice.replace('S', 'O');
 
-  } else { }
+      const sub_useroffice = useroffice.substring(0, 2);
+      const eventcreator = sub_useroffice.replace('S', 'O');
+      // check if useroffice is using event code format
+      const regex = /^((\s)*([a-zA-Z]{2}))([0-9]{4})?$/g;
+      // will match AO1234
+      const found = eventcode.match(regex);
+      // if useroffice is AO or PO then show events created by office
+      if (sub_useroffice === 'AO' ||
+        sub_useroffice === 'PO') {
+        // show all events that office has created
+        qry = {
+          accessapproval: findText,
+          distinction: distinction,
+          nextstep: nextstep,
+          "event.eventcreator": eventcreator
+        };
+      }
+      // if useroffice is AS or PS then show all events
+      if (sub_useroffice === 'AS' ||
+        sub_useroffice === 'PS') {
+        // just show all events to PSG
+        qry = {
+          accessapproval: findText,
+          distinction: distinction,
+          nextstep: nextstep
+        };
+      }
+      if (found) {
+        // show specific event to user
+        qry = {
+          accessapproval: findText,
+          distinction: distinction,
+          nextstep: nextstep,
+          profileid: eventcode
+        };
+      }
+    } else {}
+  } else {}
 
   query = qry;
   const isTrueSet = (newestFirst === 'true');
   const sortOrder = isTrueSet === true ? -1 : 1;
   const options = {
-    sort:       { accessdatetagged: sortOrder },
-    lean:       true,
+    sort: {
+      accessdatetagged: sortOrder
+    },
+    lean: true,
     leanWithId: true,
-    page:       parseInt(page),
-    limit:      parseInt(limit)
+    page: parseInt(page),
+    limit: parseInt(limit)
   };
 
   let result = await Profile.paginate(query, options);
@@ -327,17 +402,24 @@ profilesPaginated = async (findText, distinction, nextstep, useroffice, page, li
 
 residentSearchByName = async (firstname, lastname, page, limit) => {
   const query = {
-    "name.first": { $regex : new RegExp(firstname, "i") },
-    "name.last" : { $regex : new RegExp(lastname, "i") },
+    "name.first": {
+      $regex: new RegExp(firstname, "i")
+    },
+    "name.last": {
+      $regex: new RegExp(lastname, "i")
+    },
     distinction: 'BRGYRESIDENT'
   };
   const sortOrder = 1;
   const options = {
-    sort:       { "name.last": sortOrder, "name.first": sortOrder },
-    lean:       true,
+    sort: {
+      "name.last": sortOrder,
+      "name.first": sortOrder
+    },
+    lean: true,
     leanWithId: true,
-    page:       parseInt(page),
-    limit:      parseInt(limit)
+    page: parseInt(page),
+    limit: parseInt(limit)
   };
 
   let result = await Profile.paginate(query, options);
