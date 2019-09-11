@@ -146,9 +146,11 @@ const postProfile = async (req, res, next) => {
     // modify the document with the new
     // code [cisscode], token [cisstoken], url [cissinqtext]
     // and two factor secret for this profile
-    saved_profile.cisscode = hmac;
+    if ( !(saved_profile.distinction.includes('EVENT')) ) {
+      saved_profile.cisscode = hmac;
+      saved_profile.cissinqtext = url;
+    }
     saved_profile.cisstoken = token;
-    saved_profile.cissinqtext = url;
     saved_profile.two_factor_secret = secret;
     // save the updated document
     const updated_profile = await Profile.Profile.findByIdAndUpdate({_id: saved_profile._id}, saved_profile, { new: true });

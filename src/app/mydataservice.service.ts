@@ -140,14 +140,13 @@ export class MydataserviceService {
         visitstatus: visitor.visitstatus
       }) : {},
       event: event !== undefined ? Object.freeze({
-        guestid: event.guestid,
+        eventcode: event.eventcode,
         guestaffiliation: event.guestaffiliation,
         eventid: event.eventid,
         eventname: event.eventname,
         eventdetails: event.eventdetails,
         eventcreator: event.eventcreator,
-        timeofevent: event.timeofevent,
-        gueststatus: event.gueststatus
+        timeofevent: event.timeofevent
       }) : {},
       datecreated: datecreated,
       dateupdated: dateupdated,
@@ -255,14 +254,13 @@ export class MydataserviceService {
         visitstatus: visitor.visitstatus
       } : {},
       event: event !== undefined ? Object.freeze({
-        guestid: event.guestid,
+        eventcode: event.eventcode,
         guestaffiliation: event.guestaffiliation,
         eventid: event.eventid,
         eventname: event.eventname,
         eventdetails: event.eventdetails,
         eventcreator: event.eventcreator,
-        timeofevent: event.timeofevent,
-        gueststatus: event.gueststatus
+        timeofevent: event.timeofevent
       }) : {},
       datecreated: datecreated,
       dateupdated: dateupdated,

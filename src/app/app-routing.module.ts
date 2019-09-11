@@ -15,10 +15,12 @@ import { AccessApprovalComponent } from './access-approval/access-approval.compo
 import { InvoiceComponent } from './invoice/invoice.component';
 import { PrintLayoutComponent } from './print-layout/print-layout.component';
 import { PrintComponent } from './print/print.component';
+import { EventComponent } from './event/event.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthGuard], pathMatch: 'full' },
-  { path: 'print',
+  {
+    path: 'print',
     outlet: 'print',
     component: PrintLayoutComponent,
     children: [
@@ -58,13 +60,20 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     runGuardsAndResolvers: 'paramsChange'
   },
+  {
+    path: 'event/:id',
+    component: EventComponent,
+    data: { state: 'event' },
+    canActivate: [AuthGuard],
+    runGuardsAndResolvers: 'paramsChange'
+  },
   { path: 'profilenotfound', component: ProfileNotFoundComponent, data: { state: 'profilenotfound' }, canActivate: [AuthGuard] },
   { path: '**', component: PageNotFoundComponent }
 ];
 
 @NgModule({
-  imports: [ RouterModule.forRoot(routes, {onSameUrlNavigation: 'reload'}) ],
-  exports: [ RouterModule ]
+  imports: [RouterModule.forRoot(routes, { onSameUrlNavigation: 'reload' })],
+  exports: [RouterModule]
 })
 
 export class AppRoutingModule { }

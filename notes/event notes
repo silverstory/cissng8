@@ -24,11 +24,11 @@ qr code will come from vegas not generated
 8-digit code stays ciss generated
 
 
-para sa events, mag add ka ng dalawang user
+para sa events, mag add ka ng tatlong user
 na ang usertype EVENT-MANAGER
-tapos ang useroffice nila, AO tsaka PO
+tapos ang useroffice nila, AO, PO tsaka OP
 
-Sila head ng AO o PO office na ang role
+Sila ang head ng AO o PO o OP office na ang role
 sa ciss ay taga endorse ng event guest
 sa PSG
 
@@ -40,7 +40,7 @@ the current view can change the textfield matPrefix
 if usertype is ( PG, S2, CO, GC )
 show textfield that has no matPrefix
 PSG must provide the whole eventcode 'AO1234'
-then the app will replace AO to AS or PO to PS
+then the app will replace AO to AS or PO to PS or OP to SP
 
 Example:
 'AO1234' or 'PO1234' to 'AS1234' or 'PS1234'
@@ -64,7 +64,7 @@ yung useroffice na galing sa users table, yung ang gamitin
 mo sa matPrefix
 tapos i-concat mo yung sa 4-digit na i-susupply sa textbox
 
-example product: 'AO1234'
+example product: 'AO123456'
 
 tapos i-supply mo sa useroffice field ng profilesPaginated API
 
@@ -73,12 +73,12 @@ ang product value na nacombine mo
 
 regex
 
-^((\s)*([a-zA-Z]{2}))([0-9]{4})?$
+^((\s)*([a-zA-Z]{2}))([0-9]{6})?$
 
 
 will match
 
-AO1234
+AO123456
 
 
-console.log(/^((\s)*([a-zA-Z]{2}))([0-9]{4})?$/.test('AO1234')); // true
+console.log(/^((\s)*([a-zA-Z]{2}))([0-9]{6})?$/.test('AO123456')); // true

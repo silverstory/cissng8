@@ -1,0 +1,88 @@
+/* Responsive layout - makes the three columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 500px) {
+  .column {
+    width: 100%;
+  }
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  background-color: #E8EAF6;
+  padding: 0 1rem 1rem 1rem;
+  font-size: large;
+}
+
+.parent-card {
+  /* flex: 95%; */
+  max-width: 95%;
+  margin: 0 auto 1rem auto;
+}
+
+.column-card {
+  flex: 100%;
+  /* max-width: 100%; */
+}
+
+.full-width-input {
+  flex: 100%;
+  /* width: 100%; */
+}
+
+.row {
+  display: flex;
+}
+
+.column {
+  flex: 25%;
+  padding: 5px;
+  margin: 10px 0 10px 0;
+}
+
+.stepcolumn {
+  flex: 100%;
+  /* padding: 5px; */
+  /* margin: 10px 0 10px 0; */
+}
+
+.one-2-3-4 {
+  flex: 50%;
+  font-family: Roboto, Arial, sans-serif;
+  margin: 0 .05rem 16px .05rem;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 50px;
+  height: 50px;
+  background-color: #e6e6e6;
+}
+
+/* OLD ANIMATION */
+/* .columnimage {
+  flex: 100%;
+  padding: 5px;
+} */
+
+/* OLD ANIMATION */
+/* mat-card {
+  max-width: 95%;
+  margin: 0 auto 1rem auto;
+} */
+
+/* OLD ANIMATION */
+/* .column {
+  flex: 33.33%;
+  padding: 5px;
+  margin: 10px 0 10px 0;
+} */
+
+/* OLD ANIMATION */
+/* .columnparent1 {
+  flex: 25%;
+  padding: 5px;
+} */
+
+/* OLD ANIMATION */
+/* .columnparent2 {
+  flex: 75%;
+  padding: 5px;
+} */

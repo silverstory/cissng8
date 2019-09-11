@@ -48,6 +48,7 @@ import { ExportAsModule } from 'ngx-export-as';
 import { PrintLayoutComponent } from './print-layout/print-layout.component';
 import { InvoiceComponent } from './invoice/invoice.component';
 import { PrintComponent } from './print/print.component';
+import { EventComponent } from './event/event.component';
 
 // the second parameter 'fr' is optional
 // registerLocaleData(localeFr, 'fr');
@@ -76,7 +77,8 @@ registerLocaleData(localeEnPh, 'en-PH', localeEnPhExtra);
     RequestFormDialogComponent,
     PrintLayoutComponent,
     InvoiceComponent,
-    PrintComponent
+    PrintComponent,
+    EventComponent
   ],
   imports: [
     BrowserModule,

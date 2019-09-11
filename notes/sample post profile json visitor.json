@@ -7,7 +7,7 @@
     "profileid" : "the-visitid-field-from-visits-collection",
     "mobile" : "+639271991817",
     "email" : "c@c.com",
-    "distinction" : "OPVISITOR",
+    "distinction" : "OPVISITOR || OPVISITOR-VIP",
     "personaccesslevel" : "PASSING THROUGH",
     "recordstatus" : "ACTIVE",
     "photothumbnailurl" : "https://images.pexels.com/photos/459880/pexels-photo-459880.jpeg",

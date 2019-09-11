@@ -43,22 +43,58 @@ import {
 export class AccessApprovalComponent implements OnInit {
 
   public chips = [
-    { id: 1, name: 'OPEMPLOYEE', alias: 'OP EMPLOYEE', badge: 0, badgehidden: true, badgecolor: 'accent', badgesize: 'medium' },
-    { id: 2, name: 'BRGYRESIDENT-PSG', alias: 'PSG', badge: 0, badgehidden: true, badgecolor: 'accent', badgesize: 'medium' },
-    { id: 3, name: 'OPVISITOR-PRRD-GUEST', alias: 'PRRD GUEST', badge: 0, badgehidden: true, badgecolor: 'accent', badgesize: 'medium' },
-    // tslint:disable-next-line:max-line-length
-    { id: 4, name: 'OPVISITOR-GENERAL-GUEST', alias: 'GENERAL GUEST', badge: 0, badgehidden: true, badgecolor: 'accent', badgesize: 'medium' },
-    { id: 5, name: 'BRGYRESIDENT', alias: 'BRGY RESIDENT', badge: 0, badgehidden: true, badgecolor: 'accent', badgesize: 'medium' },
-    { id: 6, name: 'BRGYRESIDENT-RTVM', alias: 'RTVM', badge: 0, badgehidden: true, badgecolor: 'accent', badgesize: 'medium' },
-    { id: 7, name: 'BRGYRESIDENT-MESLA', alias: 'MESLA', badge: 0, badgehidden: true, badgecolor: 'accent', badgesize: 'medium' },
-    { id: 8, name: 'BRGYRESIDENT-MECOOP', alias: 'MECOOP', badge: 0, badgehidden: true, badgecolor: 'accent', badgesize: 'medium' },
-    { id: 9, name: 'OPVISITOR', alias: 'VISITOR', badge: 0, badgehidden: true, badgecolor: 'accent', badgesize: 'medium' },
-    // tslint:disable-next-line:max-line-length
-    { id: 10, name: 'OPVISITOR-SECURITY-CLEARANCE', alias: 'SECURITY CLEARANCE', badge: 0, badgehidden: true, badgecolor: 'accent', badgesize: 'medium' },
-    // tslint:disable-next-line:max-line-length
-    { id: 11, name: 'BRGYRESIDENT-PASSING-THRU', alias: 'PASSING THRU', badge: 0, badgehidden: true, badgecolor: 'accent', badgesize: 'medium' },
-    { id: 12, name: 'OPEMPLOYEE-VIP', alias: 'VIP EMPLOYEE', badge: 0, badgehidden: true, badgecolor: 'accent', badgesize: 'medium' },
-    { id: 13, name: 'OPVISITOR-VIP', alias: 'VIP VISITOR', badge: 0, badgehidden: true, badgecolor: 'accent', badgesize: 'medium' }
+    {
+      id: 1, name: 'OPEMPLOYEE', alias: 'OP EMPLOYEE',
+      badge: 0, badgehidden: true, badgecolor: 'accent', badgesize: 'medium'
+    },
+    {
+      id: 2, name: 'OPEMPLOYEE-VIP', alias: 'VIP EMPLOYEE',
+      badge: 0, badgehidden: true, badgecolor: 'accent', badgesize: 'medium'
+    },
+    {
+      id: 3, name: 'BRGYRESIDENT-PSG', alias: 'PSG',
+      badge: 0, badgehidden: true, badgecolor: 'accent', badgesize: 'medium'
+    },
+    {
+      id: 4, name: 'OPVISITOR', alias: 'OP VISITOR',
+      badge: 0, badgehidden: true, badgecolor: 'accent', badgesize: 'medium'
+    },
+    {
+      id: 5, name: 'OPVISITOR-VIP', alias: 'OP VIP VISITOR',
+      badge: 0, badgehidden: true, badgecolor: 'accent', badgesize: 'medium'
+    },
+    {
+      id: 6, name: 'BRGYRESIDENT', alias: 'BRGY RESIDENT',
+      badge: 0, badgehidden: true, badgecolor: 'accent', badgesize: 'medium'
+    },
+    {
+      id: 7, name: 'BRGYRESIDENT-RTVM', alias: 'RTVM',
+      badge: 0, badgehidden: true, badgecolor: 'accent', badgesize: 'medium'
+    },
+    {
+      id: 8, name: 'BRGYRESIDENT-MESLA', alias: 'MESLA',
+      badge: 0, badgehidden: true, badgecolor: 'accent', badgesize: 'medium'
+    },
+    {
+      id: 9, name: 'BRGYRESIDENT-MECOOP', alias: 'MECOOP',
+      badge: 0, badgehidden: true, badgecolor: 'accent', badgesize: 'medium'
+    },
+    {
+      id: 10, name: 'OPVISITOR-SECURITY-CLEARANCE', alias: 'SECURITY CLEARANCE',
+      badge: 0, badgehidden: true, badgecolor: 'accent', badgesize: 'medium'
+    },
+    {
+      id: 11, name: 'BRGYRESIDENT-PASSING-THRU', alias: 'PASSING THRU',
+      badge: 0, badgehidden: true, badgecolor: 'accent', badgesize: 'medium'
+    },
+    {
+      id: 12, name: 'EVENT-GUEST', alias: 'EVENTS GENERAL GUEST',
+      badge: 0, badgehidden: true, badgecolor: 'accent', badgesize: 'medium'
+    },
+    {
+      id: 13, name: 'EVENT-VIP', alias: 'EVENTS VIP GUEST',
+      badge: 0, badgehidden: true, badgecolor: 'accent', badgesize: 'medium'
+    }
   ];
 
   public statuschips = [
@@ -90,16 +126,15 @@ export class AccessApprovalComponent implements OnInit {
 
   public face_icons = [
     'OPEMPLOYEE',
+    'OPEMPLOYEE-VIP',
     'BRGYRESIDENT-PSG',
-    'OPVISITOR-PRRD-GUEST',
+    'OPVISITOR',
     'OPVISITOR-VIP',
-    'OPVISITOR-GENERAL-GUEST',
     'BRGYRESIDENT',
     'BRGYRESIDENT-RTVM',
-    'OPVISITOR',
     'OPVISITOR-SECURITY-CLEARANCE',
-    'OPEMPLOYEE-VIP',
-    'OPVISITOR-VIP'
+    'EVENT-GUEST',
+    'EVENT-VIP'
   ];
 
   public usertemplate: Approvaltemplate;

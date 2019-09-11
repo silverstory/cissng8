@@ -1,0 +1,110 @@
+<div class="container" [style.background-color]="getEventGuestColor(profile.accessapproval)" *ngIf="profile">
+  <mat-card class="parent-card" [@homeTransition]="profile">
+    <div class="row">
+      <div class="stepcolumn">
+        <mat-horizontal-stepper [linear]="isLinear" [selectedIndex]="profile.nextstep" #stepper>
+          <ng-template matStepperIcon="edit">
+            <mat-icon>check</mat-icon>
+          </ng-template>
+          <mat-step *ngFor="let step of steps" [stepControl]="step.dialogbuttontext" [completed]="completedBa[step.step]" editable="false">
+            <ng-template matStepLabel>{{ stepstext[step.step] }}</ng-template>
+          </mat-step>
+        </mat-horizontal-stepper>
+      </div>
+    </div>
+    <div class="row">
+      <div class="column">
+        <mat-card class="column-card" (click)="OnMatCardClickEvent()">
+          <div class="row">
+            <div class="one-2-3-4" [style.background-color]="profile.access.colorone">1</div>
+            <div class="one-2-3-4" [style.background-color]="profile.access.colortwo">2</div>
+          </div>
+          <img mat-card-image [src]="service.transformPBU(profile.photothumbnailurl)" alt="Photo"> <!-- style="width:100%;height:275px;" -->
+          <div class="row">
+            <div class="one-2-3-4" [style.background-color]="profile.access.colorthree">3</div>
+            <div class="one-2-3-4" [style.background-color]="profile.access.colorfour">4</div>
+          </div>
+        </mat-card>
+      </div>
+      <div class="column">
+        <mat-card class="column-card">
+          <mat-card-header>
+            <div mat-card-avatar><mat-icon aria-label="GUEST'S NAME">person</mat-icon></div>
+            <mat-card-title>GUEST'S NAME</mat-card-title>
+            <mat-card-subtitle>{{ profile.gender | uppercase }}</mat-card-subtitle>
+          </mat-card-header>
+          <br>
+          <div class="row">
+            <mat-form-field class="full-width-input">
+              <input matInput placeholder="First name" readonly [(ngModel)]="profile.name.first" style="width:100%;font-weight:bold;font-size:large;color: #424242;">
+            </mat-form-field>
+          </div>
+          <div class="row">
+            <mat-form-field class="full-width-input">
+              <input matInput placeholder="Middle name" readonly [(ngModel)]="profile.name.middle" style="width:100%;font-weight:bold;font-size:large;color: #424242;">
+            </mat-form-field>
+          </div>
+          <div class="row">
+            <mat-form-field class="full-width-input">
+              <input matInput placeholder="Family name" readonly [(ngModel)]="profile.name.last" style="width:100%;font-weight:bold;font-size:large;color: #424242;">
+            </mat-form-field>
+          </div>
+        </mat-card>
+      </div>
+      <div class="column">
+        <mat-card class="column-card">
+          <mat-card-header>
+            <div mat-card-avatar><mat-icon aria-label="GUEST INFORMATION">business</mat-icon></div>
+            <mat-card-title>GUEST INFORMATION</mat-card-title>
+            <mat-card-subtitle>Most recent action: {{ profile.accessdatetagged | date: 'MMMM dd yyyy @ hh:mm a' }}</mat-card-subtitle>
+          </mat-card-header>
+          <br>
+          <div class="row">
+            <mat-form-field class="full-width-input">
+              <input matInput placeholder="Affiliation" readonly [(ngModel)]="profile.event.guestaffiliation" style="width:100%;font-weight:bold;font-size:large;color: #424242;">
+            </mat-form-field>
+          </div>
+          <div class="row">
+            <mat-form-field class="full-width-input">
+              <input matInput placeholder="Handled By" readonly [(ngModel)]="profile.event.eventcreator" style="width:100%;font-weight:bold;font-size:large;color: #424242;">
+            </mat-form-field>
+          </div>
+          <div class="row">
+            <mat-form-field class="full-width-input">
+              <input matInput placeholder="Event Approval Status" readonly [(ngModel)]="profile.accessapproval" style="width:100%;font-weight:bold;font-size:large;color: #424242;">
+            </mat-form-field>
+          </div>
+        </mat-card>
+      </div>
+      <div class="column">
+        <mat-card class="column-card">
+          <mat-card-header>
+            <div mat-card-avatar><mat-icon aria-label="EVENT INFORMATION">access_time</mat-icon></div>
+            <mat-card-title>EVENT INFORMATION</mat-card-title>
+            <mat-card-subtitle>TYPE: {{ profile.distinction | uppercase }}</mat-card-subtitle>
+          </mat-card-header>
+          <br>
+          <div class="row">
+            <mat-form-field class="full-width-input">
+              <input matInput placeholder="Name of Event" readonly [(ngModel)]="profile.event.eventname" style="width:100%;font-weight:bold;font-size:large;color: #424242;">
+            </mat-form-field>
+          </div>
+          <div class="row">
+            <mat-form-field class="full-width-input">
+              <span>
+                <input matInput placeholder="Event Particulars" readonly [(ngModel)]="profile.event.eventcode" style="width:100%;font-weight:bold;font-size:large;color: #424242;">
+                &nbsp;
+                <input matInput placeholder="Event Code" readonly [(ngModel)]="profile.event.eventdetails" style="width:100%;font-weight:bold;font-size:large;color: #424242;">
+              </span>
+            </mat-form-field>
+          </div>
+          <div class="row">
+            <mat-form-field class="full-width-input">
+              <textarea matInput placeholder="Date and Time of Event" readonly style="width:100%;font-size:large;color: #424242;">{{ profile.event.timeofevent | date: 'EEEE BBBB dd MMM yyyy, hh:mm a' }}</textarea>
+            </mat-form-field>
+          </div>
+        </mat-card>
+      </div>
+    </div>
+  </mat-card>
+</div>

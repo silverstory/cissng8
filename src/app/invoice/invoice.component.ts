@@ -54,6 +54,9 @@ export class InvoiceComponent implements OnInit, OnDestroy {
     if (tmpProfile.distinction.includes('OPVISITOR')) {
       location1 = tmpProfile.visitor.visitorpurpose;
       location2 = tmpProfile.visitor.visitordestination;
+    } else if (tmpProfile.distinction.includes('EVENT')) {
+      location1 = tmpProfile.event.guestaffiliation;
+      location2 = tmpProfile.event.eventname;
     } else {
       location1 = tmpProfile.distinction === 'OPEMPLOYEE' ? tmpProfile.employee.position : tmpProfile.resident.barangay;
       location2 = tmpProfile.distinction === 'OPEMPLOYEE' ? tmpProfile.employee.office : tmpProfile.resident.district;

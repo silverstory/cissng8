@@ -34,14 +34,13 @@ export interface Profile {
     visitstatus: String;
   };
   event: {
-    guestid: String;
+    eventcode: String;
     guestaffiliation: String;
     eventid: String;
     eventname: String;
     eventdetails: String;
     eventcreator: String;
     timeofevent: Date;
-    gueststatus: String;
   };
   datecreated: Date;
   dateupdated: Date;
@@ -112,14 +111,13 @@ export class ProfileObj implements Profile {
     visitstatus: String;
   };
   event: {
-    guestid: String;
+    eventcode: String;
     guestaffiliation: String;
     eventid: String;
     eventname: String;
     eventdetails: String;
     eventcreator: String;
     timeofevent: Date;
-    gueststatus: String;
   };
   datecreated: Date;
   dateupdated: Date;

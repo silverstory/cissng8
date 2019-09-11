@@ -102,7 +102,7 @@ const ProfileSchema = new Schema({
     }
   },
   event: {
-    guestid: {
+    eventcode: {
       type: String
     },
     guestaffiliation: {
@@ -122,9 +122,6 @@ const ProfileSchema = new Schema({
     },
     timeofevent: {
       type: Date
-    },
-    gueststatus: {
-      type: String
     }
   },
   datecreated: {
@@ -347,12 +344,13 @@ profilesPaginated = async (findText, distinction, nextstep, useroffice, page, li
       const sub_useroffice = useroffice.substring(0, 2);
       const eventcreator = sub_useroffice.replace('S', 'O');
       // check if useroffice is using event code format
-      const regex = /^((\s)*([a-zA-Z]{2}))([0-9]{4})?$/g;
+      const regex = /^((\s)*([a-zA-Z]{2}))([0-9]{6})?$/g;
       // will match AO1234
       const found = eventcode.match(regex);
       // if useroffice is AO or PO then show events created by office
       if (sub_useroffice === 'AO' ||
-        sub_useroffice === 'PO') {
+        sub_useroffice === 'PO' ||
+        sub_useroffice === 'OP') {
         // show all events that office has created
         qry = {
           accessapproval: findText,
@@ -363,7 +361,8 @@ profilesPaginated = async (findText, distinction, nextstep, useroffice, page, li
       }
       // if useroffice is AS or PS then show all events
       if (sub_useroffice === 'AS' ||
-        sub_useroffice === 'PS') {
+        sub_useroffice === 'PS' ||
+        sub_useroffice === 'SP') {
         // just show all events to PSG
         qry = {
           accessapproval: findText,
@@ -377,7 +376,7 @@ profilesPaginated = async (findText, distinction, nextstep, useroffice, page, li
           accessapproval: findText,
           distinction: distinction,
           nextstep: nextstep,
-          profileid: eventcode
+          "event.eventcode": eventcode
         };
       }
     } else {}
