@@ -183,13 +183,28 @@ export class AccessApprovalComponent implements OnInit {
   ) { }
 
   async ngOnInit() {
+
     this._loading.next(true);
+    this.service.find = 'Provisional';
+    this.service.distinction = 'OPEMPLOYEE';
+    this.service.usertype = '';
+    this.service.useroffice = '';
+    this.service.eventcode = '';
+    this.service.eventcreator = '';
+    this.service.nextstep = 100;
+    this.service.limit = 8; // limit must be atleast 8 and above
+    this.service.newestFirst = true;
+
+    this.titles = [`SHOWING THE LIST OF
+    ${ this.current_distinction_alias.toUpperCase()}S
+    WITH ${ this.service.find.toUpperCase()} STATUS`];
 
     try {
       await this.authService.getProfile()
         .subscribe((user) => {
           this.service.usertype = user.usertype;
           this.service.useroffice = user.useroffice;
+          this.service.eventcreator = user.eventcreator ? user.eventcreator : '';
           this.getProfiles();
         });
     } catch (error) {
@@ -221,7 +236,7 @@ export class AccessApprovalComponent implements OnInit {
       const distinction = chip.name;
       const usertype = this.service.usertype;
       const findtext = this.service.find;
-      const useroffice = this.service.useroffice;
+      let useroffice = this.service.useroffice;
       const largemeter = 99;
       let nextstep = 100;
 
@@ -233,6 +248,16 @@ export class AccessApprovalComponent implements OnInit {
       const approvaltemplate: Approvaltemplate = await this.http.post<Approvaltemplate>(approvaltemplateurl, body).toPromise();
       if (approvaltemplate !== null) {
         nextstep = approvaltemplate.step;
+      }
+
+      // put new event workflow here
+      if (distinction.includes('EVENT')) {
+        if (this.service.eventcreator) {
+          useroffice = this.service.eventcreator;
+        }
+        if (this.service.eventcode) {
+          useroffice = this.service.eventcode;
+        }
       }
 
       // tslint:disable-next-line:max-line-length
@@ -275,7 +300,7 @@ export class AccessApprovalComponent implements OnInit {
     const x = `SHOWING THE LIST OF
     ${ this.current_distinction_alias.toUpperCase()}S
     WITH ${ this.service.find.toUpperCase()} STATUS`;
-    this.titles = [ x ];
+    this.titles = [x];
     this.refreshInfin8List();
   }
 
@@ -295,7 +320,7 @@ export class AccessApprovalComponent implements OnInit {
 
     const largemeter = 99;
     const usertype = this.service.usertype;
-    const useroffice = this.service.useroffice;
+    let useroffice = this.service.useroffice;
 
     // iterate through statuses using
     for await (const statuschip of this.statuschips) {
@@ -320,6 +345,16 @@ export class AccessApprovalComponent implements OnInit {
         const approvaltemplate: Approvaltemplate = await this.http.post<Approvaltemplate>(approvaltemplateurl, body).toPromise();
         if (approvaltemplate !== null) {
           nextstep = approvaltemplate.step;
+        }
+
+        // put new event workflow here
+        if (distinction.includes('EVENT')) {
+          if (this.service.eventcreator) {
+            useroffice = this.service.eventcreator;
+          }
+          if (this.service.eventcode) {
+            useroffice = this.service.eventcode;
+          }
         }
 
         // tslint:disable-next-line:max-line-length
@@ -568,8 +603,8 @@ export class AccessApprovalComponent implements OnInit {
     if (smsResponse.success) {
       this.snackBar.open(`Notification sent to ${this.profile.name.first} ${this.profile.name.last}'s mobile number.`,
         'Sending notification succeeded.', {
-          duration: 7000,
-        });
+        duration: 7000,
+      });
     } else {
       this.snackBar.open('Sending notification failed!', 'Something went wrong :(', {
         duration: 7000,
@@ -588,7 +623,7 @@ export class AccessApprovalComponent implements OnInit {
     const x = `SHOWING THE LIST OF
     ${ this.current_distinction_alias.toUpperCase()}S
     WITH ${ this.service.find.toUpperCase()} STATUS`;
-    this.titles = [ x ];
+    this.titles = [x];
     this.refreshInfin8List();
     this.updateBadges();
   }

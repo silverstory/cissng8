@@ -5,7 +5,9 @@
       <div class="column">
         <mat-card class="column-card">
           <mat-card-header>
-            <div mat-card-avatar><mat-icon aria-label="VALIDATE">verified_user</mat-icon></div>
+            <div mat-card-avatar>
+              <mat-icon aria-label="VALIDATE">verified_user</mat-icon>
+            </div>
             <mat-card-title>ID VERIFICATION</mat-card-title>
           </mat-card-header>
           <div class="row">
@@ -13,7 +15,8 @@
           </div>
           <div class="row">
             <mat-form-field class="full-width-input">
-              <input matInput placeholder="Enter code" [(ngModel)]="token" required style="width:100%;font-weight:bold;font-size:large;color: #424242;">
+              <input matInput placeholder="Enter code" [(ngModel)]="token" required
+                style="width:100%;font-weight:bold;font-size:large;color: #424242;">
               <mat-hint align="end">6-digit verification code</mat-hint>
               <button mat-button *ngIf="token" matSuffix mat-icon-button aria-label="Clear" (click)="token=''">
                 <mat-icon>close</mat-icon>
@@ -27,7 +30,8 @@
             <p style="color: #babacb;width: 100%;text-align: center">Still waiting for the code?</p>
           </div>
           <div class="row">
-            <button mat-button (click)="resendCode()" style="text-decoration: underline;color: #b3b3b3;width: 100%">Resend the code</button>
+            <button mat-button (click)="resendCode()"
+              style="text-decoration: underline;color: #b3b3b3;width: 100%">Resend the code</button>
           </div>
         </mat-card>
       </div>
@@ -40,7 +44,9 @@
       <div class="column">
         <mat-card class="column-card">
           <mat-card-header>
-            <div mat-card-avatar><mat-icon aria-label="STATUS">person</mat-icon></div>
+            <div mat-card-avatar>
+              <mat-icon aria-label="STATUS">person</mat-icon>
+            </div>
             <mat-card-title>STATUS</mat-card-title>
           </mat-card-header>
           <div class="row">
@@ -60,16 +66,21 @@
         </mat-card>
         <mat-card class="column-card">
           <mat-card-header>
-            <div mat-card-avatar><mat-icon aria-label="NAME">person</mat-icon></div>
+            <div mat-card-avatar>
+              <mat-icon aria-label="NAME">person</mat-icon>
+            </div>
             <mat-card-title>NAME</mat-card-title>
           </mat-card-header>
           <div class="row">
-            <span class="profile">{{ profile.name.first | uppercase }} {{ profile.name.middle | slice:0:1 | uppercase }}. {{ profile.name.last | uppercase }}</span>
+            <span class="profile">{{ profile.name.first | uppercase }}
+              {{ profile.name.middle | slice:0:1 | uppercase }}. {{ profile.name.last | uppercase }}</span>
           </div>
         </mat-card>
         <mat-card *ngIf="profile.distinction.includes('OPEMPLOYEE')" class="column-card">
           <mat-card-header>
-            <div mat-card-avatar><mat-icon aria-label="DESIGNATION AND OFFICE">location_city</mat-icon></div>
+            <div mat-card-avatar>
+              <mat-icon aria-label="DESIGNATION AND OFFICE">location_city</mat-icon>
+            </div>
             <mat-card-title>POSITION AND OFFICE</mat-card-title>
           </mat-card-header>
           <div class="row">
@@ -87,7 +98,9 @@
         </mat-card>
         <mat-card *ngIf="profile.distinction.includes('BRGYRESIDENT')" class="column-card">
           <mat-card-header>
-            <div mat-card-avatar><mat-icon aria-label="RESIDENCE LOCATION">location_city</mat-icon></div>
+            <div mat-card-avatar>
+              <mat-icon aria-label="RESIDENCE LOCATION">location_city</mat-icon>
+            </div>
             <mat-card-title>RESIDENCE LOCATION</mat-card-title>
           </mat-card-header>
           <div class="row">
@@ -105,7 +118,9 @@
         </mat-card>
         <mat-card *ngIf="profile.distinction.includes('OPVISITOR')" class="column-card">
           <mat-card-header>
-            <div mat-card-avatar><mat-icon aria-label="DESTINATION, PURPOSE & DESTINATION">business</mat-icon></div>
+            <div mat-card-avatar>
+              <mat-icon aria-label="DESTINATION, PURPOSE & DESTINATION">business</mat-icon>
+            </div>
             <mat-card-title>ORIGIN, PURPOSE & DESTINATION</mat-card-title>
           </mat-card-header>
           <div class="row">
@@ -136,25 +151,72 @@
             <span class="profile" style="color: #817e7e">Time of Appointment</span>
           </div>
           <div class="row">
-            <span class="profile">{{ profile.visitor.timeofappointment | date: 'EEEE BBBB dd MMM yyyy, hh:mm a' }}</span>
+            <span
+              class="profile">{{ profile.visitor.timeofappointment | date: 'EEEE BBBB dd MMM yyyy, hh:mm a' }}</span>
           </div>
         </mat-card>
+
+        <mat-card *ngIf="profile.distinction.includes('EVENT')" class="column-card">
+          <mat-card-header>
+            <div mat-card-avatar>
+              <mat-icon aria-label="EVENT & GUEST INFORMATION">business</mat-icon>
+            </div>
+            <mat-card-title>EVENT & GUEST INFORMATION</mat-card-title>
+          </mat-card-header>
+          <div class="row">
+            <span class="profile" style="color: #817e7e">Guest Affiliation</span>
+          </div>
+          <div class="row">
+            <span class="profile">{{ profile.event.guestaffiliation | uppercase }}</span>
+          </div>
+          <div class="row">
+            <span class="profile" style="color: #817e7e">Name of Event</span>
+          </div>
+          <div class="row">
+            <span class="profile">{{ profile.event.eventname | uppercase }}</span>
+          </div>
+          <div class="row">
+            <span class="profile" style="color: #817e7e">Event Code</span>
+          </div>
+          <div class="row">
+            <span class="profile">{{ profile.event.eventcode | uppercase }}</span>
+          </div>
+          <div class="row">
+            <span class="profile" style="color: #817e7e">Event Details</span>
+          </div>
+          <div class="row">
+            <span class="profile">{{ profile.event.eventdetails | uppercase }}</span>
+          </div>
+          <div class="row">
+            <span class="profile" style="color: #817e7e">Date and Time of Event</span>
+          </div>
+          <div class="row">
+            <span
+              class="profile">{{ profile.event.timeofevent | date: 'EEEE BBBB dd MMM yyyy, hh:mm a' }}</span>
+          </div>
+        </mat-card>
+
         <mat-card class="column-card">
           <mat-card-header>
-            <div mat-card-avatar><mat-icon aria-label="GATE ACCESS KEY">vpn_key</mat-icon></div>
+            <div mat-card-avatar>
+              <mat-icon aria-label="GATE ACCESS KEY">vpn_key</mat-icon>
+            </div>
             <mat-card-title>GATE ACCESS KEY</mat-card-title>
           </mat-card-header>
           <div class="row">
-            <qrcode [qrdata]="profile.cissinqtext" [size]="300" [level]="'M'" style="width: 50%;padding: 20px;"></qrcode>
+            <qrcode [qrdata]="profile.cissinqtext" [size]="300" [level]="'M'" style="width: 50%;padding: 20px;">
+            </qrcode>
           </div>
-          <br/>
+          <br />
           <div class="row">
             <span class="profile">Your 8-digit key: {{ profile.cisstoken }}</span>
           </div>
         </mat-card>
         <mat-card class="column-card">
           <mat-card-header>
-            <div mat-card-avatar><mat-icon aria-label=">ACCESS REQUEST STAGE">done_outline</mat-icon></div>
+            <div mat-card-avatar>
+              <mat-icon aria-label=">ACCESS REQUEST STAGE">done_outline</mat-icon>
+            </div>
             <mat-card-title>ACCESS REQUEST STAGE</mat-card-title>
           </mat-card-header>
           <div class="row">
@@ -162,7 +224,8 @@
               <ng-template matStepperIcon="edit">
                 <mat-icon>check</mat-icon>
               </ng-template>
-              <mat-step *ngFor="let step of steps" [stepControl]="step.dialogbuttontext" [completed]="completedBa[step.step]" editable="false">
+              <mat-step *ngFor="let step of steps" [stepControl]="step.dialogbuttontext"
+                [completed]="completedBa[step.step]" editable="false">
                 <ng-template matStepLabel>{{ stepstext[step.step] }}</ng-template>
               </mat-step>
             </mat-vertical-stepper>

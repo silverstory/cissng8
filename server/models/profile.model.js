@@ -370,7 +370,7 @@ profilesPaginated = async (findText, distinction, nextstep, useroffice, page, li
           nextstep: nextstep
         };
       }
-      if (found) {
+      if (found === true) {
         // show specific event to user
         qry = {
           accessapproval: findText,
@@ -379,6 +379,9 @@ profilesPaginated = async (findText, distinction, nextstep, useroffice, page, li
           "event.eventcode": eventcode
         };
       }
+      console.log(useroffice);
+      console.log(qry);
+
     } else {}
   } else {}
 

@@ -23,6 +23,10 @@ const UserSchema = mongoose.Schema(
         useroffice: {
           type: String,
           default: 'NONE'
+        },
+        eventcreator: {
+            type: String,
+            default: ''
         }
     },
     {

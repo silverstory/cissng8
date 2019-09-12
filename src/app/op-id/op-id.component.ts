@@ -157,6 +157,8 @@ export class OPIDComponent implements OnInit, OnDestroy {
               completeFlag = 'Distributed';
             } else if (profile.distinction.includes('OPVISITOR')) {
               completeFlag = 'Approved';
+            } else if (profile.distinction.includes('EVENT')) {
+              completeFlag = 'Approved';
             }
             if (item.step < profile.nextstep || profile.accessapproval === completeFlag) {
               await this.completedBa.push(true);

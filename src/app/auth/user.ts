@@ -4,4 +4,5 @@ export interface User {
   usertype: string;
   mobileno: string;
   useroffice: string;
+  eventcreator: string;
 }
