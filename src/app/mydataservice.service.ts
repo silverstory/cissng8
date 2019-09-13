@@ -43,10 +43,10 @@ export class MydataserviceService {
   getProfiles(page: number) {
     let _useroffice = this.useroffice;
     if (this.distinction.includes('EVENT')) {
-      if (this.eventcreator) {
+      if (this.eventcreator !== undefined && this.eventcreator !== '') {
         _useroffice = this.eventcreator;
       }
-      if (this.eventcode) {
+      if (this.eventcode !== undefined && this.eventcode !== '') {
         _useroffice = this.eventcode;
       }
     }

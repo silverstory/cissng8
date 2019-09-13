@@ -252,10 +252,10 @@ export class AccessApprovalComponent implements OnInit {
 
       // put new event workflow here
       if (distinction.includes('EVENT')) {
-        if (this.service.eventcreator) {
+        if (this.service.eventcreator !== undefined && this.service.eventcreator !== '') {
           useroffice = this.service.eventcreator;
         }
-        if (this.service.eventcode) {
+        if (this.service.eventcode !== undefined && this.service.eventcode !== '') {
           useroffice = this.service.eventcode;
         }
       }
@@ -349,16 +349,17 @@ export class AccessApprovalComponent implements OnInit {
 
         // put new event workflow here
         if (distinction.includes('EVENT')) {
-          if (this.service.eventcreator) {
+          if (this.service.eventcreator !== undefined && this.service.eventcreator !== '') {
             useroffice = this.service.eventcreator;
           }
-          if (this.service.eventcode) {
+          if (this.service.eventcode !== undefined && this.service.eventcode !== '') {
             useroffice = this.service.eventcode;
           }
         }
 
         // tslint:disable-next-line:max-line-length
         const url = `/api/profile/accessapprovals?findtext=${findtext}&distinction=${distinction}&nextstep=${nextstep}&useroffice=${useroffice}&page=1&limit=1&newestfirst=${true}`;
+        console.log('client query : ' + url);
         const profile: any = await this.http.get<any>(url).toPromise();
         if (profile !== null) {
           count += profile.totalDocs;

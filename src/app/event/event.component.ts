@@ -97,6 +97,8 @@ export class EventComponent implements OnInit, OnDestroy {
         map((user: any) => {
           this.service.usertype = user.usertype;
           this.service.useroffice = user.useroffice;
+          this.service.eventcreator = user.eventcreator;
+          this.service.eventcode = '';
           const dist: string = String(this.profile.distinction);
           this.service.distinction = dist;
         }),
@@ -175,12 +177,20 @@ export class EventComponent implements OnInit, OnDestroy {
   OnMatCardClickEvent(): void {
     if (this.service.nextstep === this.profile.nextstep) {
       if (this.service.useroffice !== 'NONE') {
-        if (this.service.useroffice === this.profile.event.eventcreator) {
+        if (this.service.usertype === 'OFFICEHEAD' &&
+          this.service.eventcreator === this.profile.event.eventcreator) {
           // event.eventcreator   for events
           this.openDialog();
-        }
+        } else if (this.service.usertype !== 'OFFICEHEAD' &&
+          this.service.eventcreator === 'SA') {
+          // SA for PSG
+          this.openDialog();
+        } else { }
       } else {
-        this.openDialog();
+        if (this.service.eventcreator === 'SA') {
+          // SA for PSG
+          this.openDialog();
+        }
       }
     }
   }
@@ -276,8 +286,8 @@ export class EventComponent implements OnInit, OnDestroy {
     if (smsResponse.success) {
       this.snackBar.open(`Approval notification sent to ${this.profile.name.first} ${this.profile.name.last}'s mobile number.`,
         'Sending notification succeeded.', {
-          duration: 7000,
-        });
+        duration: 7000,
+      });
     } else {
       this.snackBar.open('Sending notification failed!', 'Something went wrong :(', {
         duration: 7000,

@@ -339,18 +339,26 @@ profilesPaginated = async (findText, distinction, nextstep, useroffice, page, li
         "resident.barangay": useroffice
       };
     } else if (distinction.includes('EVENT')) {
-      const eventcode = useroffice.replace('S', 'O');
 
+      // initialize to show NO event
+      qry = {
+        accessapproval: findText,
+        distinction: distinction,
+        nextstep: 100
+      };
+
+      const eventcode = useroffice;
       const sub_useroffice = useroffice.substring(0, 2);
-      const eventcreator = sub_useroffice.replace('S', 'O');
+      const eventcreator = sub_useroffice;
       // check if useroffice is using event code format
       const regex = /^((\s)*([a-zA-Z]{2}))([0-9]{6})?$/g;
       // will match AO1234
       const found = eventcode.match(regex);
       // if useroffice is AO or PO then show events created by office
-      if (sub_useroffice === 'AO' ||
-        sub_useroffice === 'PO' ||
-        sub_useroffice === 'OP') {
+      if (eventcreator === 'AO' ||
+        eventcreator === 'PO' ||
+        eventcreator === 'OP' ||
+        eventcreator === 'AP') {
         // show all events that office has created
         qry = {
           accessapproval: findText,
@@ -359,10 +367,8 @@ profilesPaginated = async (findText, distinction, nextstep, useroffice, page, li
           "event.eventcreator": eventcreator
         };
       }
-      // if useroffice is AS or PS then show all events
-      if (sub_useroffice === 'AS' ||
-        sub_useroffice === 'PS' ||
-        sub_useroffice === 'SP') {
+      // if eventcreator is SA - usertype is PSG (SA for Security Administrator)
+      if (eventcreator === 'SA') {
         // just show all events to PSG
         qry = {
           accessapproval: findText,
@@ -379,9 +385,6 @@ profilesPaginated = async (findText, distinction, nextstep, useroffice, page, li
           "event.eventcode": eventcode
         };
       }
-      console.log(useroffice);
-      console.log(qry);
-
     } else {}
   } else {}
 
