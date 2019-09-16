@@ -176,22 +176,34 @@ export class EventComponent implements OnInit, OnDestroy {
 
   OnMatCardClickEvent(): void {
     if (this.service.nextstep === this.profile.nextstep) {
-      if (this.service.useroffice !== 'NONE') {
-        if (this.service.usertype === 'OFFICEHEAD' &&
-          this.service.eventcreator === this.profile.event.eventcreator) {
-          // event.eventcreator   for events
-          this.openDialog();
-        } else if (this.service.usertype !== 'OFFICEHEAD' &&
-          this.service.eventcreator === 'SA') {
-          // SA for PSG
-          this.openDialog();
-        } else { }
-      } else {
-        if (this.service.eventcreator === 'SA') {
-          // SA for PSG
-          this.openDialog();
-        }
+      // On event component mat card click, add checks if
+      // user is the owner of the event OR
+      // if user eventcreator value is 'SA'
+      let openD = false;
+      const _profile: Profile = this.profile;
+      if (this.service.eventcreator === _profile.event.eventcreator ||
+        this.service.eventcreator === 'SA') {
+        openD = true;
       }
+      if (openD === true) {
+        this.openDialog();
+      }
+      // if (this.service.useroffice !== 'NONE') {
+      //   if (this.service.usertype === 'OFFICEHEAD' &&
+      //     this.service.eventcreator === this.profile.event.eventcreator) {
+      //     // event.eventcreator   for events
+      //     this.openDialog();
+      //   } else if (this.service.usertype !== 'OFFICEHEAD' &&
+      //     this.service.eventcreator === 'SA') {
+      //     // SA for PSG
+      //     this.openDialog();
+      //   } else { }
+      // } else {
+      //   if (this.service.eventcreator === 'SA') {
+      //     // SA for PSG
+      //     this.openDialog();
+      //   }
+      // }
     }
   }
 

@@ -1,4 +1,6 @@
+import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { Component, OnInit, Inject } from '@angular/core';
+import { MatChipInputEvent } from '@angular/material/chips';
 import { MydataserviceService } from '../mydataservice.service';
 import { SmsServiceService } from '../sms-service.service';
 import { Profile, ProfileObj } from '../profile';
@@ -21,6 +23,10 @@ import {
   fadeInThenOut, growInShrinkOut, swingInAndOut
 } from '../../triggers';
 
+export interface Event {
+  code: string;
+}
+
 @Component({
   selector: 'app-access-approval',
   templateUrl: './access-approval.component.html',
@@ -41,6 +47,15 @@ import {
   ],
 })
 export class AccessApprovalComponent implements OnInit {
+
+  // eventcode
+  visible = true;
+  selectable = true;
+  removable = true;
+  addOnBlur = true;
+  readonly separatorKeysCodes: number[] = [ENTER, COMMA];
+  events: Event[] = [];
+  // end eventcode
 
   public chips = [
     {
@@ -88,11 +103,11 @@ export class AccessApprovalComponent implements OnInit {
       badge: 0, badgehidden: true, badgecolor: 'accent', badgesize: 'medium'
     },
     {
-      id: 12, name: 'EVENT-GUEST', alias: 'EVENTS GENERAL GUEST',
+      id: 12, name: 'EVENT-GUEST', alias: 'EVENT GUEST',
       badge: 0, badgehidden: true, badgecolor: 'accent', badgesize: 'medium'
     },
     {
-      id: 13, name: 'EVENT-VIP', alias: 'EVENTS VIP GUEST',
+      id: 13, name: 'EVENT-VIP', alias: 'EVENT VIP',
       badge: 0, badgehidden: true, badgecolor: 'accent', badgesize: 'medium'
     }
   ];
@@ -187,6 +202,9 @@ export class AccessApprovalComponent implements OnInit {
     this._loading.next(true);
     this.service.find = 'Provisional';
     this.service.distinction = 'OPEMPLOYEE';
+    this.current_distinction = 'OPEMPLOYEE';
+    this.current_approvalstatus = 'Provisional';
+    this.current_distinction_alias = 'OP EMPLOYEE';
     this.service.usertype = '';
     this.service.useroffice = '';
     this.service.eventcode = '';
@@ -236,7 +254,6 @@ export class AccessApprovalComponent implements OnInit {
       const distinction = chip.name;
       const usertype = this.service.usertype;
       const findtext = this.service.find;
-      let useroffice = this.service.useroffice;
       const largemeter = 99;
       let nextstep = 100;
 
@@ -250,6 +267,7 @@ export class AccessApprovalComponent implements OnInit {
         nextstep = approvaltemplate.step;
       }
 
+      let useroffice = this.service.useroffice;
       // put new event workflow here
       if (distinction.includes('EVENT')) {
         if (this.service.eventcreator !== undefined && this.service.eventcreator !== '') {
@@ -320,7 +338,6 @@ export class AccessApprovalComponent implements OnInit {
 
     const largemeter = 99;
     const usertype = this.service.usertype;
-    let useroffice = this.service.useroffice;
 
     // iterate through statuses using
     for await (const statuschip of this.statuschips) {
@@ -347,6 +364,7 @@ export class AccessApprovalComponent implements OnInit {
           nextstep = approvaltemplate.step;
         }
 
+        let useroffice = this.service.useroffice;
         // put new event workflow here
         if (distinction.includes('EVENT')) {
           if (this.service.eventcreator !== undefined && this.service.eventcreator !== '') {
@@ -359,7 +377,6 @@ export class AccessApprovalComponent implements OnInit {
 
         // tslint:disable-next-line:max-line-length
         const url = `/api/profile/accessapprovals?findtext=${findtext}&distinction=${distinction}&nextstep=${nextstep}&useroffice=${useroffice}&page=1&limit=1&newestfirst=${true}`;
-        console.log('client query : ' + url);
         const profile: any = await this.http.get<any>(url).toPromise();
         if (profile !== null) {
           count += profile.totalDocs;
@@ -614,8 +631,23 @@ export class AccessApprovalComponent implements OnInit {
   }
 
   OnMatCardClickEvent(item: any): void {
-    this.profile = <Profile>item;
-    this.openDialog();
+    // On approval component mat card click, add checks if
+    // distinction includes EVENT
+    // then if user is the owner of the event OR
+    // if user eventcreator value is 'SA'
+    let openD = true;
+    const _profile: Profile = <Profile>item;
+    if (_profile.distinction.includes('EVENT')) {
+      openD = false;
+      if (this.service.eventcreator === _profile.event.eventcreator ||
+        this.service.eventcreator === 'SA') {
+        openD = true;
+      }
+    }
+    if (openD === true) {
+      this.profile = <Profile>item;
+      this.openDialog();
+    }
   }
 
   OnAccessTypeClickEvent(type: string): void {
@@ -638,5 +670,60 @@ export class AccessApprovalComponent implements OnInit {
     this.hasNextPage = true;
     this.getProfiles();
   }
+
+  // eventcode
+  add(event: MatChipInputEvent): void {
+    const input = event.input;
+    const value = event.value;
+
+    // Add our fruit
+    if ((value || '').trim()) {
+      this.events.push({ code: value.trim() });
+
+      // new chip has been added so
+      // do CISS event logic here
+      this.service.eventcode = value.trim();
+      if (!(this.service.distinction.includes('EVENT')) &&
+        (this.service.eventcode !== undefined && this.service.eventcode !== '')) {
+        this.service.distinction = 'EVENT-GUEST';
+        this.service.find = 'New Record';
+        this.current_distinction = 'EVENT-GUEST';
+        this.current_approvalstatus = 'New Record';
+        this.current_distinction_alias = 'EVENT GUEST';
+        const x = `SHOWING THE LIST OF
+              ${ this.current_distinction_alias.toUpperCase()}S
+              WITH ${ this.service.find.toUpperCase()} STATUS`;
+        this.titles = [x];
+      }
+      this.refreshInfin8List();
+      this.updateStatusBadges();
+      this.updateBadges();
+
+      // then always limit array size to 1
+      this.events = [{ code: value.trim() }, ...this.events.slice(0, 0)];
+    }
+
+    // Reset the input value
+    if (input) {
+      input.value = '';
+    }
+
+  }
+
+  remove(event: Event): void {
+    const index = this.events.indexOf(event);
+
+    if (index >= 0) {
+      this.events.splice(index, 1);
+      // do logic here
+      this.service.eventcode = '';
+      if (this.service.distinction.includes('EVENT')) {
+        this.refreshInfin8List();
+      }
+      this.updateStatusBadges();
+      this.updateBadges();
+    }
+  }
+  // end eventcode
 
 }

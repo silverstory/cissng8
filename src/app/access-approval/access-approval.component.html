@@ -1,24 +1,14 @@
 <mat-toolbar color="accent" style="background: #E0F7FA">
   <span class="demo-toolbar">
-    <!-- <button mat-fab color="primary" (click)="OnAccessTypeClickEvent('New Record')">New</button>&nbsp;
-    <button mat-fab color="primary" (click)="OnAccessTypeClickEvent('Provisional')">Provi</button>&nbsp;
-    <button mat-fab color="accent" (click)="OnAccessTypeClickEvent('Approved')">Apprvd</button>&nbsp;
-    <button mat-fab color="primary" (click)="OnAccessTypeClickEvent('Printed')">Prnted</button>&nbsp;
-    <button mat-fab color="accent" (click)="OnAccessTypeClickEvent('Distributed')">Dist</button>&nbsp;
-    <button mat-fab color="warn" (click)="OnAccessTypeClickEvent('Denied')">Denied</button>&nbsp; -->
-
     <div *ngFor="let chip of statuschips">
-      <button mat-fab [color]="chip.chipcolor"
-        [matBadge]="chip.badge" [matBadgeHidden]="chip.badgehidden"
-        matBadgePosition="above after" [matBadgeColor]="chip.badgecolor"
-        [matBadgeSize]="chip.badgesize"
+      <button mat-fab [color]="chip.chipcolor" [matBadge]="chip.badge" [matBadgeHidden]="chip.badgehidden"
+        matBadgePosition="above after" [matBadgeColor]="chip.badgecolor" [matBadgeSize]="chip.badgesize"
         (click)="OnAccessTypeClickEvent(chip.name)">
         {{ chip.alias }}
       </button>
       &nbsp;
     </div>
     &nbsp;&nbsp;
-
     <!-- LIST OF {{ service.find | uppercase }} ACCESS ( {{ current_distinction_alias | uppercase }} ) -->
     <ng-container [ngSwitch]="selectedAnimation">
       <ng-container *ngSwitchCase="'swing'">
@@ -28,18 +18,33 @@
         <div class="list-item" [@enterAndLeaveFromRight] *ngFor="let title of titles">{{ title }}</div>
       </ng-container>
     </ng-container>
-
+    &nbsp;&nbsp;
+    <div class="example-chip-form">
+      <mat-form-field class="example-chip-list">
+        <span matPrefix>
+          <mat-icon>event</mat-icon> &nbsp;
+        </span>
+        <!-- event insert_invitation keyboard assignment_ind filter_8 filter_1 filter_4 filter_2 phone_iphone tablet_mac laptop_mac sim_card assignment mode_edit -->
+        <mat-chip-list #chipList aria-label="Event selection">
+          <mat-chip *ngFor="let event of events" [selectable]="selectable" [removable]="removable"
+            (removed)="remove(event)" color="accent" selected>
+            {{event.code}}
+            <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+          </mat-chip>
+          <input placeholder="Event Code" maxlength="8" [matChipInputFor]="chipList"
+            [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
+            (matChipInputTokenEnd)="add($event)">
+        </mat-chip-list>
+        <mat-icon matSuffix>keyboard</mat-icon>
+      </mat-form-field>
+    </div>
   </span>
 </mat-toolbar>
 <!-- <section class="example-section"> -->
 <div id="chipcontent" style="text-align: -webkit-center;">
-  <mat-slide-toggle
-    [color]="color"
-    [checked]="checked"
-    [disabled]="disabled"
-    (change)="toggle($event)">
+  <!-- <mat-slide-toggle [color]="color" [checked]="checked" [disabled]="disabled" (change)="toggle($event)">
     Newest first!
-  </mat-slide-toggle>
+  </mat-slide-toggle> -->
   <div *ngFor="let chip of chips">
     <!-- <mat-chip-list>
       <mat-chip *ngFor="let chip of chips"
@@ -49,23 +54,16 @@
         [matBadgeSize]="chip.badgesize"
         (click)="onDistinctionChipClick(chip.name)">{{ chip.alias }}</mat-chip>
     </mat-chip-list> -->
-    <button mat-flat-button color="primary"
-      [matBadge]="chip.badge" [matBadgeHidden]="chip.badgehidden"
-      matBadgePosition="above after" [matBadgeColor]="chip.badgecolor"
-      [matBadgeSize]="chip.badgesize"
+    <button mat-flat-button color="primary" [matBadge]="chip.badge" [matBadgeHidden]="chip.badgehidden"
+      matBadgePosition="above after" [matBadgeColor]="chip.badgecolor" [matBadgeSize]="chip.badgesize"
       (click)="onDistinctionChipClick(chip.name)">
       {{ chip.alias }}
     </button>
   </div>
 </div>
 <!-- </section> -->
-<div  infiniteScroll
-    [infiniteScrollDistance]="2"
-    [infiniteScrollThrottle]="500"
-    (scrolled)="onScroll()"
-    id="content"
-    style="overflow-y: scroll; text-align: -webkit-center;"
-  >
+<div infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="500" (scrolled)="onScroll()" id="content"
+  style="overflow-y: scroll; text-align: -webkit-center;">
   <!-- height: 100%;
   overflow-y: scroll;
   text-align: -webkit-center; -->
@@ -73,7 +71,9 @@
     <div>
       <mat-card class="example-card" (click)="OnMatCardClickEvent(i)">
         <mat-card-header>
-          <div mat-card-avatar [ngStyle]="{'background-image': 'url(../assets/face_icon/'+ setFaceIcon(i.distinction, i.gender) + '.svg)'}" class="example-header-image"></div>
+          <div mat-card-avatar
+            [ngStyle]="{'background-image': 'url(../assets/face_icon/'+ setFaceIcon(i.distinction, i.gender) + '.svg)'}"
+            class="example-header-image"></div>
           <mat-card-title>{{ i.name.first }} {{ i.name.last }}</mat-card-title>
           <mat-card-subtitle>{{ i.distinction }}</mat-card-subtitle>
         </mat-card-header>
@@ -101,7 +101,7 @@
 <!-- arrow 9658 square 9632 -->
 <!-- SHOULD STATE DENY REASON ON MODAL DIALOG WHEN CLICKED -->
 
-  <!-- <div>1</div>
+<!-- <div>1</div>
   <div>2</div>
   <div>3</div>
   <div class="nested">
