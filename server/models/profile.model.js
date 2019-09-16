@@ -347,18 +347,17 @@ profilesPaginated = async (findText, distinction, nextstep, useroffice, page, li
         nextstep: 100
       };
 
+      const creators = ['AO', 'PO', 'OP', 'AP'];
       const eventcode = useroffice;
       const sub_useroffice = useroffice.substring(0, 2);
       const eventcreator = sub_useroffice;
       // check if useroffice is using event code format
       const regex = /^((\s)*([a-zA-Z]{2}))([0-9]{6})?$/g;
       // will match AO1234
-      const found = eventcode.match(regex);
+      // const found = eventcode.match(regex);
+      const found = regex.test(eventcode);
       // if useroffice is AO or PO then show events created by office
-      if (eventcreator === 'AO' ||
-        eventcreator === 'PO' ||
-        eventcreator === 'OP' ||
-        eventcreator === 'AP') {
+      if (creators.includes(eventcreator)) {
         // show all events that office has created
         qry = {
           accessapproval: findText,
@@ -376,7 +375,7 @@ profilesPaginated = async (findText, distinction, nextstep, useroffice, page, li
           nextstep: nextstep
         };
       }
-      if (found === true) {
+      if (found === true && eventcode.length === 8 ) {
         // show specific event to user
         qry = {
           accessapproval: findText,
