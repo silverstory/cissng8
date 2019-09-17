@@ -1,5 +1,5 @@
-<mat-toolbar color="accent" style="background: #E0F7FA">
-  <span class="demo-toolbar">
+<div id="statuschipcontent" style="background: #E0F7FA; text-align: -webkit-center;">
+  <span class="statbuttons">
     <div *ngFor="let chip of statuschips">
       <button mat-fab [color]="chip.chipcolor" [matBadge]="chip.badge" [matBadgeHidden]="chip.badgehidden"
         matBadgePosition="above after" [matBadgeColor]="chip.badgecolor" [matBadgeSize]="chip.badgesize"
@@ -8,8 +8,8 @@
       </button>
       &nbsp;
     </div>
-    &nbsp;&nbsp;
-    <!-- LIST OF {{ service.find | uppercase }} ACCESS ( {{ current_distinction_alias | uppercase }} ) -->
+  </span>
+  <span class="titletext">
     <ng-container [ngSwitch]="selectedAnimation">
       <ng-container *ngSwitchCase="'swing'">
         <div class="list-item" [@swingInAndOut] *ngFor="let title of titles">{{ title }}</div>
@@ -18,7 +18,8 @@
         <div class="list-item" [@enterAndLeaveFromRight] *ngFor="let title of titles">{{ title }}</div>
       </ng-container>
     </ng-container>
-    &nbsp;&nbsp;
+  </span>
+  <span class="eventfield">
     <div class="example-chip-form">
       <mat-form-field class="example-chip-list">
         <span matPrefix>
@@ -39,21 +40,21 @@
       </mat-form-field>
     </div>
   </span>
-</mat-toolbar>
+</div>
 <!-- <section class="example-section"> -->
 <div id="chipcontent" style="text-align: -webkit-center;">
   <!-- <mat-slide-toggle [color]="color" [checked]="checked" [disabled]="disabled" (change)="toggle($event)">
-    Newest first!
-  </mat-slide-toggle> -->
+      Newest first!
+    </mat-slide-toggle> -->
   <div *ngFor="let chip of chips">
     <!-- <mat-chip-list>
-      <mat-chip *ngFor="let chip of chips"
-        class="allow-overflow" color="primary" selected
-        [matBadge]="chip.badge" [matBadgeHidden]="chip.badgehidden"
-        matBadgePosition="above after" [matBadgeColor]="chip.badgecolor"
-        [matBadgeSize]="chip.badgesize"
-        (click)="onDistinctionChipClick(chip.name)">{{ chip.alias }}</mat-chip>
-    </mat-chip-list> -->
+        <mat-chip *ngFor="let chip of chips"
+          class="allow-overflow" color="primary" selected
+          [matBadge]="chip.badge" [matBadgeHidden]="chip.badgehidden"
+          matBadgePosition="above after" [matBadgeColor]="chip.badgecolor"
+          [matBadgeSize]="chip.badgesize"
+          (click)="onDistinctionChipClick(chip.name)">{{ chip.alias }}</mat-chip>
+      </mat-chip-list> -->
     <button mat-flat-button color="primary" [matBadge]="chip.badge" [matBadgeHidden]="chip.badgehidden"
       matBadgePosition="above after" [matBadgeColor]="chip.badgecolor" [matBadgeSize]="chip.badgesize"
       (click)="onDistinctionChipClick(chip.name)">
@@ -65,8 +66,8 @@
 <div infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="500" (scrolled)="onScroll()" id="content"
   style="overflow-y: scroll; text-align: -webkit-center;">
   <!-- height: 100%;
-  overflow-y: scroll;
-  text-align: -webkit-center; -->
+    overflow-y: scroll;
+    text-align: -webkit-center; -->
   <div *ngFor="let i of myProfileList">
     <div>
       <mat-card class="example-card" (click)="OnMatCardClickEvent(i)">
@@ -102,13 +103,13 @@
 <!-- SHOULD STATE DENY REASON ON MODAL DIALOG WHEN CLICKED -->
 
 <!-- <div>1</div>
-  <div>2</div>
-  <div>3</div>
-  <div class="nested">
-    <p>1</p>
-    <p>2</p>
-    <p>3</p>
-    <p>4</p>
-  </div>
-  <div>5</div>
-  <div>6</div> -->
+    <div>2</div>
+    <div>3</div>
+    <div class="nested">
+      <p>1</p>
+      <p>2</p>
+      <p>3</p>
+      <p>4</p>
+    </div>
+    <div>5</div>
+    <div>6</div> -->

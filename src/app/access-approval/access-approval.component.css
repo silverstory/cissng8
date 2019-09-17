@@ -12,13 +12,13 @@ mat-toolbar-row {
 }
 
 .example-card {
-max-width: 400px;
-font-family: Roboto, sans-serif, 'Nunito Semibold';
+  max-width: 400px;
+  font-family: Roboto, sans-serif, 'Nunito Semibold';
 }
 
 .example-card p {
-font-size: 0.9em;
-line-height: 2em;
+  font-size: 0.9em;
+  line-height: 2em;
 }
 
 /* .example-header-image {
@@ -36,33 +36,39 @@ background-size: cover;
 
 /* CSS GRID  */
 /* iphone */
-#content{
+#content {
   display: grid;
   grid-template-columns: repeat(1, 1fr);
   grid-gap: 10px;
-  max-width: 100%;  /* 960px; */
+  max-width: 100%;
+  /* 960px; */
   margin: 0 auto;
 }
+
 /* ipad */
 @media screen and (min-width: 760px) {
-  #content{
+  #content {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-gap: 10px;
-    max-width: 100%; /* 960px; */
+    max-width: 100%;
+    /* 960px; */
     margin: 0 auto;
   }
 }
+
 /* macbook 1366+ or 1280+ */
 @media screen and (min-width: 1360px) {
-  #content{
+  #content {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-gap: 10px;
-    max-width: 100%; /* 960px; */
+    max-width: 100%;
+    /* 960px; */
     margin: 0 auto;
   }
 }
+
 #content div {
   /* background: #3bbced; */
   padding: 10px;
@@ -71,7 +77,8 @@ background-size: cover;
   /* #E0F7FA */
   /* margin: 2em auto; */
 }
-#content div:nth-child(even){
+
+#content div:nth-child(even) {
   /* background: #777; */
   padding: 10px;
   font-family: Lato;
@@ -79,21 +86,22 @@ background-size: cover;
 
 /* nested */
 
-.nested{
+.nested {
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-gap: 10px;
   /*grid-column: span 3;*/
 }
-.nested p{
+
+.nested p {
   border: 1px solid #fff;
   /* padding: 10px; */
   margin: 0;
 }
 
- /* footers loading and alerts */
+/* footers loading and alerts */
 
- .tag {
+.tag {
   font-size: 2.2em;
   text-align: -webkit-center;
 }
@@ -105,26 +113,29 @@ background-size: cover;
   max-width: 960px;
   margin: 0 auto;
   grid-template-areas:
-      "footer footer"
-      "footer footer";
+    "footer footer"
+    "footer footer";
 }
+
 /* desktop grid */
 @media screen and (min-width: 760px) {
-#footers {
-display: grid;
-grid-template-columns: repeat(4, 1fr);
-grid-auto-rows: minmax(100px, auto);
-max-width: 960px;
-margin: 0 auto;
-      grid-template-areas:
+  #footers {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: minmax(100px, auto);
+    max-width: 960px;
+    margin: 0 auto;
+    grid-template-areas:
       "footer footer footer footer"
       "footer footer footer footer";
+  }
 }
+
+#footers>* {
+  /* background: #3bbced; */
+  padding: 30px;
 }
-#footers > * {
-/* background: #3bbced; */
-padding: 30px;
-}
+
 footer {
   grid-area: footer;
   /* background: #333 !important; */
@@ -148,16 +159,28 @@ footer {
 
 /* CSS GRID - distinction buttons  */
 /* iphone */
-#chipcontent{
+#chipcontent {
   display: grid;
   grid-template-columns: repeat(1, 1fr);
   grid-gap: 10px;
   max-width: 100%;
   margin: 18px auto 8px auto;
 }
+
 /* ipad */
 @media screen and (min-width: 760px) {
-  #chipcontent{
+  #chipcontent {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 10px;
+    max-width: 100%;
+    margin: 18px auto 8px auto;
+  }
+}
+
+/* ipad pro */
+@media screen and (min-width: 1020px) {
+  #chipcontent {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     grid-gap: 10px;
@@ -165,21 +188,23 @@ footer {
     margin: 18px auto 8px auto;
   }
 }
+
 /* macbook 1366+ or 1280+ */
 @media screen and (min-width: 1360px) {
-  #chipcontent{
+  #chipcontent {
     display: grid;
-    grid-template-columns: repeat(10, 1fr);
+    grid-template-columns: repeat(7, 1fr);
     grid-gap: 10px;
     max-width: 100%;
     margin: 18px auto 8px auto;
   }
 }
+
 /* large screen laptops or desktops 1600+ */
 @media screen and (min-width: 1600px) {
-  #chipcontent{
+  #chipcontent {
     display: grid;
-    grid-template-columns: repeat(12, 1fr);
+    grid-template-columns: repeat(10, 1fr);
     grid-gap: 10px;
     max-width: 100%;
     margin: 18px auto 8px auto;
@@ -190,6 +215,7 @@ footer {
   border-radius: 16px;
   line-height: 32px;
 }
+
 #chipcontent mat-slide-toggle {
   margin: 10px 20px;
 }
@@ -218,7 +244,7 @@ footer {
   line-height: 32px;
 }
 
-.mat-basic-chip > div {
+.mat-basic-chip>div {
   display: inline-block;
   overflow: hidden;
   line-height: 32px;
@@ -231,13 +257,14 @@ footer {
 
 /* End Badges */
 
-.list-item{
+.list-item {
   border-radius: 5px;
-  width: auto; /* 200px; */
-  padding:15px;
+  width: auto;
+  /* 200px; */
+  padding: 15px;
   margin: 15px;
   height: 30px;
-  background-color:lightblue;
+  background-color: lightblue;
 }
 
 /* eventcode */
@@ -250,10 +277,104 @@ footer {
   font-family: Roboto, sans-serif, 'Nunito Semibold';
   font-size: 0.9em;
 }
+
 .example-chip-list {
   width: 100%;
-  font-family: Lato;
   font-family: Roboto, sans-serif, 'Nunito Semibold';
   font-size: 0.9em;
 }
+
 /* end eventcode */
+
+
+/* status chips */
+
+.statbuttons {
+  grid-area: chips;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  color: #212121;
+}
+
+.titletext {
+  grid-area: title;
+  font-family: Roboto, sans-serif, 'Nunito Semibold';
+  font-size: larger;
+}
+
+.eventfield {
+  grid-area: eventcode;
+  font-family: Roboto, sans-serif, 'Nunito Semibold';
+}
+
+/* CSS GRID - status buttons  */
+/* iphone */
+#statuschipcontent {
+  display: grid;
+  grid-template-areas:
+  'chips'
+  'eventcode'
+  'title';
+  grid-gap: 10px;
+  max-width: 100%;
+  margin: auto 10px auto 10px;
+}
+
+/* ipad */
+@media screen and (min-width: 760px) {
+  #statuschipcontent {
+    display: grid;
+    grid-template-areas:
+    'chips'
+    'eventcode'
+    'title';
+    grid-gap: 10px;
+    max-width: 100%;
+    margin: auto 10px auto 10px;
+  }
+}
+
+/* ipad pro 1024+ */
+@media screen and (min-width: 1020px) {
+  #statuschipcontent {
+    display: grid;
+    grid-template-areas:
+    'chips eventcode'
+    'title title';
+    grid-gap: 10px;
+    max-width: 100%;
+    margin: auto 10px auto 10px;
+  }
+}
+
+/* macbook 1366+ or 1280+ */
+@media screen and (min-width: 1360px) {
+  #statuschipcontent {
+    display: grid;
+    grid-template-areas:
+    'chips eventcode'
+    'title title';
+    grid-gap: 10px;
+    max-width: 100%;
+    margin: auto 10px auto 10px;
+  }
+}
+
+/* large screen laptops or desktops 1600+ */
+@media screen and (min-width: 1600px) {
+  #statuschipcontent {
+    display: grid;
+    grid-template-areas:
+    'chips title title eventcode';
+    grid-gap: 10px;
+    max-width: 100%;
+    margin: auto 10px auto 10px;
+  }
+}
+
+#statuschipcontent button {
+  justify-content: space-between;
+}
+
+/* end status chips */
