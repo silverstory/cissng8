@@ -59,55 +59,113 @@ export class AccessApprovalComponent implements OnInit {
 
   public chips = [
     {
-      id: 1, name: 'OPEMPLOYEE', alias: 'OP EMPLOYEE',
+      id: 1, name: 'OPEMPLOYEE', alias: 'OP EMPLOYEE', chipcolor: 'primary',
+      default_color: 'primary',
       badge: 0, badgehidden: true, badgecolor: 'accent', badgesize: 'medium'
     },
     {
-      id: 2, name: 'OPEMPLOYEE-VIP', alias: 'VIP EMPLOYEE',
+      id: 2, name: 'OPEMPLOYEE-VIP', alias: 'VIP EMPLOYEE', chipcolor: 'primary',
+      default_color: 'primary',
       badge: 0, badgehidden: true, badgecolor: 'accent', badgesize: 'medium'
     },
     {
-      id: 3, name: 'BRGYRESIDENT-PSG', alias: 'PSG',
+      id: 3, name: 'BRGYRESIDENT-PSG', alias: 'PSG', chipcolor: 'primary',
+      default_color: 'primary',
       badge: 0, badgehidden: true, badgecolor: 'accent', badgesize: 'medium'
     },
     {
-      id: 4, name: 'OPVISITOR', alias: 'OP VISITOR',
+      id: 4, name: 'BRGYRESIDENT-PSG-PARK', alias: 'PSG PARK', chipcolor: 'primary',
+      default_color: 'primary',
       badge: 0, badgehidden: true, badgecolor: 'accent', badgesize: 'medium'
     },
     {
-      id: 5, name: 'OPVISITOR-VIP', alias: 'OP VIP VISITOR',
+      id: 5, name: 'OPVISITOR', alias: 'OP VISITOR', chipcolor: 'primary',
+      default_color: 'primary',
       badge: 0, badgehidden: true, badgecolor: 'accent', badgesize: 'medium'
     },
     {
-      id: 6, name: 'BRGYRESIDENT', alias: 'BRGY RESIDENT',
+      id: 6, name: 'OPVISITOR-VIP', alias: 'OP VIP VISITOR', chipcolor: 'primary',
+      default_color: 'primary',
       badge: 0, badgehidden: true, badgecolor: 'accent', badgesize: 'medium'
     },
     {
-      id: 7, name: 'BRGYRESIDENT-RTVM', alias: 'RTVM',
+      id: 7, name: 'BRGYRESIDENT', alias: 'BRGY RESIDENT', chipcolor: 'primary',
+      default_color: 'primary',
       badge: 0, badgehidden: true, badgecolor: 'accent', badgesize: 'medium'
     },
     {
-      id: 8, name: 'BRGYRESIDENT-MESLA', alias: 'MESLA',
+      id: 8, name: 'BRGYRESIDENT-RTVM', alias: 'RTVM', chipcolor: 'primary',
+      default_color: 'primary',
       badge: 0, badgehidden: true, badgecolor: 'accent', badgesize: 'medium'
     },
     {
-      id: 9, name: 'BRGYRESIDENT-MECOOP', alias: 'MECOOP',
+      id: 9, name: 'BRGYRESIDENT-MESLA', alias: 'MESLA', chipcolor: 'primary',
+      default_color: 'primary',
       badge: 0, badgehidden: true, badgecolor: 'accent', badgesize: 'medium'
     },
     {
-      id: 10, name: 'OPVISITOR-SECURITY-CLEARANCE', alias: 'SECURITY CLEARANCE',
+      id: 10, name: 'BRGYRESIDENT-MECOOP', alias: 'MECOOP', chipcolor: 'primary',
+      default_color: 'primary',
       badge: 0, badgehidden: true, badgecolor: 'accent', badgesize: 'medium'
     },
     {
-      id: 11, name: 'BRGYRESIDENT-PASSING-THRU', alias: 'PASSING THRU',
+      id: 11, name: 'BRGYRESIDENT-PCOO', alias: 'PCOO', chipcolor: 'primary',
+      default_color: 'primary',
       badge: 0, badgehidden: true, badgecolor: 'accent', badgesize: 'medium'
     },
     {
-      id: 12, name: 'EVENT-GUEST', alias: 'EVENT GUEST',
+      id: 12, name: 'BRGYRESIDENT-BLUE-GUARDS', alias: 'BLUE GUARD', chipcolor: 'primary',
+      default_color: 'primary',
       badge: 0, badgehidden: true, badgecolor: 'accent', badgesize: 'medium'
     },
     {
-      id: 13, name: 'EVENT-VIP', alias: 'EVENT VIP',
+      id: 13, name: 'BRGYRESIDENT-OP-CASUAL-WORKERS', alias: 'CASUAL WORKER', chipcolor: 'primary',
+      default_color: 'primary',
+      badge: 0, badgehidden: true, badgecolor: 'accent', badgesize: 'medium'
+    },
+    {
+      id: 14, name: 'BRGYRESIDENT-LPLP', alias: 'LPLP', chipcolor: 'primary',
+      default_color: 'primary',
+      badge: 0, badgehidden: true, badgecolor: 'accent', badgesize: 'medium'
+    },
+    {
+      id: 15, name: 'BRGYRESIDENT-MPC', alias: 'MPC', chipcolor: 'primary',
+      default_color: 'primary',
+      badge: 0, badgehidden: true, badgecolor: 'accent', badgesize: 'medium'
+    },
+    {
+      id: 16, name: 'BRGYRESIDENT-SAINT-JUDE', alias: 'SAINT JUDE', chipcolor: 'primary',
+      default_color: 'primary',
+      badge: 0, badgehidden: true, badgecolor: 'accent', badgesize: 'medium'
+    },
+    {
+      id: 17, name: 'BRGYRESIDENT-PUJ', alias: 'PUJ', chipcolor: 'primary',
+      default_color: 'primary',
+      badge: 0, badgehidden: true, badgecolor: 'accent', badgesize: 'medium'
+    },
+    {
+      id: 18, name: 'BRGYRESIDENT-TRICYCLE', alias: 'TRICYCLE', chipcolor: 'primary',
+      default_color: 'primary',
+      badge: 0, badgehidden: true, badgecolor: 'accent', badgesize: 'medium'
+    },
+    {
+      id: 19, name: 'OPVISITOR-SECURITY-CLEARANCE', alias: 'SECURITY CLEARANCE', chipcolor: 'primary',
+      default_color: 'primary',
+      badge: 0, badgehidden: true, badgecolor: 'accent', badgesize: 'medium'
+    },
+    {
+      id: 20, name: 'BRGYRESIDENT-PASSING-THRU', alias: 'PASSING THRU', chipcolor: 'primary',
+      default_color: 'primary',
+      badge: 0, badgehidden: true, badgecolor: 'accent', badgesize: 'medium'
+    },
+    {
+      id: 21, name: 'EVENT-GUEST', alias: 'EVENT GUEST', chipcolor: 'primary',
+      default_color: 'primary',
+      badge: 0, badgehidden: true, badgecolor: 'accent', badgesize: 'medium'
+    },
+    {
+      id: 22, name: 'EVENT-VIP', alias: 'EVENT VIP', chipcolor: 'primary',
+      default_color: 'primary',
       badge: 0, badgehidden: true, badgecolor: 'accent', badgesize: 'medium'
     }
   ];
@@ -115,27 +173,33 @@ export class AccessApprovalComponent implements OnInit {
   public statuschips = [
     {
       id: 1, name: 'New Record', alias: 'New', badge: 0, badgehidden: true,
+      default_color: 'primary',
       chipcolor: 'primary', badgecolor: 'accent', badgesize: 'medium'
     },
     {
       id: 2, name: 'Provisional', alias: 'Provi', badge: 0, badgehidden: true,
-      chipcolor: 'warn', badgecolor: 'primary', badgesize: 'medium'
+      default_color: 'accent',
+      chipcolor: 'accent', badgecolor: 'primary', badgesize: 'medium'
     },
     {
       id: 3, name: 'Approved', alias: 'Apprvd', badge: 0, badgehidden: true,
-      chipcolor: 'accent', badgecolor: 'warn', badgesize: 'medium'
-    },
-    {
-      id: 4, name: 'Printed', alias: 'Printed', badge: 0, badgehidden: true,
+      default_color: 'primary',
       chipcolor: 'primary', badgecolor: 'accent', badgesize: 'medium'
     },
     {
+      id: 4, name: 'Printed', alias: 'Printed', badge: 0, badgehidden: true,
+      default_color: 'accent',
+      chipcolor: 'accent', badgecolor: 'primary', badgesize: 'medium'
+    },
+    {
       id: 5, name: 'Distributed', alias: 'Dist', badge: 0, badgehidden: true,
-      chipcolor: 'accent', badgecolor: 'warn', badgesize: 'medium'
+      default_color: 'primary',
+      chipcolor: 'primary', badgecolor: 'accent', badgesize: 'medium'
     },
     {
       id: 6, name: 'Denied', alias: 'Denied', badge: 0, badgehidden: true,
-      chipcolor: 'warn', badgecolor: 'primary', badgesize: 'medium'
+      default_color: 'accent',
+      chipcolor: 'accent', badgecolor: 'primary', badgesize: 'medium'
     },
   ];
 
@@ -189,6 +253,13 @@ export class AccessApprovalComponent implements OnInit {
   ${ this.current_distinction_alias.toUpperCase()}S
   WITH ${ this.service.find.toUpperCase()} STATUS`];
 
+  // for selected chip
+  prev_dist = 'OPEMPLOYEE';
+  next_dist = 'OPEMPLOYEE';
+  prev_stat = 'Provisional';
+  next_stat = 'Provisional';
+  // end for selected chip
+
   constructor(public service: MydataserviceService,
     public smsService: SmsServiceService,
     public dialog: MatDialog,
@@ -212,6 +283,13 @@ export class AccessApprovalComponent implements OnInit {
     this.service.nextstep = 100;
     this.service.limit = 8; // limit must be atleast 8 and above
     this.service.newestFirst = true;
+    this.prev_dist = 'OPEMPLOYEE';
+    this.next_dist = 'OPEMPLOYEE';
+    this.prev_stat = 'Provisional';
+    this.next_stat = 'Provisional';
+
+    this.changeStatColor();
+    this.changeDistColor();
 
     this.titles = [`SHOWING THE LIST OF
     ${ this.current_distinction_alias.toUpperCase()}S
@@ -234,6 +312,24 @@ export class AccessApprovalComponent implements OnInit {
       await this.updateBadges();
     }, 1000);
 
+  }
+
+  async changeStatColor() {
+    // make prev color back to default
+    const stat_prev_index = this.statuschips.findIndex(x => x.name === this.prev_stat);
+    this.statuschips[stat_prev_index].chipcolor = this.statuschips[stat_prev_index].default_color;
+    // set next color to none
+    const stat_next_index = this.statuschips.findIndex(x => x.name === this.next_stat);
+    this.statuschips[stat_next_index].chipcolor = 'warn';
+  }
+
+  async changeDistColor() {
+    // make prev color back to default
+    const dist_prev_index = this.chips.findIndex(x => x.name === this.prev_dist);
+    this.chips[dist_prev_index].chipcolor = this.chips[dist_prev_index].default_color;
+    // set next color to none
+    const dist_next_index = this.chips.findIndex(x => x.name === this.next_dist);
+    this.chips[dist_next_index].chipcolor = 'warn';
   }
 
   setFaceIcon(distinction: String, gender: String): String {
@@ -313,6 +409,9 @@ export class AccessApprovalComponent implements OnInit {
   onDistinctionChipClick(chipname) {
     this.service.distinction = chipname;
     this.current_distinction = chipname;
+    this.prev_dist = this.next_dist;
+    this.next_dist = chipname;
+    this.changeDistColor();
     const chip = this.chips.find(c => c.name === chipname);
     this.current_distinction_alias = chip.alias;
     const x = `SHOWING THE LIST OF
@@ -653,6 +752,9 @@ export class AccessApprovalComponent implements OnInit {
   OnAccessTypeClickEvent(type: string): void {
     this.service.find = type;
     this.current_approvalstatus = type;
+    this.prev_stat = this.next_stat;
+    this.next_stat = type;
+    this.changeStatColor();
     const x = `SHOWING THE LIST OF
     ${ this.current_distinction_alias.toUpperCase()}S
     WITH ${ this.service.find.toUpperCase()} STATUS`;
@@ -688,7 +790,13 @@ export class AccessApprovalComponent implements OnInit {
         this.service.distinction = 'EVENT-GUEST';
         this.service.find = 'New Record';
         this.current_distinction = 'EVENT-GUEST';
+        this.prev_dist = this.next_dist;
+        this.next_dist = 'EVENT-GUEST';
         this.current_approvalstatus = 'New Record';
+        this.prev_stat = this.next_stat;
+        this.next_stat = 'New Record';
+        this.changeStatColor();
+        this.changeDistColor();
         this.current_distinction_alias = 'EVENT GUEST';
         const x = `SHOWING THE LIST OF
               ${ this.current_distinction_alias.toUpperCase()}S

@@ -55,7 +55,7 @@
           [matBadgeSize]="chip.badgesize"
           (click)="onDistinctionChipClick(chip.name)">{{ chip.alias }}</mat-chip>
       </mat-chip-list> -->
-    <button mat-flat-button color="primary" [matBadge]="chip.badge" [matBadgeHidden]="chip.badgehidden"
+    <button mat-flat-button [color]="chip.chipcolor" [matBadge]="chip.badge" [matBadgeHidden]="chip.badgehidden"
       matBadgePosition="above after" [matBadgeColor]="chip.badgecolor" [matBadgeSize]="chip.badgesize"
       (click)="onDistinctionChipClick(chip.name)">
       {{ chip.alias }}
