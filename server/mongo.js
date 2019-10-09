@@ -4,6 +4,7 @@ const config = require("./config/config.js");
 
 function connect() {
   mongoose.set('debug', true);
+  mongoose.set('useCreateIndex', true);
   if (config.DB_MODE == 'STAGING') {
     return mongoose.connect(db.database)
     .then(() => console.log('connection successful'))
@@ -13,8 +14,9 @@ function connect() {
         auth:
         {
             user: config.DB_USER_NAME,
-            password: config.DB_PASSWORD,
-        }
+            password: config.DB_PASSWORD
+        },
+        useNewUrlParser: true
     })
     .then(() => console.log('connection successful'))
     .catch((err) => console.error(err));

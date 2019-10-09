@@ -186,18 +186,18 @@ export class AccessApprovalComponent implements OnInit {
       default_color: 'primary',
       chipcolor: 'primary', badgecolor: 'accent', badgesize: 'medium'
     },
+    // {
+    //   id: 4, name: 'Printed', alias: 'Printed', badge: 0, badgehidden: true,
+    //   default_color: 'accent',
+    //   chipcolor: 'accent', badgecolor: 'primary', badgesize: 'medium'
+    // },
+    // {
+    //   id: 5, name: 'Distributed', alias: 'Dist', badge: 0, badgehidden: true,
+    //   default_color: 'primary',
+    //   chipcolor: 'primary', badgecolor: 'accent', badgesize: 'medium'
+    // },
     {
-      id: 4, name: 'Printed', alias: 'Printed', badge: 0, badgehidden: true,
-      default_color: 'accent',
-      chipcolor: 'accent', badgecolor: 'primary', badgesize: 'medium'
-    },
-    {
-      id: 5, name: 'Distributed', alias: 'Dist', badge: 0, badgehidden: true,
-      default_color: 'primary',
-      chipcolor: 'primary', badgecolor: 'accent', badgesize: 'medium'
-    },
-    {
-      id: 6, name: 'Denied', alias: 'Denied', badge: 0, badgehidden: true,
+      id: 4, name: 'Denied', alias: 'Denied', badge: 0, badgehidden: true,
       default_color: 'accent',
       chipcolor: 'accent', badgecolor: 'primary', badgesize: 'medium'
     },

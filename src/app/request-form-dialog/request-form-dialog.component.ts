@@ -194,12 +194,13 @@ export class RequestFormDialogComponent implements OnInit {
           // steps code here
           this.steps = [];
           this.completedBa = [];
-          let finishText = '';
-          if (this.data.freezedProfile.distinction.includes('OPVISITOR')) {
-            finishText = 'Approved';
-          } else {
-            finishText = 'Distributed';
-          }
+          const finishText = 'Approved';
+          // let finishText = '';
+          // if (this.data.freezedProfile.distinction.includes('OPVISITOR')) {
+          //   finishText = 'Approved';
+          // } else {
+          //   finishText = 'Distributed';
+          // }
           this.service.getTemplates(this.data.profile.distinction, 1)
             .pipe(
               tap((res: any) => res)

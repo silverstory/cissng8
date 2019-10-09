@@ -150,16 +150,17 @@ export class OPIDComponent implements OnInit, OnDestroy {
         await items.forEach(async item => {
           if (item.step > previousStep) {
             await this.steps.push(await new ApprovaltemplateObj(item));
-            let completeFlag = 'Distributed';
-            if (profile.distinction.includes('OPEMPLOYEE')) {
-              completeFlag = 'Distributed';
-            } else if (profile.distinction.includes('BRGYRESIDENT')) {
-              completeFlag = 'Distributed';
-            } else if (profile.distinction.includes('OPVISITOR')) {
-              completeFlag = 'Approved';
-            } else if (profile.distinction.includes('EVENT')) {
-              completeFlag = 'Approved';
-            }
+            const completeFlag = 'Approved';
+            // let completeFlag = 'Distributed';
+            // if (profile.distinction.includes('OPEMPLOYEE')) {
+            //   completeFlag = 'Distributed';
+            // } else if (profile.distinction.includes('BRGYRESIDENT')) {
+            //   completeFlag = 'Distributed';
+            // } else if (profile.distinction.includes('OPVISITOR')) {
+            //   completeFlag = 'Approved';
+            // } else if (profile.distinction.includes('EVENT')) {
+            //   completeFlag = 'Approved';
+            // }
             if (item.step < profile.nextstep || profile.accessapproval === completeFlag) {
               await this.completedBa.push(true);
               await this.stepstext.push(item.completedsteptext);

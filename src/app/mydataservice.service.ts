@@ -95,6 +95,7 @@ export class MydataserviceService {
       cisscode,
       cissinqtext,
       cisstoken,
+      rfid,
       photothumbnailurl,
       employee,
       resident,
@@ -131,6 +132,7 @@ export class MydataserviceService {
       cisscode: cisscode,
       cissinqtext: cissinqtext,
       cisstoken: cisstoken,
+      rfid: rfid,
       photothumbnailurl: photothumbnailurl,
       employee: employee !== undefined ? Object.freeze({
         position: employee.position,
@@ -209,6 +211,7 @@ export class MydataserviceService {
       cisscode,
       cissinqtext,
       cisstoken,
+      rfid,
       photothumbnailurl,
       employee,
       resident,
@@ -245,6 +248,7 @@ export class MydataserviceService {
       cisscode: cisscode,
       cissinqtext: cissinqtext,
       cisstoken: cisstoken,
+      rfid: rfid,
       photothumbnailurl: photothumbnailurl,
       employee: employee !== undefined ? {
         position: employee.position,

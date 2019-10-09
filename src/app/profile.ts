@@ -14,6 +14,7 @@ export interface Profile {
   cisscode: String;
   cissinqtext: String;
   cisstoken: String;
+  rfid: String;
   photothumbnailurl: String;
   employee: {
     position: String;
@@ -91,6 +92,7 @@ export class ProfileObj implements Profile {
   cisscode: String;
   cissinqtext: String;
   cisstoken: String;
+  rfid: String;
   photothumbnailurl: String;
   employee: {
     position: String;

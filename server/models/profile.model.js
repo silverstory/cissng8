@@ -55,9 +55,13 @@ const ProfileSchema = new Schema({
     type: String,
     unique: true
   },
+  rfid: {
+    type: String,
+    unique: true
+  },
   photothumbnailurl: {
     type: String,
-    default: 'https://images.pexels.com/photos/399772/pexels-photo-399772.jpeg'
+    default: 'http://192.168.23.8/assets/face_icon/DEFAULT_MALE.svg'
   },
   employee: {
     position: {
@@ -237,11 +241,13 @@ const ProfileSchema = new Schema({
   read: 'nearest'
 });
 ProfileSchema.index({
+  rfid: 'text',
   cisscode: 'text',
   cisstoken: 'text',
   cissinqtext: 'text'
 }, {
   weights: {
+    rfid: 4,
     cisscode: 3,
     cisstoken: 2,
     cissinqtext: 1
