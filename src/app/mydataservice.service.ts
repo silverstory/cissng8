@@ -4,6 +4,10 @@ import { BehaviorSubject } from 'rxjs';
 import { Profile, ProfileObj } from './profile';
 import { Approvaltemplate } from './approvaltemplate';
 
+const httpOptions = {
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+};
+
 @Injectable({
   providedIn: 'root'
 })
@@ -78,6 +82,20 @@ export class MydataserviceService {
   saveProfile(profile: Profile) {
     const url = `${this.api}/profile`;
     return this.http.post(url, new ProfileObj(profile));
+  }
+
+  // push status data to vegas
+  async issueEventApproval(code: String, status: String) {
+    const base_url = 'http://58.69.10.200/guests/updateStatus';
+    const body = {
+      code: code,
+      status: status
+    };
+    const url = `${base_url}`;
+    const data: any = await
+    this.http.post(url, body,
+      httpOptions).toPromise();
+   return data;
   }
 
   createFreezedProfile(p: Profile): Profile {

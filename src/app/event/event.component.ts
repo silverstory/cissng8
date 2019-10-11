@@ -241,6 +241,11 @@ export class EventComponent implements OnInit, OnDestroy {
           this.profile = this.service.unfreezeProfile(p);
           this.profile.accessapproval = 'Denied';
           this.profile.nextstep = 0;
+          // if event, update vegas guest status
+          if (this.profile.distinction.includes('EVENT')) {
+            const res: any = this.service.issueEventApproval(this.profile.cisscode, 'Denied');
+            console.log(res.success);
+          }
           // update db with this.profile
           this.saveProfile();
           break;
@@ -250,7 +255,13 @@ export class EventComponent implements OnInit, OnDestroy {
           this.profile.access = this.profile.proviaccess;
           // set accessaproval to Approved
           this.profile.accessapproval = 'Approved';
+          this.profile.recordstatus = 'ACTIVE';
           this.profile.nextstep = this.usertemplate.tosaveonprofilesnextstep;
+          // if event, update vegas guest status
+          if (this.profile.distinction.includes('EVENT')) {
+            const res: any = this.service.issueEventApproval(this.profile.cisscode, 'Approved');
+            console.log(res.success);
+          }
           // update db with this.profile
           this.saveProfile();
           break;

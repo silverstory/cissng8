@@ -370,6 +370,7 @@ export class EmployeeComponent implements OnInit, OnDestroy {
           this.profile.access = this.profile.proviaccess;
           // set accessaproval to Approved
           this.profile.accessapproval = 'Approved';
+          this.profile.recordstatus = 'ACTIVE';
           this.profile.nextstep = this.usertemplate.tosaveonprofilesnextstep;
           // update db with this.profile
           this.saveProfile();
