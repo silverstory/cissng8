@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { MydataserviceService } from '../mydataservice.service';
+import { AuthService } from '../auth/auth.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 // import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ApprovaltemplateObj } from '../approvaltemplate';
@@ -70,6 +71,7 @@ export class OPIDComponent implements OnInit, OnDestroy {
   // end approval templates
 
   constructor(public service: MydataserviceService,
+    public auth: AuthService,
     private http: HttpClient,
     private route: ActivatedRoute,
     private router: Router,
@@ -96,15 +98,8 @@ export class OPIDComponent implements OnInit, OnDestroy {
     this.resendToken = null;
     // this.invalidToken = null;
 
-    // get client ip
-    const data = await this.http.get<any>('https://api.ipify.org?format=json').toPromise();
-    this.client = data['ip'];
-
-    // check if in the ip whitelist
-    const ipurl = `${this.api}/ipwhitelist/c/${this.client}`;
-    const ipwhitelist: Ipwhitelist = await this.http.get<Ipwhitelist>(ipurl).toPromise();
-    // console.log(ipwhitelist);
-    if (ipwhitelist !== null) {
+    // check if logged in
+    if (this.auth.isAuthenticated() === true) {
       // show picture and status
       const phrase = this.route.snapshot.paramMap.get('text');
       const url = `${this.api}/opid/v/${phrase}`;
@@ -112,27 +107,47 @@ export class OPIDComponent implements OnInit, OnDestroy {
       this.profile_picture = await this.service.transformPBU(this.profile.photothumbnailurl);
       console.log(this.profile_picture);
       await this.getTemplates(this.profile);
+      // end check if logged in
     } else {
-      const phrase = this.route.snapshot.paramMap.get('text');
-      this.tmpProfile = null;
-      this.valid = false;
-      const url = `${this.api}/opid/v/${phrase}`;
-      this.tmpProfile = await this.http.get<Profile>(url).toPromise();
-      this.name = `${this.tmpProfile.profileid} ${this.tmpProfile.name.last}`;
-      // present verify token input box
-      this.validate = 'start validation';
-      const sendToken: any = await this.validateTokenService.sendToken(this.tmpProfile.profileid, this.tmpProfile.distinction);
-      if (sendToken.success) {
-        this.snackBar.open('Verification code sent.', 'Code is now airborne =^=', {
-          duration: 5000,
-        });
+      // get client ip
+      const data = await this.http.get<any>('https://api.ipify.org?format=json').toPromise();
+      this.client = data['ip'];
+
+      // check if in the ip whitelist
+      const ipurl = `${this.api}/ipwhitelist/c/${this.client}`;
+      const ipwhitelist: Ipwhitelist = await this.http.get<Ipwhitelist>(ipurl).toPromise();
+      // console.log(ipwhitelist);
+      if (ipwhitelist !== null) {
+        // show picture and status
+        const phrase = this.route.snapshot.paramMap.get('text');
+        const url = `${this.api}/opid/v/${phrase}`;
+        this.profile = await this.http.get<Profile>(url).toPromise();
+        this.profile_picture = await this.service.transformPBU(this.profile.photothumbnailurl);
+        console.log(this.profile_picture);
+        await this.getTemplates(this.profile);
       } else {
-        this.resendToken = 'Sending failed';
-        this.snackBar.open('Sending code failed!', 'Something went wrong :(', {
-          duration: 5000,
-        });
+        const phrase = this.route.snapshot.paramMap.get('text');
+        this.tmpProfile = null;
+        this.valid = false;
+        const url = `${this.api}/opid/v/${phrase}`;
+        this.tmpProfile = await this.http.get<Profile>(url).toPromise();
+        this.name = `${this.tmpProfile.profileid} ${this.tmpProfile.name.last}`;
+        // present verify token input box
+        this.validate = 'start validation';
+        const sendToken: any = await this.validateTokenService.sendToken(this.tmpProfile.profileid, this.tmpProfile.distinction);
+        if (sendToken.success) {
+          this.snackBar.open('Verification code sent.', 'Code is now airborne =^=', {
+            duration: 5000,
+          });
+        } else {
+          this.resendToken = 'Sending failed';
+          this.snackBar.open('Sending code failed!', 'Something went wrong :(', {
+            duration: 5000,
+          });
+        }
       }
     }
+
   }
 
   async getTemplates(profile: Profile) {

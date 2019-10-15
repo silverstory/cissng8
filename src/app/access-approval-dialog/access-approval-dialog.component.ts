@@ -162,6 +162,9 @@ export class AccessApprovalDialogComponent implements OnInit {
   }
 
   async ngOnInit() {
+    // console.log(this.data.usertemplate.userisapprovalstage + ' ' +
+    //             this.data.freezedProfile.distinction + ' ' +
+    //             this.data.usertemplate.usertype);
     this.usertemplate = this.data.usertemplate;
     this.profile = this.data.freezedProfile;
     try {

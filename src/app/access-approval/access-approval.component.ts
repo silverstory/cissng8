@@ -639,7 +639,12 @@ export class AccessApprovalComponent implements OnInit {
           this.profile.nextstep = 0;
           // if event, update vegas guest status
           if (this.profile.distinction.includes('EVENT')) {
-            const res: any = this.service.issueEventApproval(this.profile.cisscode, 'Denied');
+            let msgToVegas = 'Denied';
+            // if usertype is head
+            if (this.service.usertype === 'OFFICEHEAD') {
+              msgToVegas = 'Denied by Head';
+            }
+            const res: any = this.service.issueEventApproval(this.profile.cisscode, msgToVegas);
             console.log(res.success);
           }
           // update db with this.profile
@@ -655,7 +660,13 @@ export class AccessApprovalComponent implements OnInit {
           this.profile.nextstep = this.usertemplate.tosaveonprofilesnextstep;
           // if event, update vegas guest status
           if (this.profile.distinction.includes('EVENT')) {
-            const res: any = this.service.issueEventApproval(this.profile.cisscode, 'Approved');
+            let msgToVegas = 'Approved';
+            // if usertype is head
+            if (this.service.usertype === 'OFFICEHEAD') {
+              this.profile.accessapproval = 'Provisional';
+              msgToVegas = 'Approved by Head';
+            }
+            const res: any = this.service.issueEventApproval(this.profile.cisscode, msgToVegas);
             console.log(res.success);
           }
           // update db with this.profile

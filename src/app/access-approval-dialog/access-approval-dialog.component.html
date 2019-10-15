@@ -143,7 +143,8 @@
                 affiliated to the {{ data.freezedProfile.event.guestaffiliation }}.</li>
               <li><span *ngIf="data.freezedProfile.gender === 'male'">He </span><span
                   *ngIf="data.freezedProfile.gender === 'female'">She </span> is requesting to attend an event named
-                <strong>{{ data.freezedProfile.event.eventname }}</strong> with event code <strong>{{ data.freezedProfile.event.eventcode }}</strong>.
+                <strong>{{ data.freezedProfile.event.eventname }}</strong> with event code
+                <strong>{{ data.freezedProfile.event.eventcode }}</strong>.
               </li>
               <li>The said event is scheduled on
                 {{ data.freezedProfile.event.timeofevent | date: 'EEEE BBBB, MMM dd yyyy àt hh:mm a' }}.</li>
@@ -418,6 +419,14 @@ Legend:
     (click)="onButtonClick('Deny Request')" [mat-dialog-close]="data">Deny Request</button>&nbsp;&nbsp;
   <button mat-raised-button color="primary"
     *ngIf="data.usertemplate.userisapprovalstage === 'Yes' && data.freezedProfile.accessapproval === 'Provisional'"
+    (click)="onButtonClick('Approve Request')" [mat-dialog-close]="data" cdkFocusInitial>Approve Request</button>
+
+  <!-- event manager -->
+  <button mat-flat-button color="warn"
+    *ngIf="data.usertemplate.userisapprovalstage === 'Yes' && data.freezedProfile.distinction.includes('EVENT') && data.usertemplate.usertype === 'OFFICEHEAD'"
+    (click)="onButtonClick('Deny Request')" [mat-dialog-close]="data">Deny Request</button>&nbsp;&nbsp;
+  <button mat-raised-button color="primary"
+    *ngIf="data.usertemplate.userisapprovalstage === 'Yes' && data.freezedProfile.distinction.includes('EVENT') && data.usertemplate.usertype === 'OFFICEHEAD'"
     (click)="onButtonClick('Approve Request')" [mat-dialog-close]="data" cdkFocusInitial>Approve Request</button>
 
   <button mat-raised-button color="primary"

@@ -16,6 +16,7 @@ export class MydataserviceService {
   public userapprovaltemplate: Approvaltemplate;
   public find = 'Provisional';
   public distinction = 'OPEMPLOYEE';
+  public isLoggedIn = false;
   public usertype: string;
   public useroffice: string;
   public eventcode: string;
