@@ -353,7 +353,7 @@ profilesPaginated = async (findText, distinction, nextstep, useroffice, page, li
         nextstep: 100
       };
 
-      const creators = ['AO', 'PO', 'OP', 'AP'];
+      const creators = ['AO', 'PO', 'OP', 'AP', 'PM'];
       const eventcode = useroffice;
       const sub_useroffice = useroffice.substring(0, 2);
       const eventcreator = sub_useroffice;

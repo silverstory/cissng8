@@ -5,6 +5,7 @@ import { MydataserviceService } from '../mydataservice.service';
 import { SmsServiceService } from '../sms-service.service';
 import { Profile, ProfileObj } from '../profile';
 import { Approvaltemplate, ApprovaltemplateObj } from '../approvaltemplate';
+import { Distinction, DistinctionObj } from '../distinction';
 import { BehaviorSubject, Observable, from } from 'rxjs';
 import { AccessApprovalDialogComponent } from '../access-approval-dialog/access-approval-dialog.component';
 import { AuthService } from '../auth/auth.service';
@@ -57,118 +58,7 @@ export class AccessApprovalComponent implements OnInit {
   events: Event[] = [];
   // end eventcode
 
-  public chips = [
-    {
-      id: 1, name: 'OPEMPLOYEE', alias: 'OP EMPLOYEE', chipcolor: 'primary',
-      default_color: 'primary',
-      badge: 0, badgehidden: true, badgecolor: 'accent', badgesize: 'medium'
-    },
-    {
-      id: 2, name: 'OPEMPLOYEE-VIP', alias: 'VIP EMPLOYEE', chipcolor: 'primary',
-      default_color: 'primary',
-      badge: 0, badgehidden: true, badgecolor: 'accent', badgesize: 'medium'
-    },
-    {
-      id: 3, name: 'BRGYRESIDENT-PSG', alias: 'PSG', chipcolor: 'primary',
-      default_color: 'primary',
-      badge: 0, badgehidden: true, badgecolor: 'accent', badgesize: 'medium'
-    },
-    {
-      id: 4, name: 'BRGYRESIDENT-PSG-PARK', alias: 'PSG PARK', chipcolor: 'primary',
-      default_color: 'primary',
-      badge: 0, badgehidden: true, badgecolor: 'accent', badgesize: 'medium'
-    },
-    {
-      id: 5, name: 'OPVISITOR', alias: 'OP VISITOR', chipcolor: 'primary',
-      default_color: 'primary',
-      badge: 0, badgehidden: true, badgecolor: 'accent', badgesize: 'medium'
-    },
-    {
-      id: 6, name: 'OPVISITOR-VIP', alias: 'OP VIP VISITOR', chipcolor: 'primary',
-      default_color: 'primary',
-      badge: 0, badgehidden: true, badgecolor: 'accent', badgesize: 'medium'
-    },
-    {
-      id: 7, name: 'BRGYRESIDENT', alias: 'BRGY RESIDENT', chipcolor: 'primary',
-      default_color: 'primary',
-      badge: 0, badgehidden: true, badgecolor: 'accent', badgesize: 'medium'
-    },
-    {
-      id: 8, name: 'BRGYRESIDENT-RTVM', alias: 'RTVM', chipcolor: 'primary',
-      default_color: 'primary',
-      badge: 0, badgehidden: true, badgecolor: 'accent', badgesize: 'medium'
-    },
-    {
-      id: 9, name: 'BRGYRESIDENT-MESLA', alias: 'MESLA', chipcolor: 'primary',
-      default_color: 'primary',
-      badge: 0, badgehidden: true, badgecolor: 'accent', badgesize: 'medium'
-    },
-    {
-      id: 10, name: 'BRGYRESIDENT-MECOOP', alias: 'MECOOP', chipcolor: 'primary',
-      default_color: 'primary',
-      badge: 0, badgehidden: true, badgecolor: 'accent', badgesize: 'medium'
-    },
-    {
-      id: 11, name: 'BRGYRESIDENT-PCOO', alias: 'PCOO', chipcolor: 'primary',
-      default_color: 'primary',
-      badge: 0, badgehidden: true, badgecolor: 'accent', badgesize: 'medium'
-    },
-    {
-      id: 12, name: 'BRGYRESIDENT-BLUE-GUARDS', alias: 'BLUE GUARD', chipcolor: 'primary',
-      default_color: 'primary',
-      badge: 0, badgehidden: true, badgecolor: 'accent', badgesize: 'medium'
-    },
-    {
-      id: 13, name: 'BRGYRESIDENT-OP-CASUAL-WORKERS', alias: 'CASUAL WORKER', chipcolor: 'primary',
-      default_color: 'primary',
-      badge: 0, badgehidden: true, badgecolor: 'accent', badgesize: 'medium'
-    },
-    {
-      id: 14, name: 'BRGYRESIDENT-LPLP', alias: 'LPLP', chipcolor: 'primary',
-      default_color: 'primary',
-      badge: 0, badgehidden: true, badgecolor: 'accent', badgesize: 'medium'
-    },
-    {
-      id: 15, name: 'BRGYRESIDENT-MPC', alias: 'MPC', chipcolor: 'primary',
-      default_color: 'primary',
-      badge: 0, badgehidden: true, badgecolor: 'accent', badgesize: 'medium'
-    },
-    {
-      id: 16, name: 'BRGYRESIDENT-SAINT-JUDE', alias: 'SAINT JUDE', chipcolor: 'primary',
-      default_color: 'primary',
-      badge: 0, badgehidden: true, badgecolor: 'accent', badgesize: 'medium'
-    },
-    {
-      id: 17, name: 'BRGYRESIDENT-PUJ', alias: 'PUJ', chipcolor: 'primary',
-      default_color: 'primary',
-      badge: 0, badgehidden: true, badgecolor: 'accent', badgesize: 'medium'
-    },
-    {
-      id: 18, name: 'BRGYRESIDENT-TRICYCLE', alias: 'TRICYCLE', chipcolor: 'primary',
-      default_color: 'primary',
-      badge: 0, badgehidden: true, badgecolor: 'accent', badgesize: 'medium'
-    },
-    {
-      id: 19, name: 'OPVISITOR-SECURITY-CLEARANCE', alias: 'SECURITY CLEARANCE', chipcolor: 'primary',
-      default_color: 'primary',
-      badge: 0, badgehidden: true, badgecolor: 'accent', badgesize: 'medium'
-    },
-    {
-      id: 20, name: 'BRGYRESIDENT-PASSING-THRU', alias: 'PASSING THRU', chipcolor: 'primary',
-      default_color: 'primary',
-      badge: 0, badgehidden: true, badgecolor: 'accent', badgesize: 'medium'
-    },
-    {
-      id: 21, name: 'EVENT-GUEST', alias: 'EVENT GUEST', chipcolor: 'primary',
-      default_color: 'primary',
-      badge: 0, badgehidden: true, badgecolor: 'accent', badgesize: 'medium'
-    },
-    {
-      id: 22, name: 'EVENT-VIP', alias: 'EVENT VIP', chipcolor: 'primary',
-      default_color: 'primary',
-      badge: 0, badgehidden: true, badgecolor: 'accent', badgesize: 'medium'
-    }
-  ];
+  public chips = [];
 
   public statuschips = [
     {
@@ -269,6 +159,27 @@ export class AccessApprovalComponent implements OnInit {
   ) { }
 
   async ngOnInit() {
+
+    // get all distinctions
+    this.service.getDistinctions()
+      .pipe(
+        tap((res: any) => res)
+      )
+      .subscribe({
+        next: (res: any) => {
+          const items = res.docs;
+          if (items !== undefined) {
+            items.forEach(item => {
+              this.chips.push(new DistinctionObj(item));
+            });
+          }
+        },
+        complete: () => {
+          // this._done.next(true);
+          // this._loading.next(false);
+        }
+      });
+    // end get all distinctions
 
     this._loading.next(true);
     this.service.find = 'Provisional';

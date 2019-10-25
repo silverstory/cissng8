@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient , HttpHeaders  } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
 import { Profile, ProfileObj } from './profile';
 import { Approvaltemplate } from './approvaltemplate';
@@ -28,6 +28,13 @@ export class MydataserviceService {
   public image_source = '-';
 
   constructor(private http: HttpClient) { }
+
+  // find all distinctions
+  getDistinctions() {
+    // tslint:disable-next-line:max-line-length
+    const url = `${this.api}/findalldistinctions`;
+    return this.http.get(url);
+  }
 
   transformPBU(fullURL: any): any {
     let result: string;
@@ -94,9 +101,9 @@ export class MydataserviceService {
     };
     const url = `${base_url}`;
     const data: any = await
-    this.http.post(url, body,
-      httpOptions).toPromise();
-   return data;
+      this.http.post(url, body,
+        httpOptions).toPromise();
+    return data;
   }
 
   createFreezedProfile(p: Profile): Profile {
@@ -135,7 +142,7 @@ export class MydataserviceService {
       blacklisted,
     } = p;
 
-    const profile: Profile = <Profile> Object.freeze({
+    const profile: Profile = <Profile>Object.freeze({
       _id: _id,
       profileid: profileid,
       mobile: mobile,
@@ -251,7 +258,7 @@ export class MydataserviceService {
       blacklisted,
     } = p;
 
-    const profile: Profile = <Profile> {
+    const profile: Profile = <Profile>{
       _id: _id,
       profileid: profileid,
       mobile: mobile,
