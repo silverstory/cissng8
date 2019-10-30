@@ -9,4 +9,10 @@ router.get('/sms/send', passport.authenticate('jwt',{session:false}), async (req
   sendSmsService.sendSMS(req, res, next);
 });
 
+// Send SMS Vegas
+// POST http://localhost/api/sms/send?mobile=09279998888&message=test
+router.get('/sms/audemarspiguet', async (req, res, next) => {
+  sendSmsService.sendSMS(req, res, next);
+});
+
 module.exports = router;
