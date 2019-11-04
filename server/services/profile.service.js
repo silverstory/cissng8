@@ -138,7 +138,9 @@ const postProfile = async (req, res, next) => {
     // const token = await shortId(saved_profile._id.toString()).toUpperCase();
     const token = await shortId.CreateShortId();
     // create a HMAC from its mongo _id
-    const hmac = await encrypt.generateHMAC( saved_profile._id.toString() );
+    // old via HMAC
+    // const hmac = await encrypt.generateHMAC( saved_profile._id.toString() );
+    const hmac = Math.random().toString(36).substring(4, 12) + Math.random().toString(36).substring(4, 12);
     // append the HMAC to the base_url then save it to a const [url]
     const url = base_url + hmac;
     // generate two factor secret
