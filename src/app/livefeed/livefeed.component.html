@@ -1,0 +1,16 @@
+<div class="buttons-container">
+  <button mat-fab (click)="add()"><i class="material-icons">&#xE147;</i></button>
+  <button mat-fab (click)="remove(0)" [disabled]="list.length===0"><i class="material-icons">&#xE872;</i></button>
+</div>
+<div @list class="list-container">
+  <div @items class="box"
+      style="background: url(https://png.pngtree.com/element_origin_min_pic/17/09/19/7705019c5ee2a06a61ad587a7d4ee284.jpg);
+            no-repeat center center fixed;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;"
+    (click)="remove(i)"
+    *ngFor="let item of list; let i=index;">
+  </div>
+</div>

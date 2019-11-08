@@ -1,0 +1,26 @@
+.buttons-container, .list-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.buttons-container {
+  flex-direction: row;
+}
+
+.list-container {
+  flex-direction: row;
+}
+
+.box {
+  min-width: 180px;
+  width: 180px;
+  height: 200px;
+  background-color: #f0397b;
+  margin: 5px;
+}
+
+.mat-fab.mat-accent, .mat-mini-fab.mat-accent, .mat-raised-button.mat-accent {
+  margin: 20px 10px 20px 0;
+  background-color: #2976b9;
+}

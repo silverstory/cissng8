@@ -29,12 +29,20 @@ export class AuthService {
 
   public loggedIn = new BehaviorSubject<boolean>(false); // {1}
 
+  public _userType = new BehaviorSubject<string>(''); // {1}
+
   public collectFailedRequest(request): void {
     this.cachedRequests.push(request);
   }
   public retryFailedRequests(): void {
     // retry the requests. this method can
     // be called after the token is refreshed
+  }
+
+  get userType() {
+    // this.loggedIn.next(tokenNotExpired('token'));
+    this._userType.next(this.getUserType());
+    return this._userType.asObservable(); // {2}
   }
 
   get isLoggedIn() {
@@ -106,9 +114,27 @@ export class AuthService {
   public getToken(): string {
     return localStorage.getItem('token');
   }
+
   private getUserName(): string {
     return localStorage.getItem('userName');
   }
+
+  public getUserType(): string {
+    return localStorage.getItem('usertype'); // {2}
+  }
+
+  public getUserOffice(): string {
+    return localStorage.getItem('useroffice'); // {2}
+  }
+
+  public getUserMobile(): string {
+    return localStorage.getItem('mobileno'); // {2}
+  }
+
+  public getUserEventCreator(): string {
+    return localStorage.getItem('eventcreator'); // {2}
+  }
+
   public isAuthenticated(): boolean {
     // get the token
     const token = this.getToken();
@@ -129,6 +155,10 @@ export class AuthService {
     // localStorage.setItem('user',JSON.stringify(user));
     localStorage.setItem('user', user);
     localStorage.setItem('userName', user.userName);
+    localStorage.setItem('usertype', user.usertype);
+    localStorage.setItem('mobileno', user.mobileno);
+    localStorage.setItem('useroffice', user.useroffice);
+    localStorage.setItem('eventcreator', user.eventcreator);
     // this.authToken = token;
     // this.user = user;
   }

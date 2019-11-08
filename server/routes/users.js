@@ -43,8 +43,12 @@ router.post('/authenticate', async (req,res) => {
                 success: true,
                 token: token,
                 user : {
-                    id: user._id,
-                    userName : user.userName
+                  id: user._id,
+                  userName: user.userName,
+                  usertype: user.usertype,
+                  useroffice: user.useroffice,
+                  mobileno: user.mobileno,
+                  eventcreator: user.eventcreator
                 }
             });
         } else {

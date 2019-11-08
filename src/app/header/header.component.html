@@ -9,6 +9,21 @@
     <mat-icon>more_vert</mat-icon>
   </button>
   <mat-menu #menu="matMenu">
+    <!-- <ng-container *ngIf="isLoggedIn$ | async as isLoggedIn"> -->
+    <!-- <div *ngIf="{
+        userType: userType$ | async,
+        isLoggedIn: isLoggedIn$ | async
+      }"> -->
+    <!-- *ngIf="userType === 'G2' || userType === 'PG' || userType === 'CISS_ADMINISTRATOR'" -->
+    <!-- *ngIf="(userType$ | async).userData.userDatabases.includes('Clinic Database')" -->
+    <button mat-menu-item *ngIf="(userType$ | async)?.includes('G2') ||
+    (userType$ | async)?.includes('PG') ||
+    (userType$ | async)?.includes('CISS_ADMINISTRATOR')"
+    routerLink="livefeed">
+      <mat-icon>graphic_eq</mat-icon>
+      <span>@ Live Feed</span>
+    </button>
+    <!-- </ng-container> -->
     <button mat-menu-item *ngIf="isLoggedIn" routerLink="access-approval">
       <mat-icon>spellcheck</mat-icon>
       <span>Access Approval</span>

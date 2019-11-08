@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
 import { AuthService } from '../auth/auth.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, NgZone } from '@angular/core';
 
 @Component({
   selector: 'app-header',
@@ -74,11 +74,23 @@ import { Component, OnInit } from '@angular/core';
 export class HeaderComponent implements OnInit {
 
   isLoggedIn$: Observable<boolean>;                  // {1}
+  userType$: Observable<string>;                  // {1}
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService,
+    private ref: ChangeDetectorRef,
+    private zone: NgZone) { }
 
   ngOnInit() {
     this.isLoggedIn$ = this.authService.isLoggedIn; // {2}
+    this.userType$ = this.authService.userType; // {2}
+    setInterval(() => {
+      this.ref.detectChanges();
+      this.ref.markForCheck();
+      this.zone.run(() => {
+        // Here add the code to force the value update
+        this.userType$ = this.authService.userType; // This value will be force updated
+      });
+    }, 5000);
   }
 
   onLogout() {

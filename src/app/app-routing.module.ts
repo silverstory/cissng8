@@ -16,6 +16,7 @@ import { InvoiceComponent } from './invoice/invoice.component';
 import { PrintLayoutComponent } from './print-layout/print-layout.component';
 import { PrintComponent } from './print/print.component';
 import { EventComponent } from './event/event.component';
+import { LivefeedComponent } from './livefeed/livefeed.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthGuard], pathMatch: 'full' },
@@ -39,6 +40,7 @@ const routes: Routes = [
   { path: 'signup', component: SignupComponent, pathMatch: 'full' },
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard], pathMatch: 'full' },
   { path: 'access-approval', component: AccessApprovalComponent, canActivate: [AuthGuard], pathMatch: 'full' },
+  { path: 'livefeed', component: LivefeedComponent, canActivate: [AuthGuard], pathMatch: 'full' },
   {
     path: 'employee/:id',
     component: EmployeeComponent,
