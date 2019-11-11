@@ -27,6 +27,8 @@ export class MydataserviceService {
   private api = '/api';
   public image_source = '-';
 
+  public hasSearch = true;
+
   constructor(private http: HttpClient) { }
 
   // find all distinctions

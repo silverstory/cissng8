@@ -1,16 +1,70 @@
-<div class="buttons-container">
-  <button mat-fab (click)="add()"><i class="material-icons">&#xE147;</i></button>
-  <button mat-fab (click)="remove(0)" [disabled]="list.length===0"><i class="material-icons">&#xE872;</i></button>
-</div>
+<!-- <div class="buttons-container">
+  <button mat-fab (click)="old_add()"><i class="material-icons">&#xE147;</i></button>
+  <button mat-fab (click)="old_remove(0)" [disabled]="list.length===0"><i class="material-icons">&#xE872;</i></button>
+</div> -->
+
 <div @list class="list-container">
-  <div @items class="box"
-      style="background: url(https://png.pngtree.com/element_origin_min_pic/17/09/19/7705019c5ee2a06a61ad587a7d4ee284.jpg);
-            no-repeat center center fixed;
-            -webkit-background-size: cover;
-            -moz-background-size: cover;
-            -o-background-size: cover;
-            background-size: cover;"
-    (click)="remove(i)"
-    *ngFor="let item of list; let i=index;">
+  <div @items class="box" *ngFor="let item of items$ | async; let i=index; trackBy: track">
+    <mat-card class="example-card" (click)="OnMatCardClickEvent(item)">
+      <img mat-card-image [src]="service.transformPBU(item.imagepath)" alt="Photo">
+      <mat-card-content>
+        <p>
+          <b>{{ item.name }}</b>
+          <br>
+          <b>{{ item.distinction }} - {{ item.gate }}</b>
+        </p>
+      </mat-card-content>
+    </mat-card>
   </div>
 </div>
+
+
+
+<!-- let item of list; let i=index; -->
+<!-- live -->
+
+<div class="container">
+
+  <div class="input-field">
+    <i class="material-icons prefix">rss_feed</i>
+    <input id="icon_prefix" (keyup.enter)="feed(feedinput)" #feedinput placeholder="Add Feed..">
+  </div>
+  <!-- <div class="input-field">
+    <i class="material-icons prefix">rss_feed</i>
+    <input id="icon_prefix" (keyup.enter)="add(addinput)" #addinput placeholder="Add Item..">
+  </div>
+
+  <ul class="collection with-header">
+    <li class="collection-header">
+      <h4>Livefeed</h4>
+    </li>
+    <li class="collection-item" *ngFor="let item of items$ | async; trackBy: track">
+      <div [class.done]="item.completed">{{item.name}}
+        <span class="secondary-content" (click)="remove(item.id)">
+          <i class="material-icons">delete_forever</i>
+        </span>
+        <span class="secondary-content" (click)="toggle(item.id)">
+          <i class="material-icons">done</i>
+        </span>
+        <span class="secondary-content">&nbsp; : &nbsp;</span>
+        <span class="secondary-content">
+          {{item.gate}}
+        </span>
+        <span class="secondary-content">&nbsp; - &nbsp;</span>
+        <span class="secondary-content">
+          {{item.distinction}}
+        </span>
+      </div>
+    </li>
+  </ul> -->
+</div>
+
+<ul class="list">
+  <cdk-virtual-scroll-viewport style="height: 300px; width: 500px;" itemSize="100">
+    <ng-container *cdkVirtualFor="let n of items$">
+      <li>
+        <mat-card> {{n?.name}} </mat-card>
+      </li>
+    </ng-container>
+  </cdk-virtual-scroll-viewport>
+</ul>

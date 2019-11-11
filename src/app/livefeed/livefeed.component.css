@@ -13,10 +13,10 @@
 }
 
 .box {
-  min-width: 180px;
-  width: 180px;
-  height: 200px;
-  background-color: #f0397b;
+  min-width: 300px;
+  width: 300px;
+  height: 350px;
+  background-color: #ffffff;
   margin: 5px;
 }
 
@@ -24,3 +24,50 @@
   margin: 20px 10px 20px 0;
   background-color: #2976b9;
 }
+
+/* tanggalin dapat */
+
+.secondary-content {
+  cursor: pointer;
+}
+
+.done {
+  text-decoration: line-through;
+}
+
+.pre-class {
+  white-space: pre;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.list {
+  color: #333;
+  list-style: none;
+  margin: 50px 50px auto 50px;
+  padding: 10px;
+}
+
+.list li {
+  padding: 25px;
+  background: #FAFAAF;
+  border-radius: 5px;
+  margin: auto 10px 5px 10px;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.center {
+  text-align: center;
+}
+
+/* end tanggalin dapat */

@@ -1,4 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ChangeDetectionStrategy, ViewEncapsulation } from '@angular/core';
+import { LivefeedListService } from '../state/livefeed-list.service';
+import { Observable } from 'rxjs';
+import { LivefeedListQuery } from '../state/livefeed-list.query';
+import { ID } from '@datorama/akita';
+import { LivefeedListItem } from '../state/livefeed-list.model';
+
+import { MydataserviceService } from '../mydataservice.service';
 
 import {
   style, animate, animation, animateChild,
@@ -34,28 +41,85 @@ import {
       ]),
     ])
   ],
-  styleUrls: ['./livefeed.component.css']
+  styleUrls: ['./livefeed.component.css'],
+  encapsulation: ViewEncapsulation.None,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LivefeedComponent implements OnInit {
+export class LivefeedComponent implements OnInit, OnDestroy {
 
   counter = 5;
   list = [1, 2, 3, 4];
 
-  constructor() { }
+  items$: Observable<LivefeedListItem[]>;
+  private disposeConnection: VoidFunction;
 
-  ngOnInit() {
+  constructor(public livefeedList: LivefeedListService,
+    public query: LivefeedListQuery,
+    public service: MydataserviceService) {
   }
 
-  add() {
+  ngOnInit() {
+    this.items$ = this.query.selectAll();
+    this.disposeConnection = this.livefeedList.connect();
+    this.service.hasSearch = false;
+  }
+
+  feed(input: HTMLInputElement) {
+    // this.livefeedList.feed(input.value);
+    // input.value = '';
+  }
+
+  add(input: HTMLInputElement) {
+    this.livefeedList.add(input.value);
+    input.value = '';
+  }
+
+  remove(id: ID) {
+    this.livefeedList.remove(id);
+  }
+
+  toggle(id: ID) {
+    this.livefeedList.toggleCompleted(id);
+  }
+
+  track(_, item) {
+    return item.name;
+  }
+
+  ngOnDestroy() {
+    this.disposeConnection();
+  }
+
+  old_add() {
     this.list.unshift(this.counter++);
     if (this.list.length < 6) return;
     this.list.pop();
   }
 
-  remove(index) {
+  old_remove(index) {
     if (!this.list.length) return;
     // this.list.splice(index,1);
     this.list.pop();
+  }
+
+  OnMatCardClickEvent(item: any): void {
+    // // On approval component mat card click, add checks if
+    // // distinction includes EVENT
+    // // then if user is the owner of the event OR
+    // // if user eventcreator value is 'SA'
+    // let openD = true;
+    // const _profile: Profile = <Profile>item;
+    // if (_profile.distinction.includes('EVENT')) {
+    //   openD = false;
+    //   if (this.service.eventcreator === _profile.event.eventcreator ||
+    //     this.service.eventcreator === 'SA') {
+    //     openD = true;
+    //   }
+    // }
+    // if (openD === true) {
+    //   this.profile = <Profile>item;
+    //   this.openDialog();
+    // }
   }
 
 }

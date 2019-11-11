@@ -50,6 +50,10 @@ import { InvoiceComponent } from './invoice/invoice.component';
 import { PrintComponent } from './print/print.component';
 import { EventComponent } from './event/event.component';
 import { LivefeedComponent } from './livefeed/livefeed.component';
+import { AkitaNgDevtools } from '@datorama/akita-ngdevtools';
+import { environment } from '../environments/environment';
+
+import { ScrollingModule } from '@angular/cdk/scrolling';
 
 // the second parameter 'fr' is optional
 // registerLocaleData(localeFr, 'fr');
@@ -92,7 +96,9 @@ registerLocaleData(localeEnPh, 'en-PH', localeEnPhExtra);
     InfiniteScrollModule,
     AppMaterialModule,
     QRCodeModule,
-    ExportAsModule
+    ExportAsModule,
+    environment.production ? [] : AkitaNgDevtools.forRoot(),
+    ScrollingModule
   ],
   entryComponents: [AccessApprovalComponent, AccessApprovalDialogComponent, RequestFormDialogComponent],
   providers: [

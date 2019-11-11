@@ -5,10 +5,11 @@
     </h1>
   </div> -->
   <app-header></app-header>
-  <app-search-bar></app-search-bar>
+  <app-search-bar *ngIf="service.hasSearch"></app-search-bar>
   <main [@routerTransition]="getState(o)">
       <router-outlet #o="outlet"></router-outlet>
   </main>
   <!-- <app-messages></app-messages> -->
   <router-outlet name="print"></router-outlet>
+  <app-livefeed></app-livefeed>
 </div>

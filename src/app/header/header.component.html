@@ -32,6 +32,14 @@
       <mat-icon>perm_identity</mat-icon>
       <span>Login</span>
     </button>
+    <button mat-menu-item *ngIf="service.hasSearch" (click)="hidesearch()">
+      <mat-icon>check</mat-icon>
+      <span>Hide Search</span>
+    </button>
+    <button mat-menu-item *ngIf="!service.hasSearch" (click)="showsearch()">
+      <mat-icon>check_box_outline_blank</mat-icon>
+      <span>Show Search</span>
+    </button>
     <button mat-menu-item *ngIf="isLoggedIn" (click)="onLogout()">
       <mat-icon>exit_to_app</mat-icon>
       <span>Logout</span>

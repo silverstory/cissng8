@@ -6,6 +6,8 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Profile } from '../profile';
 import { ProfileService } from '../profile.service';
 // import { routerTransition } from '../router.animations';
+import { LivefeedListService } from '../state/livefeed-list.service';
+import { LivefeedListItem } from '../state/livefeed-list.model';
 
 @Component({
   selector: 'app-search-bar',
@@ -24,7 +26,8 @@ export class SearchBarComponent implements OnInit {
 
   constructor(private authService: AuthService,
     private profileService: ProfileService,
-    private router: Router
+    private router: Router,
+    public livefeedList: LivefeedListService
   ) { }
 
   ngOnInit() {
@@ -76,6 +79,8 @@ export class SearchBarComponent implements OnInit {
               component_page = '/resident';
             }
 
+            this.feed(profile);
+
             // fourth route to appropriate profile component
             const route_page = `${component_page}/${profile._id}`;
             this.router.navigate([route_page]);
@@ -116,6 +121,22 @@ export class SearchBarComponent implements OnInit {
     } else {
       return '#E91E63';
     }
+  }
+
+  feed(p: Profile) {
+    const profileid: string = String(p.profileid);
+    const name: string = String(p.name.first + ' ' + p.name.last);
+    const gender: string = String(p.gender);
+    const photothumbnailurl: string = String(p.photothumbnailurl);
+    const distinction: string = String(p.distinction);
+    const usertype = this.authService.getUserType();
+    this.livefeedList.feed(
+      profileid,
+      name,
+      gender,
+      photothumbnailurl,
+      distinction,
+      usertype);
   }
 
 }

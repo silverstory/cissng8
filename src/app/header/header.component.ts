@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs';
 import { AuthService } from '../auth/auth.service';
 import { Component, OnInit, ChangeDetectorRef, NgZone } from '@angular/core';
-
+import { MydataserviceService } from '../mydataservice.service';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -78,7 +78,8 @@ export class HeaderComponent implements OnInit {
 
   constructor(private authService: AuthService,
     private ref: ChangeDetectorRef,
-    private zone: NgZone) { }
+    private zone: NgZone,
+    public service: MydataserviceService) { }
 
   ngOnInit() {
     this.isLoggedIn$ = this.authService.isLoggedIn; // {2}
@@ -95,6 +96,14 @@ export class HeaderComponent implements OnInit {
 
   onLogout() {
     this.authService.logout();                      // {3}
+  }
+
+  hidesearch() {
+    this.service.hasSearch = false;
+  }
+
+  showsearch() {
+    this.service.hasSearch = true;
   }
 
 }
