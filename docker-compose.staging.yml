@@ -16,6 +16,7 @@ services:
       TWILIO_FROM_NUMBER: your-twilio-from-number
       CISS_SMS_TOKEN: your-ciss-sms-token
       PHOTO_BASE_URL: your-photo-base-url
+      SOCKET_IP: your-socket-ip
     networks:
       - webnet
   web:

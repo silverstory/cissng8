@@ -29,6 +29,7 @@ services:
       - TWILIO_FROM_NUMBER
       - CISS_SMS_TOKEN
       - PHOTO_BASE_URL
+      - SOCKET_IP
     environment:
       NODE_ENV: production
     ports:
@@ -68,6 +69,8 @@ secrets:
   CISS_SMS_TOKEN:
     external: true
   PHOTO_BASE_URL:
+    external: true
+  SOCKET_IP:
     external: true
 networks:
   webnet:

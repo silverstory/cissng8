@@ -85,9 +85,9 @@ export class LivefeedComponent implements OnInit, OnDestroy {
     private zone: NgZone) {
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.items$ = this.query.selectAll();
-    this.disposeConnection = this.livefeedList.connect();
+    this.disposeConnection = await this.livefeedList.connect();
     // this.service.hasSearch = false;
     this.userType$ = this.authService.userType; // {2}
     setInterval(() => {

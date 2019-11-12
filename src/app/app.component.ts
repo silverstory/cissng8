@@ -46,6 +46,13 @@ export class AppComponent implements OnInit {
   // }
 
   async ngOnInit() {
+
+    // set socket ip
+    const surl = await '/api/sip';
+    const socket_ip: any = await this.http.get(surl).toPromise();
+    const true_socket: any = socket_ip.socket_ip;
+    this.service.socket_ip = true_socket;
+
     // set image_source
     const url = await '/api/pbu';
     const image_source: any = await this.http.get(url).toPromise();

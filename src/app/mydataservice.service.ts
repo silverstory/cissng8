@@ -26,6 +26,7 @@ export class MydataserviceService {
   public newestFirst = true;
   private api = '/api';
   public image_source = '-';
+  public socket_ip = '192.68.23.8';
 
   public hasSearch = true;
 

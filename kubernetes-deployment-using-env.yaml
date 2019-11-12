@@ -46,5 +46,7 @@ spec:
             value: "ciss-sms-token"
           - name: PHOTO_BASE_URL
             value: "photo-base-url"
+          - name: SOCKET_IP
+            value: "socket-ip"
           ports:
           - containerPort: 80

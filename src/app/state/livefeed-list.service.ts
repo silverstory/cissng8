@@ -3,6 +3,8 @@ import * as io from 'socket.io-client';
 import { LivefeedListStore } from './livefeed-list.store';
 import { ID, runStoreAction, StoreActions } from '@datorama/akita';
 import { createLivefeedListItem, LivefeedListItem } from './livefeed-list.model';
+import { MydataserviceService } from '../mydataservice.service';
+import { HttpClient } from '@angular/common/http';
 
 const resolveAction = {
   ADD: StoreActions.AddEntities,
@@ -15,11 +17,20 @@ const resolveAction = {
 export class LivefeedListService {
   private socket;
 
-  constructor(private store: LivefeedListStore) {
+  constructor(private store: LivefeedListStore,
+    private http: HttpClient,
+    public service: MydataserviceService) {
   }
 
-  connect() {
-    this.socket = io.connect('http://localhost:8000');
+  async connect() {
+
+    // set socket ip
+    const surl = await '/api/sip';
+    const socket_ip: any = await this.http.get(surl).toPromise();
+    const true_socket: any = socket_ip.socket_ip;
+    this.service.socket_ip = true_socket;
+
+    this.socket = io.connect(`http://${this.service.socket_ip}:8000`);
 
     this.socket.on('list', event => {
       runStoreAction(this.store.storeName, resolveAction[event.type], {
