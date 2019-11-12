@@ -49,7 +49,8 @@ export class LoginComponent implements OnInit {
             // const true_host: any = image_source.image_source;
             // this.service.image_source = true_host;
             await this.authService.log(`authenticated user w/ name=${_.user.userName}`);
-            await this.router.navigate(['/livefeed']);
+            // await this.router.navigate(['/livefeed']);
+            await this.router.navigate(['/']);
           } catch (error) {
             console.log ('Something went wrong. ' + error);
           }

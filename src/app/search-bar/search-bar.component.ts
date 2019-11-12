@@ -130,13 +130,15 @@ export class SearchBarComponent implements OnInit {
     const photothumbnailurl: string = String(p.photothumbnailurl);
     const distinction: string = String(p.distinction);
     const usertype = this.authService.getUserType();
+    const qrcode: string = String(p.cissinqtext);
     this.livefeedList.feed(
       profileid,
       name,
       gender,
       photothumbnailurl,
       distinction,
-      usertype);
+      usertype,
+      qrcode);
   }
 
 }

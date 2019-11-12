@@ -1,4 +1,13 @@
-import { Component, OnDestroy, OnInit, ChangeDetectionStrategy, ViewEncapsulation } from '@angular/core';
+import {
+  Component,
+  OnDestroy,
+  OnInit,
+  ChangeDetectionStrategy,
+  ViewEncapsulation,
+  ChangeDetectorRef,
+  NgZone
+} from '@angular/core';
+import { AuthService } from '../auth/auth.service';
 import { LivefeedListService } from '../state/livefeed-list.service';
 import { Observable } from 'rxjs';
 import { LivefeedListQuery } from '../state/livefeed-list.query';
@@ -47,21 +56,48 @@ import {
 })
 export class LivefeedComponent implements OnInit, OnDestroy {
 
+  userType$: Observable<string>;
+
   counter = 5;
   list = [1, 2, 3, 4];
+
+  public face_icons = [
+    'OPEMPLOYEE',
+    'OPEMPLOYEE-VIP',
+    'BRGYRESIDENT-PSG',
+    'OPVISITOR',
+    'OPVISITOR-VIP',
+    'BRGYRESIDENT',
+    'BRGYRESIDENT-RTVM',
+    'OPVISITOR-SECURITY-CLEARANCE',
+    'EVENT-GUEST',
+    'EVENT-VIP'
+  ];
 
   items$: Observable<LivefeedListItem[]>;
   private disposeConnection: VoidFunction;
 
   constructor(public livefeedList: LivefeedListService,
     public query: LivefeedListQuery,
-    public service: MydataserviceService) {
+    public service: MydataserviceService,
+    private authService: AuthService,
+    private ref: ChangeDetectorRef,
+    private zone: NgZone) {
   }
 
   ngOnInit() {
     this.items$ = this.query.selectAll();
     this.disposeConnection = this.livefeedList.connect();
-    this.service.hasSearch = false;
+    // this.service.hasSearch = false;
+    this.userType$ = this.authService.userType; // {2}
+    setInterval(() => {
+      this.ref.detectChanges();
+      this.ref.markForCheck();
+      this.zone.run(() => {
+        // Here add the code to force the value update
+        this.userType$ = this.authService.userType; // This value will be force updated
+      });
+    }, 3000);
   }
 
   feed(input: HTMLInputElement) {
@@ -120,6 +156,17 @@ export class LivefeedComponent implements OnInit, OnDestroy {
     //   this.profile = <Profile>item;
     //   this.openDialog();
     // }
+  }
+
+  setFaceIcon(distinction: String, gender: String): String {
+    let icon: String = 'DEFAULT_' + gender.toUpperCase();
+    const found = this.face_icons.find(element => element === distinction);
+    if (found === undefined) {
+      icon = 'DEFAULT_' + gender.toUpperCase();
+    } else {
+      icon = distinction + '_' + gender.toUpperCase();
+    }
+    return icon;
   }
 
 }

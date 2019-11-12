@@ -3,22 +3,38 @@
   <button mat-fab (click)="old_remove(0)" [disabled]="list.length===0"><i class="material-icons">&#xE872;</i></button>
 </div> -->
 
-<div @list class="list-container">
-  <div @items class="box" *ngFor="let item of items$ | async; let i=index; trackBy: track">
-    <mat-card class="example-card" (click)="OnMatCardClickEvent(item)">
-      <img mat-card-image [src]="service.transformPBU(item.imagepath)" alt="Photo">
-      <mat-card-content>
-        <p>
-          <b>{{ item.name }}</b>
-          <br>
-          <b>{{ item.distinction }} - {{ item.gate }}</b>
-        </p>
-      </mat-card-content>
-    </mat-card>
+<div *ngIf="(userType$ | async)?.includes('G2') ||
+            (userType$ | async)?.includes('PG') ||
+            (userType$ | async)?.includes('CISS_ADMINISTRATOR')">
+
+  <div class="buttons-container">
+    <h1>
+      <mat-icon>graphic_eq</mat-icon> @ Live Feed
+    </h1>
   </div>
+
+  <div @list class="list-container">
+    <div @items class="box" *ngFor="let item of items$ | async; let i=index; trackBy: track">
+      <mat-card class="example-card" (click)="OnMatCardClickEvent(item)">
+        <mat-card-header>
+          <div mat-card-avatar
+            [ngStyle]="{'background-image': 'url(../assets/face_icon/'+ setFaceIcon(item.distinction, item.gender) + '.svg)'}"
+            class="example-header-image"></div>
+          <mat-card-title>{{ item.gate }}</mat-card-title>
+          <mat-card-subtitle>{{ item.name }}</mat-card-subtitle>
+        </mat-card-header>
+        <img mat-card-image [src]="service.transformPBU(item.imagepath)" alt="Photo">
+        <mat-card-content>
+          <p style="font-size: larger;">
+            <b>{{ item.distinction }}</b>
+            <!-- <br><qrcode [qrdata]="item.qrcode" [size]="200" [level]="'M'" style="width: 100%;padding: 10px;"></qrcode> -->
+          </p>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+
 </div>
-
-
 
 <!-- let item of list; let i=index; -->
 <!-- live -->
@@ -58,12 +74,18 @@
     </li>
   </ul>
 </div>
+-->
 
-<ul class="list">
-  <cdk-virtual-scroll-viewport style="height: 300px; width: 500px;" itemSize="100">
+<!-- <ul class="list">
+  <cdk-virtual-scroll-viewport style="height: 900px; width: 900px;" itemSize="300">
     <ng-container *cdkVirtualFor="let n of items$">
       <li>
-        <mat-card> {{n?.name}} </mat-card>
+        <mat-card>
+          <pre>
+            {{n?.name}}
+            <qrcode [qrdata]="profile.cissinqtext" [size]="300" [level]="'M'" style="width: 100%;padding: 10px;"></qrcode>
+          </pre>
+        </mat-card>
       </li>
     </ng-container>
   </cdk-virtual-scroll-viewport>

@@ -1,4 +1,5 @@
-<div class="signin-content">
+<div class="signin-content"
+    *ngIf="(userType$ | async)?.includes('CISS_ADMINISTRATOR')">
   <mat-card>
     <mat-card-header>
       <mat-card-title>OP - Central Information Security System</mat-card-title>

@@ -91,7 +91,7 @@ export class HeaderComponent implements OnInit {
         // Here add the code to force the value update
         this.userType$ = this.authService.userType; // This value will be force updated
       });
-    }, 5000);
+    }, 3000);
   }
 
   onLogout() {
@@ -104,6 +104,10 @@ export class HeaderComponent implements OnInit {
 
   showsearch() {
     this.service.hasSearch = true;
+  }
+
+  scroll(el: HTMLElement) {
+    el.scrollIntoView();
   }
 
 }

@@ -43,7 +43,8 @@ export class LivefeedListService {
     gender: string,
     imagepath: string,
     distinction: string,
-    gate: string
+    gate: string,
+    qrcode: string
   ) {
     this.socket.emit('list:feed', createLivefeedListItem({
       profileid,
@@ -51,7 +52,8 @@ export class LivefeedListService {
       gender,
       imagepath,
       distinction,
-      gate
+      gate,
+      qrcode
     })
     );
   }

@@ -9,6 +9,7 @@ export interface LivefeedListItem {
   imagepath: string;
   distinction: string;
   gate: string;
+  qrcode: string;
   completed: boolean;
 }
 
@@ -18,7 +19,8 @@ export function createLivefeedListItem({
   gender,
   imagepath,
   distinction,
-  gate
+  gate,
+  qrcode
 }: Partial<LivefeedListItem>) {
   return {
     id: guid(),
@@ -29,6 +31,7 @@ export function createLivefeedListItem({
     imagepath: imagepath,
     distinction: distinction,
     gate: gate,
+    qrcode: qrcode,
     completed: false,
   } as LivefeedListItem;
 }
