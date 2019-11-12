@@ -7,7 +7,6 @@ import { Profile } from '../profile';
 import { ProfileService } from '../profile.service';
 // import { routerTransition } from '../router.animations';
 import { LivefeedListService } from '../state/livefeed-list.service';
-import { LivefeedListItem } from '../state/livefeed-list.model';
 
 @Component({
   selector: 'app-search-bar',

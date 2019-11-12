@@ -15,6 +15,7 @@ import { trigger, stagger, animate, style, group, query, transition, keyframes }
 import { Profile } from '../profile';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { Location } from '@angular/common';
+import { LivefeedListService } from '../state/livefeed-list.service';
 
 export const homeTransition = trigger('homeTransition', [
   transition(':enter', [
@@ -78,7 +79,8 @@ export class OPIDComponent implements OnInit, OnDestroy {
     private location: Location,
     // private fb: FormBuilder,
     private validateTokenService: ValidateTokenService,
-    public snackBar: MatSnackBar
+    public snackBar: MatSnackBar,
+    public livefeedList: LivefeedListService
   ) {
 
     // subscribe to the router events - storing the subscription so
@@ -107,6 +109,7 @@ export class OPIDComponent implements OnInit, OnDestroy {
       this.profile_picture = await this.service.transformPBU(this.profile.photothumbnailurl);
       console.log(this.profile_picture);
       await this.getTemplates(this.profile);
+      this.feed(this.profile, false);
       // end check if logged in
     } else {
       // get client ip
@@ -125,6 +128,7 @@ export class OPIDComponent implements OnInit, OnDestroy {
         this.profile_picture = await this.service.transformPBU(this.profile.photothumbnailurl);
         console.log(this.profile_picture);
         await this.getTemplates(this.profile);
+        this.feed(this.profile, true);
       } else {
         const phrase = this.route.snapshot.paramMap.get('text');
         this.tmpProfile = null;
@@ -221,6 +225,7 @@ export class OPIDComponent implements OnInit, OnDestroy {
       this.profile = await this.http.get<Profile>(url).toPromise();
       this.profile_picture = await this.service.transformPBU(this.profile.photothumbnailurl);
       await this.getTemplates(this.profile);
+      this.feed(this.profile, true);
     } else {
       this.profile = null;
       // this.invalidToken = 'invalid token';
@@ -228,6 +233,24 @@ export class OPIDComponent implements OnInit, OnDestroy {
         duration: 5000,
       });
     }
+  }
+
+  feed(p: Profile, isOTP: Boolean) {
+    const profileid: string = String(p.profileid);
+    const name: string = String(p.name.first + ' ' + p.name.last);
+    const gender: string = String(p.gender);
+    const photothumbnailurl: string = String(p.photothumbnailurl);
+    const distinction: string = String(p.distinction);
+    const usertype = isOTP ? 'MOBILE DEVICE' : this.auth.getUserType();
+    const qrcode: string = String(p.cissinqtext);
+    this.livefeedList.feed(
+      profileid,
+      name,
+      gender,
+      photothumbnailurl,
+      distinction,
+      usertype,
+      qrcode);
   }
 
   getColor(status) {
