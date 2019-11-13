@@ -25,6 +25,21 @@
   background-color: #2976b9;
 }
 
+/* virtual scroll */
+
+.vs-example-viewport {
+  height: 250px;
+  width: 620px;
+  border: 1px dashed darksalmon;
+}
+
+.vs-example-item {
+  height: 250px;
+  margin: 10px 10px 0px 10px;
+}
+
+
+
 /* tanggalin dapat */
 
 .secondary-content {

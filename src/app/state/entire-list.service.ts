@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import * as io from 'socket.io-client';
-import { LivefeedListStore } from './livefeed-list.store';
 import { ID, runStoreAction, StoreActions } from '@datorama/akita';
-import { createLivefeedListItem, LivefeedListItem } from './livefeed-list.model';
+import { EntireListStore } from './entire-list.store';
+import { createEntireListItem, EntireListItem } from './entire-list.model';
 import { MydataserviceService } from '../mydataservice.service';
+import { tap } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 
 const resolveAction = {
@@ -14,10 +15,10 @@ const resolveAction = {
 };
 
 @Injectable({ providedIn: 'root' })
-export class LivefeedListService {
+export class EntireListService {
   private socket;
 
-  constructor(private store: LivefeedListStore,
+  constructor(private store: EntireListStore,
     private http: HttpClient,
     public service: MydataserviceService) {
   }
@@ -32,7 +33,7 @@ export class LivefeedListService {
 
     this.socket = io.connect(`http://${this.service.socket_ip}:8000`);
 
-    this.socket.on('list', event => {
+    this.socket.on('entirelist', event => {
       runStoreAction(this.store.storeName, resolveAction[event.type], {
         payload: {
           entityIds: event.ids,
@@ -44,11 +45,7 @@ export class LivefeedListService {
     return () => this.socket.disconnect();
   }
 
-  // old_feed(name: string) {
-  //   // this.socket.emit('list:feed', createLivefeedListItem({ name }));
-  // }
-
-  feed(
+  add(
     profileid: string,
     name: string,
     gender: string,
@@ -57,7 +54,7 @@ export class LivefeedListService {
     gate: string,
     qrcode: string
   ) {
-    this.socket.emit('list:feed', createLivefeedListItem({
+    this.socket.emit('entirelist:add', createEntireListItem({
       profileid,
       name,
       gender,
@@ -69,15 +66,12 @@ export class LivefeedListService {
     );
   }
 
-  add(name: string) {
-    // this.socket.emit('list:add', createLivefeedListItem({ name }));
-  }
-
   remove(id: ID) {
-    this.socket.emit('list:remove', id);
+    this.socket.emit('entirelist:remove', id);
   }
 
   toggleCompleted(id: ID) {
-    this.socket.emit('list:toggle', id);
+    this.socket.emit('entirelist:toggle', id);
   }
+
 }

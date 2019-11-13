@@ -9,11 +9,13 @@ import {
 } from '@angular/core';
 import { AuthService } from '../auth/auth.service';
 import { LivefeedListService } from '../state/livefeed-list.service';
+import { EntireListService } from '../state/entire-list.service';
 import { Observable } from 'rxjs';
 import { LivefeedListQuery } from '../state/livefeed-list.query';
+import { EntireListQuery } from '../state/entire-list.query';
 import { ID } from '@datorama/akita';
 import { LivefeedListItem } from '../state/livefeed-list.model';
-
+import { EntireListItem } from '../state/entire-list.model';
 import { MydataserviceService } from '../mydataservice.service';
 
 import {
@@ -75,10 +77,16 @@ export class LivefeedComponent implements OnInit, OnDestroy {
   ];
 
   items$: Observable<LivefeedListItem[]>;
+  entireitems$: Observable<EntireListItem[]>;
   private disposeConnection: VoidFunction;
+  private entiredisposeConnection: VoidFunction;
+  vsentireitems: EntireListItem[] = [];
 
-  constructor(public livefeedList: LivefeedListService,
+  constructor(
+    public livefeedList: LivefeedListService,
+    public entireList: EntireListService,
     public query: LivefeedListQuery,
+    public entirequery: EntireListQuery,
     public service: MydataserviceService,
     private authService: AuthService,
     private ref: ChangeDetectorRef,
@@ -88,6 +96,8 @@ export class LivefeedComponent implements OnInit, OnDestroy {
   async ngOnInit() {
     this.items$ = this.query.selectAll();
     this.disposeConnection = await this.livefeedList.connect();
+    this.entireitems$ = this.entirequery.selectAll();
+    this.entiredisposeConnection = await this.entireList.connect();
     // this.service.hasSearch = false;
     this.userType$ = this.authService.userType; // {2}
     setInterval(() => {
@@ -98,17 +108,15 @@ export class LivefeedComponent implements OnInit, OnDestroy {
         this.userType$ = this.authService.userType; // This value will be force updated
       });
     }, 3000);
+    this.entireitems$.subscribe(items => {
+      this.vsentireitems = [...items];
+    });
   }
 
-  feed(input: HTMLInputElement) {
-    // this.livefeedList.feed(input.value);
-    // input.value = '';
-  }
-
-  add(input: HTMLInputElement) {
-    this.livefeedList.add(input.value);
-    input.value = '';
-  }
+  // add(input: HTMLInputElement) {
+  //   this.livefeedList.add(input.value);
+  //   input.value = '';
+  // }
 
   remove(id: ID) {
     this.livefeedList.remove(id);
@@ -124,18 +132,7 @@ export class LivefeedComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.disposeConnection();
-  }
-
-  old_add() {
-    this.list.unshift(this.counter++);
-    if (this.list.length < 6) return;
-    this.list.pop();
-  }
-
-  old_remove(index) {
-    if (!this.list.length) return;
-    // this.list.splice(index,1);
-    this.list.pop();
+    this.entiredisposeConnection();
   }
 
   OnMatCardClickEvent(item: any): void {

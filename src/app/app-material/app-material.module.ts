@@ -17,7 +17,7 @@ import {
   MatChipsModule,
   MatStepperModule,
   MatBadgeModule,
-  MatSelectModule
+  MatSelectModule,
 } from '@angular/material';
 
 // import {MatDividerModule} from '@angular/material/divider';
