@@ -81,6 +81,7 @@ export class LivefeedComponent implements OnInit, OnDestroy {
   private disposeConnection: VoidFunction;
   private entiredisposeConnection: VoidFunction;
   vsentireitems: EntireListItem[] = [];
+  highlights: EntireListItem[] = [];
 
   constructor(
     public livefeedList: LivefeedListService,
@@ -136,6 +137,10 @@ export class LivefeedComponent implements OnInit, OnDestroy {
   }
 
   OnMatCardClickEvent(item: any): void {
+
+    const _highlight: EntireListItem = <EntireListItem>item;
+    this.highlights = [ _highlight, ...this.highlights ];
+
     // // On approval component mat card click, add checks if
     // // distinction includes EVENT
     // // then if user is the owner of the event OR

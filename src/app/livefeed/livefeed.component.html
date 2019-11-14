@@ -37,7 +37,31 @@
   <br>
 
   <div style="float: left; margin: 10px;">
-    <h2>Highlighted</h2>
+    <h2>Highlight</h2>
+    <cdk-virtual-scroll-viewport itemSize="250" class="vs-example-viewport">
+      <div *cdkVirtualFor="let item of highlights" class="vs-example-item">
+        <mat-card class="example-card">
+          <mat-grid-list cols="2" rowHeight="1:1">
+            <mat-grid-tile>
+              <mat-card class="example-card">
+                <img mat-card-image [src]="service.transformPBU(item.imagepath)" alt="Photo">
+              </mat-card>
+            </mat-grid-tile>
+            <mat-grid-tile>
+              <mat-card class="example-card">
+                <mat-card-content>
+                  <qrcode [qrdata]="item.qrcode" [size]="200" [level]="'M'" style="width: 100%;padding: 10px;"></qrcode>
+                </mat-card-content>
+              </mat-card>
+            </mat-grid-tile>
+          </mat-grid-list>
+        </mat-card>
+      </div>
+    </cdk-virtual-scroll-viewport>
+  </div>
+
+  <div style="float: left; margin: 10px;">
+    <h2>Realtime Logs</h2>
     <cdk-virtual-scroll-viewport itemSize="250" class="vs-example-viewport">
       <div *cdkVirtualFor="let item of vsentireitems" class="vs-example-item">
         <mat-card class="example-card" (click)="OnMatCardClickEvent(item)">
@@ -61,31 +85,7 @@
   </div>
 
   <div style="float: left; margin: 10px;">
-    <h2>Reactive Logs</h2>
-    <cdk-virtual-scroll-viewport itemSize="250" class="vs-example-viewport">
-      <div *cdkVirtualFor="let item of vsentireitems" class="vs-example-item">
-        <mat-card class="example-card" (click)="OnMatCardClickEvent(item)">
-          <mat-grid-list cols="2" rowHeight="1:1">
-            <mat-grid-tile>
-              <mat-card class="example-card">
-                <img mat-card-image [src]="service.transformPBU(item.imagepath)" alt="Photo">
-              </mat-card>
-            </mat-grid-tile>
-            <mat-grid-tile>
-              <mat-card class="example-card">
-                <mat-card-content>
-                  <qrcode [qrdata]="item.qrcode" [size]="200" [level]="'M'" style="width: 100%;padding: 10px;"></qrcode>
-                </mat-card-content>
-              </mat-card>
-            </mat-grid-tile>
-          </mat-grid-list>
-        </mat-card>
-      </div>
-    </cdk-virtual-scroll-viewport>
-  </div>
-
-  <div style="float: left; margin: 10px;">
-    <h2>Realtime Analytics</h2>
+    <h2>Reactive Analytics</h2>
   </div>
 
 </div>
