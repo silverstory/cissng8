@@ -6,7 +6,8 @@
           <ng-template matStepperIcon="edit">
             <mat-icon>check</mat-icon>
           </ng-template>
-          <mat-step *ngFor="let step of steps" [stepControl]="step.dialogbuttontext" [completed]="completedBa[step.step]" editable="false">
+          <mat-step *ngFor="let step of steps" [stepControl]="step.dialogbuttontext"
+            [completed]="completedBa[step.step]" editable="false">
             <ng-template matStepLabel>{{ stepstext[step.step] }}</ng-template>
           </mat-step>
         </mat-horizontal-stepper>
@@ -19,7 +20,8 @@
             <div class="one-2-3-4" [style.background-color]="profile.access.colorone">1</div>
             <div class="one-2-3-4" [style.background-color]="profile.access.colortwo">2</div>
           </div>
-          <img mat-card-image [src]="service.transformPBU(profile.photothumbnailurl)" alt="Photo"> <!-- style="width:100%;height:275px;" -->
+          <img mat-card-image [src]="service.transformPBU(profile.photothumbnailurl)" alt="Photo">
+          <!-- style="width:100%;height:275px;" -->
           <div class="row">
             <div class="one-2-3-4" [style.background-color]="profile.access.colorthree">3</div>
             <div class="one-2-3-4" [style.background-color]="profile.access.colorfour">4</div>
@@ -29,28 +31,38 @@
             <button mat-raised-button color="accent">VERIFY</button>
           </mat-card-actions> -->
         </mat-card>
+        <div align="center">
+          <br>
+          <button mat-raised-button color="primary" *ngIf="service.usertype.includes('CISS_ADMINISTRATOR')"
+            (click)="OnCollectRfidClickEvent()">Collect RFID value</button>
+        </div>
       </div>
       <div class="column">
         <mat-card class="column-card">
           <mat-card-header>
-            <div mat-card-avatar><mat-icon aria-label="VISITOR'S NAME">person</mat-icon></div>
+            <div mat-card-avatar>
+              <mat-icon aria-label="VISITOR'S NAME">person</mat-icon>
+            </div>
             <mat-card-title>VISITOR'S NAME</mat-card-title>
             <mat-card-subtitle>{{ profile.gender | uppercase }}</mat-card-subtitle>
           </mat-card-header>
           <br>
           <div class="row">
             <mat-form-field class="full-width-input">
-              <input matInput placeholder="First name" readonly [(ngModel)]="profile.name.first" style="width:100%;font-weight:bold;font-size:large;color: #424242;">
+              <input matInput placeholder="First name" readonly [(ngModel)]="profile.name.first"
+                style="width:100%;font-weight:bold;font-size:large;color: #424242;">
             </mat-form-field>
           </div>
           <div class="row">
             <mat-form-field class="full-width-input">
-              <input matInput placeholder="Middle name" readonly [(ngModel)]="profile.name.middle" style="width:100%;font-weight:bold;font-size:large;color: #424242;">
+              <input matInput placeholder="Middle name" readonly [(ngModel)]="profile.name.middle"
+                style="width:100%;font-weight:bold;font-size:large;color: #424242;">
             </mat-form-field>
           </div>
           <div class="row">
             <mat-form-field class="full-width-input">
-              <input matInput placeholder="Family name" readonly [(ngModel)]="profile.name.last" style="width:100%;font-weight:bold;font-size:large;color: #424242;">
+              <input matInput placeholder="Family name" readonly [(ngModel)]="profile.name.last"
+                style="width:100%;font-weight:bold;font-size:large;color: #424242;">
             </mat-form-field>
           </div>
         </mat-card>
@@ -58,24 +70,30 @@
       <div class="column">
         <mat-card class="column-card">
           <mat-card-header>
-            <div mat-card-avatar><mat-icon aria-label="ORIGIN AND PURPOSE">business</mat-icon></div>
+            <div mat-card-avatar>
+              <mat-icon aria-label="ORIGIN AND PURPOSE">business</mat-icon>
+            </div>
             <mat-card-title>ORIGIN AND PURPOSE</mat-card-title>
-            <mat-card-subtitle>Most recent action: {{ profile.accessdatetagged | date: 'MMMM dd yyyy @ hh:mm a' }}</mat-card-subtitle>
+            <mat-card-subtitle>Most recent action: {{ profile.accessdatetagged | date: 'MMMM dd yyyy @ hh:mm a' }}
+            </mat-card-subtitle>
           </mat-card-header>
           <br>
           <div class="row">
             <mat-form-field class="full-width-input">
-              <input matInput placeholder="Company" readonly [(ngModel)]="profile.visitor.visitorcompany" style="width:100%;font-weight:bold;font-size:large;color: #424242;">
+              <input matInput placeholder="Company" readonly [(ngModel)]="profile.visitor.visitorcompany"
+                style="width:100%;font-weight:bold;font-size:large;color: #424242;">
             </mat-form-field>
           </div>
           <div class="row">
             <mat-form-field class="full-width-input">
-              <input matInput placeholder="Purpose" readonly [(ngModel)]="profile.visitor.visitorpurpose" style="width:100%;font-weight:bold;font-size:large;color: #424242;">
+              <input matInput placeholder="Purpose" readonly [(ngModel)]="profile.visitor.visitorpurpose"
+                style="width:100%;font-weight:bold;font-size:large;color: #424242;">
             </mat-form-field>
           </div>
           <div class="row">
             <mat-form-field class="full-width-input">
-              <input matInput placeholder="Visit Request Status" readonly [(ngModel)]="profile.accessapproval" style="width:100%;font-weight:bold;font-size:large;color: #424242;">
+              <input matInput placeholder="Visit Request Status" readonly [(ngModel)]="profile.accessapproval"
+                style="width:100%;font-weight:bold;font-size:large;color: #424242;">
             </mat-form-field>
           </div>
         </mat-card>
@@ -83,25 +101,30 @@
       <div class="column">
         <mat-card class="column-card">
           <mat-card-header>
-            <div mat-card-avatar><mat-icon aria-label="DESTINATION">access_time</mat-icon></div>
+            <div mat-card-avatar>
+              <mat-icon aria-label="DESTINATION">access_time</mat-icon>
+            </div>
             <mat-card-title>DESTINATION</mat-card-title>
             <mat-card-subtitle>TYPE: {{ profile.distinction | uppercase }}</mat-card-subtitle>
           </mat-card-header>
           <br>
           <div class="row">
             <mat-form-field class="full-width-input">
-              <input matInput placeholder="Destination" readonly [(ngModel)]="profile.visitor.visitordestination" style="width:100%;font-weight:bold;font-size:large;color: #424242;">
+              <input matInput placeholder="Destination" readonly [(ngModel)]="profile.visitor.visitordestination"
+                style="width:100%;font-weight:bold;font-size:large;color: #424242;">
             </mat-form-field>
           </div>
           <div class="row">
             <mat-form-field class="full-width-input">
-              <input matInput placeholder="Person to visit" readonly [(ngModel)]="profile.visitor.persontovisit" style="width:100%;font-weight:bold;font-size:large;color: #424242;">
+              <input matInput placeholder="Person to visit" readonly [(ngModel)]="profile.visitor.persontovisit"
+                style="width:100%;font-weight:bold;font-size:large;color: #424242;">
             </mat-form-field>
           </div>
           <div class="row">
             <mat-form-field class="full-width-input">
               <!-- <input matInput placeholder="Time of appointment" value="{{ profile.visitor.timeofappointment | date: 'EEEE BBBB dd MMM `yy, hh:mm a O' }}" readonly style="width:100%;font-weight:bold;font-size:large;color: #424242;"> -->
-              <textarea matInput placeholder="Time of appointment" readonly style="width:100%;font-size:large;color: #424242;">{{ profile.visitor.timeofappointment | date: 'EEEE BBBB dd MMM yyyy, hh:mm a' }}</textarea>
+              <textarea matInput placeholder="Time of appointment" readonly
+                style="width:100%;font-size:large;color: #424242;">{{ profile.visitor.timeofappointment | date: 'EEEE BBBB dd MMM yyyy, hh:mm a' }}</textarea>
               <!-- date pipe with gmt+ : profile.visitor.timeofappointment | date: 'EEEE BBBB dd MMM yyyy, hh:mm a O' -->
               <!-- {{ profile.visitor.timeofappointment | date: 'EEEE bbbb dd MMM `yy, hh:mm a z' }} -->
             </mat-form-field>
@@ -177,5 +200,5 @@
     </mat-card>
   </div> -->
 
-      <!-- <h2>{{ profile.name.first | uppercase }} Details</h2> -->
-      <!-- <button (click)="save()">save</button>     -->
+<!-- <h2>{{ profile.name.first | uppercase }} Details</h2> -->
+<!-- <button (click)="save()">save</button>     -->

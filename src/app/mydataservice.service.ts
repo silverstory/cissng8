@@ -17,16 +17,19 @@ export class MydataserviceService {
   public find = 'Provisional';
   public distinction = 'OPEMPLOYEE';
   public isLoggedIn = false;
-  public usertype: string;
-  public useroffice: string;
   public eventcode: string;
-  public eventcreator: string;
   public nextstep = 100;
   public limit = 8; // limit must be atleast 8 and above
   public newestFirst = true;
   private api = '/api';
   public image_source = '-';
   public socket_ip = '192.68.23.8';
+
+  public userName: string;
+  public usertype: string;
+  public mobileno: string;
+  public useroffice: string;
+  public eventcreator: string;
 
   public hasSearch = true;
 

@@ -26,6 +26,7 @@ import { Profile } from '../profile';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { Location } from '@angular/common';
 import { ProfileService } from '../profile.service';
+import { CollectRfidComponent } from '../collect-rfid/collect-rfid.component';
 // import { routerTransition } from '../router.animations';
 // original stagger 300
 // original animate 1s
@@ -199,8 +200,13 @@ export class EmployeeComponent implements OnInit, OnDestroy {
     this.authService.getProfile()
       .pipe(
         map((user: any) => {
+          // user data
+          this.service.userName = user.userName;
           this.service.usertype = user.usertype;
+          this.service.mobileno = user.mobileno;
           this.service.useroffice = user.useroffice;
+          this.service.eventcreator = user.eventcreator;
+          // end user data
           const dist: string = String(this.profile.distinction);
           this.service.distinction = dist;
         }),
@@ -313,6 +319,8 @@ export class EmployeeComponent implements OnInit, OnDestroy {
 
   // Adding Access Request and Approval Functionality
 
+  // show approval dialog
+
   OnMatCardClickEvent(): void {
     if (this.service.nextstep === this.profile.nextstep) {
       if (this.service.useroffice !== 'NONE') {
@@ -408,6 +416,55 @@ export class EmployeeComponent implements OnInit, OnDestroy {
     });
   }
 
+  // end - show approval dialog
+
+  // show collect rfid dialog
+
+  OnCollectRfidClickEvent(): void {
+    if (this.service.usertype.includes('CISS_ADMINISTRATOR')) {
+      this.openRfidDialog();
+    }
+  }
+
+  openRfidDialog(): void {
+    const p: Profile = this.service.createFreezedProfile(this.profile);
+    const dialogRef = this.dialog.open(CollectRfidComponent, {
+      // this should not be 700px and must implement css grid styling
+      // width: '100%',
+      width: 'calc(100%)',
+      data: {
+        profile: this.profile,
+        freezedProfile: p,
+        action: '',
+        usertemplate: this.usertemplate
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      // console.log('The dialog was closed ', result);
+      // result.action here
+      switch (result.action) {
+        case 'Cancelled':
+          this.profile = p;
+          break;
+        case 'RFID Updated':
+          // store rfid
+          this.profile = result.profile;
+          // update db with this.profile
+          this.saveProfile();
+          break;
+        case '':
+          this.profile = p;
+          break;
+        default:
+          this.profile = p;
+          break;
+      }
+    });
+  }
+
+  // end - show collect rfid dialog
+
   saveProfile(): void {
     this.service.saveProfile(this.profile)
       .pipe(tap((res: any) => res))
@@ -443,8 +500,8 @@ export class EmployeeComponent implements OnInit, OnDestroy {
     if (smsResponse.success) {
       this.snackBar.open(`Notification sent to ${this.profile.name.first} ${this.profile.name.last}'s mobile number.`,
         'Sending notification succeeded.', {
-          duration: 7000,
-        });
+        duration: 7000,
+      });
     } else {
       this.snackBar.open('Sending notification failed!', 'Something went wrong :(', {
         duration: 7000,

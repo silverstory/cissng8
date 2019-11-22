@@ -1,0 +1,43 @@
+<div mat-dialog-content>
+  <div id="content">
+    <div>
+      <mat-card class="example-card">
+        <mat-card-header>
+          <div mat-card-avatar
+            [ngStyle]="{'background-image': 'url(../assets/face_icon/'+ setFaceIcon(data.freezedProfile.distinction, data.freezedProfile.gender) + '.svg)'}"
+            class="example-header-image"></div>
+          <mat-card-title>{{ data.freezedProfile.name.first }} {{ data.freezedProfile.name.last }}</mat-card-title>
+          <mat-card-subtitle><span>
+              <mat-form-field>
+                <mat-select [(value)]="data.profile.gender">
+                  <mat-option value="male">MALE</mat-option>
+                  <mat-option value="female">FEMALE</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </span> {{ data.freezedProfile.distinction }}</mat-card-subtitle>
+        </mat-card-header>
+      </mat-card>
+    </div>
+    <div>
+      <mat-card class="example-card">
+        <mat-card-content>
+          <div class="row">
+            <mat-form-field class="example-form-field">
+              <input matInput type="text" placeholder="Collect RFID value" [(ngModel)]="data.profile.rfid">
+              <button mat-button *ngIf="data.profile.rfid" matSuffix mat-icon-button aria-label="Clear"
+                (click)="data.profile.rfid=''">
+                <mat-icon>close</mat-icon>
+              </button>
+            </mat-form-field>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>
+<div mat-dialog-actions align="end">
+  <button mat-button (click)="onNoClick()">Cancel</button>&nbsp;&nbsp;
+  <!-- *ngIf="service.usertype.includes('CISS_ADMINISTRATOR')" -->
+  <button mat-raised-button color="primary"
+  (click)="onButtonClick('RFID Updated')" [mat-dialog-close]="data" cdkFocusInitial>Store RFID value</button>
+</div>

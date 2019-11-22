@@ -54,6 +54,7 @@ import { AkitaNgDevtools } from '@datorama/akita-ngdevtools';
 import { environment } from '../environments/environment';
 
 import { ScrollingModule } from '@angular/cdk/scrolling';
+import { CollectRfidComponent } from './collect-rfid/collect-rfid.component';
 
 // the second parameter 'fr' is optional
 // registerLocaleData(localeFr, 'fr');
@@ -84,7 +85,8 @@ registerLocaleData(localeEnPh, 'en-PH', localeEnPhExtra);
     InvoiceComponent,
     PrintComponent,
     EventComponent,
-    LivefeedComponent
+    LivefeedComponent,
+    CollectRfidComponent
   ],
   imports: [
     BrowserModule,
@@ -100,7 +102,7 @@ registerLocaleData(localeEnPh, 'en-PH', localeEnPhExtra);
     environment.production ? [] : AkitaNgDevtools.forRoot(),
     ScrollingModule
   ],
-  entryComponents: [AccessApprovalComponent, AccessApprovalDialogComponent, RequestFormDialogComponent],
+  entryComponents: [AccessApprovalComponent, AccessApprovalDialogComponent, RequestFormDialogComponent, CollectRfidComponent],
   providers: [
     { provide: LOCALE_ID, useValue: 'en-PH' },
     ProfileService,

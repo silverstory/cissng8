@@ -6,7 +6,8 @@
           <ng-template matStepperIcon="edit">
             <mat-icon>check</mat-icon>
           </ng-template>
-          <mat-step *ngFor="let step of steps" [stepControl]="step.dialogbuttontext" [completed]="completedBa[step.step]" editable="false">
+          <mat-step *ngFor="let step of steps" [stepControl]="step.dialogbuttontext"
+            [completed]="completedBa[step.step]" editable="false">
             <ng-template matStepLabel>{{ stepstext[step.step] }}</ng-template>
           </mat-step>
         </mat-horizontal-stepper>
@@ -41,28 +42,38 @@
             <button mat-raised-button color="accent">VERIFY</button>
           </mat-card-actions> -->
         </mat-card>
+        <div align="center">
+          <br>
+          <button mat-raised-button color="primary" *ngIf="service.usertype.includes('CISS_ADMINISTRATOR')"
+            (click)="OnCollectRfidClickEvent()">Collect RFID value</button>
+        </div>
       </div>
       <div class="column">
         <mat-card class="column-card">
           <mat-card-header>
-            <div mat-card-avatar><mat-icon aria-label="EMPLOYEE NAME">person</mat-icon></div>
+            <div mat-card-avatar>
+              <mat-icon aria-label="EMPLOYEE NAME">person</mat-icon>
+            </div>
             <mat-card-title>EMPLOYEE NAME</mat-card-title>
             <mat-card-subtitle>{{ profile.gender | uppercase }}</mat-card-subtitle>
           </mat-card-header>
           <br>
           <div class="row">
             <mat-form-field class="full-width-input">
-              <input matInput placeholder="First name" readonly [(ngModel)]="profile.name.first" style="width:100%;font-weight:bold;font-size:large;color: #424242;">
+              <input matInput placeholder="First name" readonly [(ngModel)]="profile.name.first"
+                style="width:100%;font-weight:bold;font-size:large;color: #424242;">
             </mat-form-field>
           </div>
           <div class="row">
             <mat-form-field class="full-width-input">
-              <input matInput placeholder="Middle name" readonly [(ngModel)]="profile.name.middle" style="width:100%;font-weight:bold;font-size:large;color: #424242;">
+              <input matInput placeholder="Middle name" readonly [(ngModel)]="profile.name.middle"
+                style="width:100%;font-weight:bold;font-size:large;color: #424242;">
             </mat-form-field>
           </div>
           <div class="row">
             <mat-form-field class="full-width-input">
-              <input matInput placeholder="Family name" readonly [(ngModel)]="profile.name.last" style="width:100%;font-weight:bold;font-size:large;color: #424242;">
+              <input matInput placeholder="Family name" readonly [(ngModel)]="profile.name.last"
+                style="width:100%;font-weight:bold;font-size:large;color: #424242;">
             </mat-form-field>
           </div>
         </mat-card>
@@ -70,24 +81,30 @@
       <div class="column">
         <mat-card class="column-card">
           <mat-card-header>
-            <div mat-card-avatar><mat-icon aria-label="ACCESS RESTRICTION">verified_user</mat-icon></div>
+            <div mat-card-avatar>
+              <mat-icon aria-label="ACCESS RESTRICTION">verified_user</mat-icon>
+            </div>
             <mat-card-title>ACCESS RESTRICTION</mat-card-title>
-            <mat-card-subtitle>Most recent action: {{ profile.accessdatetagged | date: 'MMMM dd yyyy @ hh:mm a' }}</mat-card-subtitle>
+            <mat-card-subtitle>Most recent action: {{ profile.accessdatetagged | date: 'MMMM dd yyyy @ hh:mm a' }}
+            </mat-card-subtitle>
           </mat-card-header>
           <br>
           <div class="row">
             <mat-form-field class="full-width-input">
-              <input matInput placeholder="Employment Status" readonly [(ngModel)]="profile.recordstatus" style="width:100%;font-weight:bold;font-size:large;color: #424242;">
+              <input matInput placeholder="Employment Status" readonly [(ngModel)]="profile.recordstatus"
+                style="width:100%;font-weight:bold;font-size:large;color: #424242;">
             </mat-form-field>
           </div>
           <div class="row">
             <mat-form-field class="full-width-input">
-              <input matInput placeholder="Recent Access Request Status" readonly [(ngModel)]="profile.accessapproval" style="width:100%;font-weight:bold;font-size:large;color: #424242;">
+              <input matInput placeholder="Recent Access Request Status" readonly [(ngModel)]="profile.accessapproval"
+                style="width:100%;font-weight:bold;font-size:large;color: #424242;">
             </mat-form-field>
           </div>
           <div class="row">
             <mat-form-field class="full-width-input">
-              <input matInput placeholder="Blacklisted" readonly [(ngModel)]="profile.blacklisted" style="width:100%;font-weight:bold;font-size:large;color: #424242;">
+              <input matInput placeholder="Blacklisted" readonly [(ngModel)]="profile.blacklisted"
+                style="width:100%;font-weight:bold;font-size:large;color: #424242;">
             </mat-form-field>
           </div>
         </mat-card>
@@ -95,24 +112,29 @@
       <div class="column">
         <mat-card class="column-card">
           <mat-card-header>
-            <div mat-card-avatar><mat-icon aria-label="OFFICE AND RANK">location_city</mat-icon></div>
+            <div mat-card-avatar>
+              <mat-icon aria-label="OFFICE AND RANK">location_city</mat-icon>
+            </div>
             <mat-card-title>OFFICE AND RANK</mat-card-title>
             <mat-card-subtitle>TYPE: {{ profile.distinction | uppercase }}</mat-card-subtitle>
           </mat-card-header>
           <br>
           <div class="row">
             <mat-form-field class="full-width-input">
-              <input matInput placeholder="Access Level" readonly [(ngModel)]="profile.personaccesslevel" style="width:100%;font-weight:bold;font-size:large;color: #424242;">
+              <input matInput placeholder="Access Level" readonly [(ngModel)]="profile.personaccesslevel"
+                style="width:100%;font-weight:bold;font-size:large;color: #424242;">
             </mat-form-field>
           </div>
           <div class="row">
             <mat-form-field class="full-width-input">
-              <input matInput placeholder="Designation" readonly [(ngModel)]="profile.employee.position" style="width:100%;font-weight:bold;font-size:large;color: #424242;">
+              <input matInput placeholder="Designation" readonly [(ngModel)]="profile.employee.position"
+                style="width:100%;font-weight:bold;font-size:large;color: #424242;">
             </mat-form-field>
           </div>
           <div class="row">
             <mat-form-field class="full-width-input">
-              <input matInput placeholder="Office" readonly [(ngModel)]="profile.employee.office" style="width:100%;font-weight:bold;font-size:large;color: #424242;">
+              <input matInput placeholder="Office" readonly [(ngModel)]="profile.employee.office"
+                style="width:100%;font-weight:bold;font-size:large;color: #424242;">
             </mat-form-field>
           </div>
         </mat-card>
@@ -186,5 +208,5 @@
   </mat-card>
 </div> -->
 
-    <!-- <h2>{{ profile.name.first | uppercase }} Details</h2> -->
-    <!-- <button (click)="save()">save</button>     -->
+<!-- <h2>{{ profile.name.first | uppercase }} Details</h2> -->
+<!-- <button (click)="save()">save</button>     -->

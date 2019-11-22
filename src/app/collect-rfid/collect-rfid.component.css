@@ -1,0 +1,81 @@
+/* Custom CSS Classes */
+
+.example-card {
+flex: 100%;
+/* font-family: Roboto, sans-serif, 'Nunito Semibold'; */
+}
+
+/* .example-header-image {
+background-image: url('https://www.freeiconspng.com/uploads/flat-face-icon-23.png');
+background-size: cover;
+} */
+
+.example-header-image {
+  background-size: cover;
+}
+
+.content-center {
+  text-align: -webkit-center;
+}
+
+/* CSS GRID  */
+/* iphone */
+#content{
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  grid-gap: 10px;
+  max-width: 100%;  /* 960px; */
+  margin: 0 auto;
+}
+/* ipad */
+@media screen and (min-width: 760px) {
+  #content{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 10px;
+    max-width: 100%; /* 960px; */
+    margin: 5 auto;
+  }
+}
+/* macbook 1366+ or 1280+ */
+@media screen and (min-width: 1360px) {
+  #content{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 10px;
+    max-width: 100%; /* 960px; */
+    margin: 5 auto;
+  }
+}
+#content div {
+  /* background: #3bbced; */
+  padding: 10px;
+  font-family: Lato;
+  /* background-color: #FCE4EC; */
+  /* #E0F7FA */
+  /* margin: 2em auto; */
+}
+#content div:nth-child(even){
+  /* background: #777; */
+  padding: 10px;
+  font-family: Lato;
+}
+
+/* from employee component css */
+.column-card {
+  flex: 100%;
+}
+
+.row {
+  display: flex;
+}
+
+.example-button-row button,
+.example-button-row a {
+  margin: 0 0 0 0;
+}
+
+.example-form-field {
+  width: 500px;
+  font-size: larger;
+}
