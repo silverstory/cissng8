@@ -99,8 +99,15 @@ export class MydataserviceService {
   }
 
   // push status data to vegas
-  async issueEventApproval(code: String, status: String) {
-    const base_url = 'http://58.69.10.200/guests/updateStatus';
+  async issueEventApproval(
+    code: String,
+    status: String,
+    distinction: String
+  ) {
+    const _vegasurl = 'http://58.69.10.200/guests/updateStatus';
+    const _pmlurl = 'http://58.69.10.200:4286/guests/updateStatus';
+    const base_url = distinction.includes('MUSEUM') ? _pmlurl : _vegasurl;
+    // const base_url = 'http://58.69.10.200/guests/updateStatus';
     const body = {
       code: code,
       status: status

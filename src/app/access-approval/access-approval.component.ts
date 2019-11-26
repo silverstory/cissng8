@@ -555,7 +555,11 @@ export class AccessApprovalComponent implements OnInit {
             if (this.service.usertype === 'OFFICEHEAD') {
               msgToVegas = 'Denied by Head';
             }
-            const res: any = this.service.issueEventApproval(this.profile.cisscode, msgToVegas);
+            const res: any =
+              this.service.issueEventApproval(
+                this.profile.cisscode,
+                msgToVegas,
+                this.profile.distinction);
             console.log(res.success);
           }
           // update db with this.profile
@@ -577,7 +581,11 @@ export class AccessApprovalComponent implements OnInit {
               this.profile.accessapproval = 'Provisional';
               msgToVegas = 'Approved by Head';
             }
-            const res: any = this.service.issueEventApproval(this.profile.cisscode, msgToVegas);
+            const res: any =
+              this.service.issueEventApproval(
+                this.profile.cisscode,
+                msgToVegas,
+                this.profile.distinction);
             console.log(res.success);
           }
           // update db with this.profile
