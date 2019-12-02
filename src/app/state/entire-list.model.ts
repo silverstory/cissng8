@@ -10,6 +10,7 @@ export interface EntireListItem {
   distinction: string;
   gate: string;
   qrcode: string;
+  datetime: Date;
   completed: boolean;
 }
 
@@ -20,7 +21,8 @@ export function createEntireListItem({
   imagepath,
   distinction,
   gate,
-  qrcode
+  qrcode,
+  datetime
 }: Partial<EntireListItem>) {
   return {
     id: guid(),
@@ -32,6 +34,7 @@ export function createEntireListItem({
     distinction: distinction,
     gate: gate,
     qrcode: qrcode,
+    datetime: datetime,
     completed: false,
   } as EntireListItem;
 }

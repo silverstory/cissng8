@@ -52,7 +52,8 @@ export class EntireListService {
     imagepath: string,
     distinction: string,
     gate: string,
-    qrcode: string
+    qrcode: string,
+    datetime: Date
   ) {
     this.socket.emit('entirelist:add', createEntireListItem({
       profileid,
@@ -61,7 +62,8 @@ export class EntireListService {
       imagepath,
       distinction,
       gate,
-      qrcode
+      qrcode,
+      datetime
     })
     );
   }
