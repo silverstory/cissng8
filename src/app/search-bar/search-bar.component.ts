@@ -133,7 +133,7 @@ export class SearchBarComponent implements OnInit {
     const distinction: string = String(p.distinction);
     const usertype = this.authService.getUserType();
     const qrcode: string = String(p.cissinqtext);
-    const datetime = new Date();
+    const datetime: Date = new Date();
     this.livefeedList.feed(
       profileid,
       name,
@@ -153,7 +153,7 @@ export class SearchBarComponent implements OnInit {
     const distinction: string = String(p.distinction);
     const usertype = this.authService.getUserType();
     const qrcode: string = String(p.cissinqtext);
-    const datetime = new Date();
+    const datetime: Date = new Date();
     this.entireList.add(
       profileid,
       name,

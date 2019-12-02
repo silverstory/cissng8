@@ -243,6 +243,7 @@ export class OPIDComponent implements OnInit, OnDestroy {
     const distinction: string = String(p.distinction);
     const usertype = isOTP ? 'MOBILE DEVICE' : this.auth.getUserType();
     const qrcode: string = String(p.cissinqtext);
+    const datetime: Date = new Date();
     this.livefeedList.feed(
       profileid,
       name,
@@ -250,7 +251,8 @@ export class OPIDComponent implements OnInit, OnDestroy {
       photothumbnailurl,
       distinction,
       usertype,
-      qrcode);
+      qrcode,
+      datetime);
   }
 
   getColor(status) {
