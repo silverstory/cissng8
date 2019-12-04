@@ -28,13 +28,13 @@
 /* virtual scroll */
 
 .vs-example-viewport {
-  height: 540px;
+  height: 764px; /* 540px; */
   width: 620px;
   border: 1px dashed darksalmon;
 }
 
 .vs-example-item {
-  height: 250px;
+  height: 368px;  /* 250px; */
   margin: 10px 10px 0px 10px;
 }
 

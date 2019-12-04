@@ -41,6 +41,10 @@
     <cdk-virtual-scroll-viewport itemSize="250" class="vs-example-viewport">
       <div *cdkVirtualFor="let item of highlights" class="vs-example-item">
         <mat-card class="example-card">
+          <mat-card-header>
+            <mat-card-title>{{ item.gate }} - {{ item.datetime | date: 'MMM dd yyyy, hh:mm a' }}</mat-card-title>
+            <mat-card-subtitle></mat-card-subtitle>
+          </mat-card-header>
           <mat-grid-list cols="2" rowHeight="1:1">
             <mat-grid-tile>
               <mat-card class="example-card">
@@ -55,6 +59,11 @@
               </mat-card>
             </mat-grid-tile>
           </mat-grid-list>
+          <mat-card-content>
+            <p style="font-size: larger;">
+              <b>{{ item.name }} - {{ item.distinction }}</b>
+            </p>
+          </mat-card-content>
         </mat-card>
       </div>
     </cdk-virtual-scroll-viewport>
@@ -65,6 +74,10 @@
     <cdk-virtual-scroll-viewport itemSize="250" class="vs-example-viewport">
       <div *cdkVirtualFor="let item of vsentireitems" class="vs-example-item">
         <mat-card class="example-card" (click)="OnMatCardClickEvent(item)">
+          <mat-card-header>
+            <mat-card-title>{{ item.gate }} - {{ item.datetime | date: 'MMM dd yyyy, hh:mm a' }}</mat-card-title>
+            <mat-card-subtitle></mat-card-subtitle>
+          </mat-card-header>
           <mat-grid-list cols="2" rowHeight="1:1">
             <mat-grid-tile>
               <mat-card class="example-card">
@@ -79,6 +92,11 @@
               </mat-card>
             </mat-grid-tile>
           </mat-grid-list>
+          <mat-card-content>
+            <p style="font-size: larger;">
+              <b>{{ item.name }} - {{ item.distinction }}</b>
+            </p>
+          </mat-card-content>
         </mat-card>
       </div>
     </cdk-virtual-scroll-viewport>
@@ -86,6 +104,12 @@
 
   <div style="float: left; margin: 10px;">
     <h2>Reactive Analytics</h2>
+    <h3 style="color: darkslategrey;">Today's Total</h3>
+    <h3>People Inside:</h3>
+    <h3>Visitors Inside:</h3>
+    <h3>OP Employees Inside:</h3>
+    <h3>Tourists Inside:</h3>
+    <h3>Non-OP Employees Inside:</h3>
   </div>
 
 </div>
