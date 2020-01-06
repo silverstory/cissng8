@@ -42,7 +42,7 @@
       <div *cdkVirtualFor="let item of highlights" class="vs-example-item">
         <mat-card class="example-card">
           <mat-card-header>
-            <mat-card-title>{{ item.gate }} - {{ item.datetime | date: 'MMM dd yyyy, hh:mm a' }}</mat-card-title>
+            <mat-card-title>{{ item.gate }} `` {{ item.datetime | date: 'MMM dd yyyy, hh:mm a' }}</mat-card-title>
             <mat-card-subtitle></mat-card-subtitle>
           </mat-card-header>
           <mat-grid-list cols="2" rowHeight="1:1">
@@ -75,7 +75,7 @@
       <div *cdkVirtualFor="let item of vsentireitems" class="vs-example-item">
         <mat-card class="example-card" (click)="OnMatCardClickEvent(item)">
           <mat-card-header>
-            <mat-card-title>{{ item.gate }} - {{ item.datetime | date: 'MMM dd yyyy, hh:mm a' }}</mat-card-title>
+            <mat-card-title>{{ item.gate }} `` {{ item.datetime | date: 'MMM dd yyyy, hh:mm a' }}</mat-card-title>
             <mat-card-subtitle></mat-card-subtitle>
           </mat-card-header>
           <mat-grid-list cols="2" rowHeight="1:1">

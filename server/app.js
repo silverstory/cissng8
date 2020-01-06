@@ -66,6 +66,8 @@ const sms = require('./routes/sms');
 app.use('/api', sms);
 const distinction = require('./routes/distinction');
 app.use('/api', distinction);
+const profileaction = require('./routes/profileaction');
+app.use('/api', profileaction);
 
 // try to implement this line if it'll solve resource not found if :3000/{path}
 // app.get('*', (req, res) => {
