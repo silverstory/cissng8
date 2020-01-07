@@ -1,4 +1,4 @@
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable, from } from 'rxjs';
 import { AuthService } from '../auth/auth.service';
 import { Router } from '@angular/router';
 // import { Component, OnInit, ViewEncapsulation, HostBinding } from '@angular/core';
@@ -8,6 +8,9 @@ import { ProfileService } from '../profile.service';
 // import { routerTransition } from '../router.animations';
 import { LivefeedListService } from '../state/livefeed-list.service';
 import { EntireListService } from '../state/entire-list.service';
+import { MydataserviceService } from '../mydataservice.service';
+import { switchMap, map, tap, mergeMap } from 'rxjs/operators';
+import { ProfileAction } from '../profileaction';
 
 @Component({
   selector: 'app-search-bar',
@@ -28,7 +31,8 @@ export class SearchBarComponent implements OnInit {
     private profileService: ProfileService,
     private router: Router,
     public livefeedList: LivefeedListService,
-    public entireList: EntireListService
+    public entireList: EntireListService,
+    public service: MydataserviceService
   ) { }
 
   ngOnInit() {
@@ -82,6 +86,22 @@ export class SearchBarComponent implements OnInit {
 
             this.feed(profile);
             this.add(profile);
+
+            // save profile action to db
+            const user = this.authService.getUserType();
+            const response = user.includes('_IN') ? 'touchdown_in' : 'touchdown_out';
+            const dateobj = new Date();
+            const B = dateobj.toISOString();
+
+            const target = profile;
+            const source = {
+              action: {
+                user: user,
+                response: response
+              }
+            };
+            const returnedTarget: any = Object.assign(target, source);
+            this.saveProfileAction(returnedTarget);
 
             // fourth route to appropriate profile component
             const route_page = `${component_page}/${profile._id}`;
@@ -163,6 +183,28 @@ export class SearchBarComponent implements OnInit {
       usertype,
       qrcode,
       datetime);
+  }
+
+  saveProfileAction(p: ProfileAction): void {
+    this.service.saveProfileAction(p)
+      .pipe(tap((res: any) => res))
+      .subscribe({
+        next: (res: any) => {
+        },
+        complete: () => {
+          // get Today's Totals using the new API
+          // todaytotal: {
+          //   peopleinside
+          //   visitorinside
+          //   employeeinside
+          //   touristinside
+          //   nonopemployeeinside
+          // }
+          //
+          // then emit the result to socket server
+          // which will broadcast the totals
+        }
+      });
   }
 
 }

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
 import { Profile, ProfileObj } from './profile';
+import { ProfileAction, ProfileActionObj } from './profileaction';
 import { Approvaltemplate } from './approvaltemplate';
 
 const httpOptions = {
@@ -96,6 +97,11 @@ export class MydataserviceService {
   saveProfile(profile: Profile) {
     const url = `${this.api}/profile`;
     return this.http.post(url, new ProfileObj(profile));
+  }
+
+  saveProfileAction(profileaction: ProfileAction) {
+    const url = `${this.api}/profileaction`;
+    return this.http.post(url, new ProfileActionObj(profileaction));
   }
 
   // push status data to vegas
