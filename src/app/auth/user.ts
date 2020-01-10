@@ -5,4 +5,5 @@ export interface User {
   mobileno: string;
   useroffice: string;
   eventcreator: string;
+  enableNotifications: string;
 }

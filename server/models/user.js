@@ -27,6 +27,10 @@ const UserSchema = mongoose.Schema(
         eventcreator: {
             type: String,
             default: ''
+        },
+        enableNotifications : {
+            type: String,
+            default: ''
         }
     },
     {

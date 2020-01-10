@@ -268,8 +268,7 @@ ProfileActionSchema.index({
 ProfileActionSchema.index({
   accessdatetagged: 1,
   accessapproval: 1,
-  distinction: 1,
-  _id: 1
+  distinction: 1
 });
 
 // ProfileSchema.index( { cissinqtext: 'text', cisstoken: 'text' }, { weights: { cissinqtext: 3, cisstoken: 2, 'name.first': 1 }} );
