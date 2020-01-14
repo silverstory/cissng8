@@ -1,14 +1,3 @@
-// 24*60*60000
-
-// { item: 1, billing_date: { $add: [ "$date", 3*24*60*60000 ] } }
-
-// because date is stored in UTC
-
-// then computation must be + 8 hours and + 1 hour
-
-// find it against current datetime
-
-
 const mongoosePaginate = require('mongoose-paginate-v2');
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
@@ -99,55 +88,15 @@ const Notification = mongoose.model('Notification', NotificationSchema);
 // @param {Function} done Node errback style function.
 // exports.method = function() {};
 notificationsPaginated = async (page, limit, newestFirst) => {
-  // try {
-  //   // default function is "paginate"
-  //   const result = await Profile.paginate({
-  //     query: {
-  //       accessapproval: findText
-  //     },
-  //     paginatedField: 'accessdatetagged',
-  //     limit: parseInt(limit),
-  //     sortAscending: false
-  //   });
-  //   return await result;
-  // } catch (error) {
-  //   console.log(error);
-  //   return error;
-  // }
-
-  // set date range
-  let start = new Date();
-  start.setHours(0, 0, 0, 0);
-
-  let end = new Date();
-  end.setHours(23, 59, 59, 999);
-
-  // db.posts.find({created_on: {$gte: start, $lt: end}});
 
   let query = {};
-  let qry = {
-    "action.datetime": {
-      $gte: start,
-      $lt: end
-    },
-    distinction: distinction
-  };
-
-  if (distinction.includes('NONE')) {
-    qry = {
-      "action.datetime": {
-        $gte: start,
-        $lt: end
-      }
-    };
-  }
 
   query = qry;
   const isTrueSet = (newestFirst === 'true');
   const sortOrder = isTrueSet === true ? -1 : 1;
   const options = {
     sort: {
-      "action.datetime": sortOrder
+      datetimesent: sortOrder
     },
     lean: true,
     leanWithId: true,
@@ -155,24 +104,19 @@ notificationsPaginated = async (page, limit, newestFirst) => {
     limit: parseInt(limit)
   };
 
-  let result = await ProfileAction.paginate(query, options);
+  let result = await Notification.paginate(query, options);
   return result;
 }
 
-profileActionSearchByName = async (firstname, lastname, page, limit) => {
+notificationSearchByUserType = async (usertype, page, limit, newestFirst) => {
   const query = {
-    "name.first": {
-      $regex: new RegExp(firstname, "i")
-    },
-    "name.last": {
-      $regex: new RegExp(lastname, "i")
-    }
+    usertype: usertype
   };
-  const sortOrder = 1;
+  const isTrueSet = (newestFirst === 'true');
+  const sortOrder = isTrueSet === true ? -1 : 1;
   const options = {
     sort: {
-      "name.last": sortOrder,
-      "name.first": sortOrder
+      datetimesent: sortOrder
     },
     lean: true,
     leanWithId: true,
@@ -180,7 +124,7 @@ profileActionSearchByName = async (firstname, lastname, page, limit) => {
     limit: parseInt(limit)
   };
 
-  let result = await ProfileAction.paginate(query, options);
+  let result = await Notification.paginate(query, options);
   return result;
 }
 
@@ -194,7 +138,7 @@ profileActionSearchByName = async (firstname, lastname, page, limit) => {
 // Update: For exact match, you should use the regex "name": /^Andrew$/i. Thanks to Yannick L.
 
 module.exports = {
-  ProfileAction,
-  profileActionsPaginated,
-  profileActionSearchByName
+  Notification,
+  notificationsPaginated,
+  notificationSearchByUserType
 }

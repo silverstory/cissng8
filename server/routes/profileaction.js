@@ -15,7 +15,7 @@ router.get('/profileaction/namefinder/', passport.authenticate('jwt',{session:fa
 
 // Add CISS Profile
 router.post('/profileaction', passport.authenticate('jwt',{session:false}), async (req, res, next) => {
-  profileActionService.postProfileAction(req, res, next);
+  await profileActionService.postProfileAction(req, res, next);
 });
 
 // heroes

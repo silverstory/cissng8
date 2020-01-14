@@ -68,6 +68,8 @@ const distinction = require('./routes/distinction');
 app.use('/api', distinction);
 const profileaction = require('./routes/profileaction');
 app.use('/api', profileaction);
+const notification = require('./routes/notification');
+app.use('/api', notification);
 
 // try to implement this line if it'll solve resource not found if :3000/{path}
 // app.get('*', (req, res) => {
