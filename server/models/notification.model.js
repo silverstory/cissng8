@@ -19,9 +19,9 @@ const NotificationSchema = new Schema({
     required: [true, 'Username is required'],
     index: true
   },
-  number: {
+  mobile: {
     type: String,
-    required: [true, 'Number is required'],
+    required: [true, 'Mobile is required'],
     index: true
   },
   message: {
@@ -40,20 +40,20 @@ NotificationSchema.index({
   distinction: 'text',
   username: 'text',
   usertype: 'text',
-  number: 'text'
+  mobile: 'text'
 }, {
   weights: {
     distinction: 4,
     username: 3,
     usertype: 2,
-    number: 1
+    mobile: 1
   }
 });
 NotificationSchema.index({
   distinction: 1,
   username: 1,
   usertype: 1,
-  number,
+  mobile: 1,
   _id: 1
 });
 

@@ -52,12 +52,10 @@ const ProfileActionSchema = new Schema({
     type: String
   },
   cisstoken: {
-    type: String,
-    unique: true
+    type: String
   },
   rfid: {
-    type: String,
-    unique: true
+    type: String
   },
   photothumbnailurl: {
     type: String,

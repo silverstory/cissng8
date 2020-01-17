@@ -34,6 +34,7 @@ const postProfileAction = async (req, res, next) => {
   // determine the base_url to be used based from
   // `distinction` and save it to a const [base_url]
   const _profileaction = req.body;
+  delete _profileaction._id;
 
   try {
 

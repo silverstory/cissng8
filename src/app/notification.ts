@@ -3,7 +3,7 @@ export interface Notification {
   distinction: String;
   usertype: String;
   username: String;
-  number: String;
+  mobile: String;
   message: String;
   datetimesent: Date;
 }
@@ -13,7 +13,7 @@ export class NotificationObj implements Notification {
   distinction: String;
   usertype: String;
   username: String;
-  number: String;
+  mobile: String;
   message: String;
   datetimesent: Date;
 
