@@ -70,6 +70,8 @@ const profileaction = require('./routes/profileaction');
 app.use('/api', profileaction);
 const notification = require('./routes/notification');
 app.use('/api', notification);
+const location = require('./routes/location');
+app.use('/api', location);
 
 // try to implement this line if it'll solve resource not found if :3000/{path}
 // app.get('*', (req, res) => {
