@@ -1,5 +1,7 @@
 node_modules
 server/node_modules
+yarn.lock
+server/yarn.lock
 secrets
 npm-debug.log
 Dockerfile*
