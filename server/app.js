@@ -72,6 +72,8 @@ const notification = require('./routes/notification');
 app.use('/api', notification);
 const location = require('./routes/location');
 app.use('/api', location);
+const notifygroup = require('./routes/notifygroup');
+app.use('/api', notifygroup);
 
 // try to implement this line if it'll solve resource not found if :3000/{path}
 // app.get('*', (req, res) => {

@@ -1,0 +1,115 @@
+Send SMS text to G2, PG if they have approvals
+But only send SMS to them if they have not been sent a SMS from CISS in the last one hour.
+
+These means you need to create a collection in CISS for the logging of sent SMS to users circle “users in the approval workflow” and call it notifications
+
+_id
+distinction
+usertype
+username
+mobile
+message
+datetimesent
+
+Create collections:
+
+notifygroup
+
+Given the new step value, use this collection to determine if a particular user for a particular distinction is able to receive an SMS notification
+
+_id
+distinction
+usertype
+username
+mobile
+datemodified
+
+This means users can use different numbers for different distinction or sources of request
+
+Finally add another table for recording profiles that needs approvals
+
+name it unverifiedrequest
+
+The documents in this collection will supply the information needed to determine whether a user has already been sent an SMS during the past one hour or not
+
+profiles fields
++
+usertype
+distinction
+username - approved by / the actual approver / will have value after the approval
+message - the exact message that has been sent / will have value after approval
+acted 'Yes/No' default No
+dateacted - date of approval / will have value after approval
+datecreated
+
+so every-time an approval has been performed, you must check if the next approver's usertype and distinction exists in the notify_group collection.
+
+only save to unverifiedrequest collection if nextstep's usertype and distinction exists in the notify_group collection
+
+for this, add a block of code that checks if e.g. 'PG or G2' is the next step for a particular verified/acted profile.
+
+If so, then create a record in the unverifiedrequest collection and perform the searching on that collection every-time setInterval() fires.
+
+the unverifiedrequest collection will be your reference on who to send sms notifications.
+
+You do not need to send for each document, you just need to check if G2 and PG has something to approve in that particular hour. Note that only one (1) sms for G2 or PG per hour.
+
+on set interval tick, iterate from each document in notifygroup collection
+
+then see if an sms has been sent to the approver a hour ago from unverifiedrequest collection
+
+why start with notifygroup collection? because you only need to send 1 sms per usertype per hour
+
+search criteria for finding if already sent an hour ago
+
+if ( distinction = ... && usertype = ... && current_time greater than > ( datetimsent plus (+) 3 hours )
+
+Then send SMS notification
+
+The SMS Notification sending will run every hour via setInterval() living in node not in angular
+
+
+
+24*60*60000
+
+{ item: 1, billing_date: { $add: [ "$date", 3*24*60*60000 ] } }
+
+because date is stored in UTC
+
+then computation must be + 8 hours and + 1 hour
+
+find it against current datetime
+
+actual query to implement along with the above query
+
+notificationsPaginated = async (page, limit, newestFirst) => {
+
+  // set date range
+  let start = new Date();
+  start.setHours(0, 0, 0, 0);
+
+  let end = new Date();
+  end.setHours(23, 59, 59, 999);
+
+  // db.posts.find({created_on: {$gte: start, $lt: end}});
+
+  let query = {};
+  let qry = {
+    "action.datetime": {
+      $gte: start,
+      $lt: end
+    },
+    distinction: distinction
+  };
+
+  if (distinction.includes('NONE')) {
+    qry = {
+      "action.datetime": {
+        $gte: start,
+        $lt: end
+      }
+    };
+  }
+
+  query = qry;
+  const isTrueSet = (newestFirst === 'true');
