@@ -35,12 +35,25 @@ The documents in this collection will supply the information needed to determine
 profiles fields
 +
 usertype
-distinction
 username - approved by / the actual approver / will have value after the approval
 message - the exact message that has been sent / will have value after approval
 acted 'Yes/No' default No
 dateacted - date of approval / will have value after approval
 datecreated
+
+unverifiedrequest API's
+
+getall
+
+getuserunacted
+
+post
+  - adding new property to object
+  - var obj = {
+      key1: value1,
+      key2: value2
+    };
+    obj.key3 = value3;
 
 so every-time an approval has been performed, you must check if the next approver's usertype and distinction exists in the notify_group collection.
 
@@ -56,18 +69,34 @@ You do not need to send for each document, you just need to check if G2 and PG h
 
 on set interval tick, iterate from each document in notifygroup collection
 
-then see if an sms has been sent to the approver a hour ago from unverifiedrequest collection
+then see if there are still unacted documents for an approver a hour ago from unverifiedrequest collection
 
 why start with notifygroup collection? because you only need to send 1 sms per usertype per hour
 
-search criteria for finding if already sent an hour ago
+search criteria for finding if the user has anything to act on
 
-if ( distinction = ... && usertype = ... && current_time greater than > ( datetimsent plus (+) 3 hours )
+if ( usertype = ... && acted = 'No' )
 
 Then send SMS notification
 
 The SMS Notification sending will run every hour via setInterval() living in node not in angular
 
+//// //// //// //// //// //// //// //// //// //// //// ////
+
+find if mongo date is an hour less than the current time
+
+db.getCollection('distinctions').find({ $and:[
+    {
+    "datecreated": {
+        $gte: new Date(ISODate().getTime() - 1000 * 60 * 60)
+    }},
+    {
+    "datecreated": {
+        $lte: ISODate()
+    }}
+]})
+
+//// //// //// //// //// //// //// //// //// //// //// ////
 
 
 24*60*60000

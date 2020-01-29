@@ -81,10 +81,10 @@ export class AccessApprovalDialogComponent implements OnInit {
   public usertemplate: Approvaltemplate;
 
   constructor(public service: MydataserviceService,
-              public dialog: MatDialog,
-              public dialogRef: MatDialogRef<AccessApprovalDialogComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: DialogData,
-              private authService: AuthService) { }
+    public dialog: MatDialog,
+    public dialogRef: MatDialogRef<AccessApprovalDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData,
+    private authService: AuthService) { }
 
   goToLink() {
     const array: Array<any> = [this.data.freezedProfile.cisstoken];

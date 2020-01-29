@@ -24,6 +24,8 @@ import {
   fadeInThenOut, growInShrinkOut, swingInAndOut
 } from '../../triggers';
 
+import { ProfileAction } from '../profileaction';
+
 export interface Event {
   code: string;
 }
@@ -223,6 +225,28 @@ export class AccessApprovalComponent implements OnInit {
       await this.updateBadges();
     }, 1000);
 
+  }
+
+  saveProfileAction(p: ProfileAction): void {
+    this.service.saveProfileAction(p)
+      .pipe(tap((res: any) => res))
+      .subscribe({
+        next: (res: any) => {
+        },
+        complete: () => {
+          // get Today's Totals using the new API
+          // todaytotal: {
+          //   peopleinside
+          //   visitorinside
+          //   employeeinside
+          //   touristinside
+          //   nonopemployeeinside
+          // }
+          //
+          // then emit the result to socket server
+          // which will broadcast the totals
+        }
+      });
   }
 
   async changeStatColor() {
@@ -648,6 +672,23 @@ export class AccessApprovalComponent implements OnInit {
           }
         },
         complete: () => {
+
+          // save profile action to db
+          const user = this.authService.getUserType();
+          const response = 'update_profile';
+          const dateobj = new Date();
+          const B = dateobj.toISOString();
+
+          const target = this.profile;
+          const source = {
+            action: {
+              user: user,
+              response: response
+            }
+          };
+          const returnedTarget: any = Object.assign(target, source);
+          this.saveProfileAction(returnedTarget);
+
           // refresh infin8 list
           this.refreshInfin8List();
           this.updateStatusBadges();
