@@ -74,6 +74,8 @@ const location = require('./routes/location');
 app.use('/api', location);
 const notifygroup = require('./routes/notifygroup');
 app.use('/api', notifygroup);
+const unverifiedrequest = require('./routes/unverifiedrequest');
+app.use('/api', unverifiedrequest);
 
 // try to implement this line if it'll solve resource not found if :3000/{path}
 // app.get('*', (req, res) => {
