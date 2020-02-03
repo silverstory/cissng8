@@ -18,6 +18,10 @@ router.post('/notifygroup', passport.authenticate('jwt',{session:false}), async 
   await notifygroupService.postNotifyGroup(req, res, next);
 });
 
+router.put('/notifygroup/:id', passport.authenticate('jwt',{session:false}), async (req, res, next) => {
+  await notifygroupService.putNotifyGroup(req, res, next);
+});
+
 // heroes
 
 module.exports = router;

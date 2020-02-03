@@ -26,9 +26,9 @@ const getNotifyGroupByTypeDist = async (usertype, distinction) => {
         .find({
           usertype: usertype,
           distinction: distinction
-    }, {
-      _id: 0
-    }).limit(1).cursor();
+        }, {
+          _id: 0
+        }).limit(1).cursor();
     notifygroup = await cursor.next();
     if (notifygroup != null) {
       return await notifygroup;
@@ -85,8 +85,31 @@ const postNotifyGroup = async (req, res, next) => {
   }
 }
 
+const putNotifyGroup = async (req, res, next) => {
+  const _notifygroup = req.body;
+  try {
+    // simply update the record
+    const updated_notifygroup = await NotifyGroup.NotifyGroup.findByIdAndUpdate({
+      _id: req.params.id
+    }, _notifygroup, {
+      new: true
+    });
+    const notifygroup = await NotifyGroup.NotifyGroup.findById({
+      _id: updated_notifygroup._id
+    });
+    return await res.json(notifygroup);
+  }
+  // don't forget to include error handling and
+  // if error, send an error response as well
+  catch (error) {
+    console.log("Error: " + error);
+    return await res.send("Error: " + error);
+  }
+}
+
 module.exports = {
   postNotifyGroup,
+  putNotifyGroup,
   allNotifyGroups,
   getNotifyGroupByTypeDist,
   getNotifyGroupByTypeDistAPI

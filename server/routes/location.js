@@ -18,6 +18,10 @@ router.post('/location', passport.authenticate('jwt',{session:false}), async (re
   await locationService.postLocation(req, res, next);
 });
 
+router.put('/location/:id', passport.authenticate('jwt',{session:false}), async (req, res, next) => {
+  await locationService.putLocation(req, res, next);
+});
+
 // heroes
 
 module.exports = router;

@@ -52,8 +52,31 @@ const postLocation = async (req, res, next) => {
   }
 }
 
+const putLocation = async (req, res, next) => {
+  const _location = req.body;
+  try {
+    // simply update the record
+    const updated_location = await Location.Location.findByIdAndUpdate({
+      _id: req.params.id
+    }, _location, {
+      new: true
+    });
+    const location = await Location.Location.findById({
+      _id: updated_location._id
+    });
+    return await res.json(location);
+  }
+  // don't forget to include error handling and
+  // if error, send an error response as well
+  catch (error) {
+    console.log("Error: " + error);
+    return await res.send("Error: " + error);
+  }
+}
+
 module.exports = {
   postLocation,
+  putLocation,
   allLocations,
   getLocationByName
 };
