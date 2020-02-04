@@ -65,6 +65,8 @@ If so, then create a record in the unverifiedrequest collection and perform the 
 
 the unverifiedrequest collection will be your reference on who to send sms notifications.
 
+** setInterval notes starts here
+
 You do not need to send for each document, you just need to check if G2 and PG has something to approve in that particular hour. Note that only one (1) sms for G2 or PG per hour.
 
 on set interval tick, iterate from each document in notifygroup collection

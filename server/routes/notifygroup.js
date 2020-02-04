@@ -4,12 +4,12 @@ const passport = require('passport');
 const notifygroupService = require('../services/notifygroup.service');
 
 // All notify group
-router.get('/notifygroup/allnotifgrp/', passport.authenticate('jwt',{session:false}), async (req, res, next) => {
+router.get('/notifygroup/allnotifgrp', passport.authenticate('jwt',{session:false}), async (req, res, next) => {
   await notifygroupService.allNotifyGroups(req, res, next);
 });
 
-// Search By Name
-router.get('/notifygroup/bytypedist/', passport.authenticate('jwt',{session:false}), async (req, res, next) => {
+// Search by Type Dist
+router.post('/notifygroup/bytypedist', passport.authenticate('jwt',{session:false}), async (req, res, next) => {
   await notifygroupService.getNotifyGroupByTypeDistAPI(req, res, next);
 });
 

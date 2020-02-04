@@ -104,6 +104,16 @@ export class MydataserviceService {
     return this.http.post(url, new ProfileActionObj(profileaction));
   }
 
+  getNotifyGroup(typedist: any) {
+    const url = `${this.api}/notifygroup/bytypedist`;
+    return this.http.post(url, typedist);
+  }
+
+  saveUnverifiedRequest(profileaction: ProfileAction) {
+    const url = `${this.api}/profileaction`;
+    return this.http.post(url, new ProfileActionObj(profileaction));
+  }
+
   // push status data to vegas
   async issueEventApproval(
     code: String,

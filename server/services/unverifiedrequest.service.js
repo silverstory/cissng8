@@ -17,6 +17,41 @@ const allUnverifiedRequests = async (req, res, next) => {
   }
 }
 
+// distinct
+const getDistinctUserUnacted = async () => {
+  try {
+    let usertypes = [];
+    usertypes = await
+      UnverifiedRequest
+        .UnverifiedRequest
+        .distinct('usertype', { 'acted': 'No' });
+    // if (!Array.isArray(usertypes) || !usertypes.length) {
+    //   // array does not exist, is not an array, or is empty
+    //   // ⇒ do not attempt to process array
+    // }
+    return usertypes;
+  } catch (error) {
+    console.log("Error: " + error);
+    return [];
+  }
+}
+
+const getDistinctUserUnactedAPI = async (req, res, next) => {
+  try {
+    let usertypes = [];
+    usertypes = await getDistinctUserUnacted();
+    // if (!Array.isArray(usertypes) || !usertypes.length) {
+    //   // array does not exist, is not an array, or is empty
+    //   // ⇒ do not attempt to process array
+    // }
+    return await res.json(usertypes);
+  } catch (error) {
+    console.log("Error: " + error);
+    return await res.send("Error: " + error);
+  }
+}
+// end distinct
+
 const getUserUnacted = async (usertype) => {
   try {
     let unverifiedrequest = null;
@@ -111,6 +146,27 @@ const findUnactedProfile = async (
     return await null;
   }
 }
+
+const findUnactedProfileAPI = async (req, res, next) => {
+  try {
+    const _unverifiedrequest = req.body;
+    let unverifiedrequest = null;
+    unverifiedrequest = await
+      findUnactedProfile(
+        _unverifiedrequest.profileid,
+        _unverifiedrequest.distinction,
+        _unverifiedrequest.usertype,
+      );
+    if (unverifiedrequest != null) {
+      return await res.json(unverifiedrequest);
+    } else {
+      return await res.send(null);
+    }
+  } catch (error) {
+    console.log("Error: " + error);
+    return await res.send("Error: " + error);
+  }
+}
 //
 
 const putUnverifiedRequest = async (req, res, next) => {
@@ -150,7 +206,10 @@ const putUnverifiedRequest = async (req, res, next) => {
 
 module.exports = {
   postUnverifiedRequest,
+  getDistinctUserUnacted,
+  getDistinctUserUnactedAPI,
   findUnactedProfile,
+  findUnactedProfileAPI,
   putUnverifiedRequest,
   allUnverifiedRequests,
   getUserUnacted,

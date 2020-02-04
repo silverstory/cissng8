@@ -44,10 +44,11 @@ const getNotifyGroupByTypeDist = async (usertype, distinction) => {
 const getNotifyGroupByTypeDistAPI = async (req, res, next) => {
   try {
     let notifygroup = null;
+    const typedist = req.body;
     notifygroup = await
-      findNotifyGroupByTypeDist(
-        req.params.usertype,
-        req.params.distinction
+      getNotifyGroupByTypeDist(
+        typedist.usertype,
+        typedist.distinction
       );
     if (notifygroup != null) {
       return await res.json(notifygroup);

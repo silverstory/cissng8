@@ -25,6 +25,8 @@ import {
 } from '../../triggers';
 
 import { ProfileAction } from '../profileaction';
+import { NotifyGroup } from '../notifygroup';
+import { UnverifiedRequest } from '../unverifiedrequest';
 
 export interface Event {
   code: string;
@@ -107,6 +109,8 @@ export class AccessApprovalComponent implements OnInit {
     'EVENT-GUEST',
     'EVENT-VIP'
   ];
+
+  private api = '/api';
 
   public usertemplate: Approvaltemplate;
 
@@ -671,7 +675,7 @@ export class AccessApprovalComponent implements OnInit {
  You may claim your new OP ID / Malacanang Control ID from your respective ID Distribution Office after 24 hours.`);
           }
         },
-        complete: () => {
+        complete: async () => {
 
           // save profile action to db
           const user = this.authService.getUserType();
@@ -688,6 +692,39 @@ export class AccessApprovalComponent implements OnInit {
           };
           const returnedTarget: any = Object.assign(target, source);
           this.saveProfileAction(returnedTarget);
+
+          // Create an UnverifiedRequest document
+
+          // check if the next approver exists in the
+          // notifygroup collection using NotifyGroup API
+          const typedist = {
+            usertype: user,
+            distinction: target.distinction
+          };
+          const url = `${this.api}/notifygroup/bytypedist`;
+          const notifygroup: NotifyGroup = await this.http.post<NotifyGroup>(url, typedist).toPromise();
+
+          // save transformed profile to unverifiedrequest collection
+          if (notifygroup !== null) {
+
+            // check if a profileid + distinction + usertype
+            // is present in the unverifiedrequests using
+            // unverified/findunacted API and if present,
+            // use PUT (update) API, hence
+
+            // use POST (create) API
+
+
+            // transform object to unverifiedrequest object
+            // - adding new property to object
+            // - var obj = {
+            //     key1: value1,
+            //     key2: value2
+            //   };
+            //   obj.key3 = value3;
+          }
+
+          // end Create an UnverifiedRequest document
 
           // refresh infin8 list
           this.refreshInfin8List();
@@ -710,6 +747,18 @@ export class AccessApprovalComponent implements OnInit {
       });
     }
   }
+
+  // findNotifyGroup(n: NotifyGroup): void {
+  //   this.service.getNotifyGroup(n)
+  //     .pipe(tap((res: any) => res))
+  //     .subscribe({
+  //       next: (res: any) => {
+  //       },
+  //       complete: () => {
+  //         //
+  //       }
+  //     });
+  // }
 
   OnMatCardClickEvent(item: any): void {
     // On approval component mat card click, add checks if
