@@ -556,7 +556,7 @@ export class AccessApprovalComponent implements OnInit {
       }
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe(async (result) => {
       // console.log('The dialog was closed ', result);
       // result.action here
       switch (result.action) {
@@ -569,13 +569,13 @@ export class AccessApprovalComponent implements OnInit {
           this.profile.accessapproval = 'Provisional';
           this.profile.nextstep = this.usertemplate.tosaveonprofilesnextstep;
           // update db with this.profile
+          await this.actOnRequest();
           this.saveProfile();
           break;
         case 'Deny Request':
           // set accessaproval to Denied
           this.profile = this.service.unfreezeProfile(p);
           this.profile.accessapproval = 'Denied';
-          this.profile.nextstep = 0;
           // if event, update vegas guest status
           if (this.profile.distinction.includes('EVENT')) {
             let msgToVegas = 'Denied';
@@ -590,6 +590,8 @@ export class AccessApprovalComponent implements OnInit {
                 this.profile.distinction);
             console.log(res.success);
           }
+          await this.actOnRequest();
+          this.profile.nextstep = 0;
           // update db with this.profile
           this.saveProfile();
           break;
@@ -600,7 +602,6 @@ export class AccessApprovalComponent implements OnInit {
           // set accessaproval to Approved
           this.profile.accessapproval = 'Approved';
           this.profile.recordstatus = 'ACTIVE';
-          this.profile.nextstep = this.usertemplate.tosaveonprofilesnextstep;
           // if event, update vegas guest status
           if (this.profile.distinction.includes('EVENT')) {
             let msgToVegas = 'Approved';
@@ -616,6 +617,8 @@ export class AccessApprovalComponent implements OnInit {
                 this.profile.distinction);
             console.log(res.success);
           }
+          await this.actOnRequest();
+          this.profile.nextstep = this.usertemplate.tosaveonprofilesnextstep;
           // update db with this.profile
           this.saveProfile();
           break;
@@ -625,6 +628,7 @@ export class AccessApprovalComponent implements OnInit {
           this.profile.access = this.profile.proviaccess;
           // set accessaproval to Printed
           this.profile.accessapproval = 'Printed';
+          await this.actOnRequest();
           this.profile.nextstep = this.usertemplate.tosaveonprofilesnextstep;
           // update db with this.profile
           this.saveProfile();
@@ -635,10 +639,11 @@ export class AccessApprovalComponent implements OnInit {
           this.profile.access = this.profile.proviaccess;
           // set accessaproval to Distributed
           this.profile.accessapproval = 'Distributed';
-          this.profile.nextstep = this.usertemplate.tosaveonprofilesnextstep;
           if (!p.distinction.includes('OPVISITOR')) {
             this.profile.recordstatus = 'ACTIVE';
           }
+          await this.actOnRequest();
+          this.profile.nextstep = this.usertemplate.tosaveonprofilesnextstep;
           // update db with this.profile
           this.saveProfile();
           break;
@@ -650,6 +655,39 @@ export class AccessApprovalComponent implements OnInit {
           break;
       }
     });
+  }
+
+  async actOnRequest() {
+    // get usertype
+    const usertype = this.authService.getUserType();
+    // then update unverifiedrequest by supplying
+    // profileid + distinction + usertype
+    // use PUT (update) API
+    // use url: /unverified/update
+    // with this object;
+    const measure = {
+      profileid: this.profile.profileid,
+      distinction: this.profile.distinction,
+      usertype: usertype
+    };
+    // find the targeted profile in unverifiedrequests
+    const path = `${this.api}/unverified/findunacted`;
+    const unverifiedrequest: UnverifiedRequest = await this.http.post<UnverifiedRequest>(path, measure).toPromise();
+    if (unverifiedrequest !== null) {
+      // prepare transformation
+      // const usertype = this.authService.getUserType();
+      const username = this.authService.getUserName();
+      // const dateobj = new Date();
+      // const B = dateobj.toISOString();
+      const B = new Date();
+      // transform object to unverifiedrequest object
+      unverifiedrequest.username = username;
+      unverifiedrequest.acted = 'Yes';
+      unverifiedrequest.dateacted = B;
+      // save to document
+      const update_url = `${this.api}/unverified/update/:${unverifiedrequest._id}`;
+      const put_unverifiedrequest: UnverifiedRequest = await this.http.put<UnverifiedRequest>(update_url, unverifiedrequest).toPromise();
+    }
   }
 
   saveProfile(): void {
@@ -707,13 +745,8 @@ export class AccessApprovalComponent implements OnInit {
           // save transformed profile to unverifiedrequest collection
           if (notifygroup !== null) {
 
-            // check if a profileid + distinction + usertype
-            // is present in the unverifiedrequests using
-            // unverified/findunacted API and if present,
-            // use PUT (update) API, hence
-
+            // Create an unverifiedrequest document
             // use POST (create) API
-
 
             // transform object to unverifiedrequest object
             // - adding new property to object
@@ -722,6 +755,9 @@ export class AccessApprovalComponent implements OnInit {
             //     key2: value2
             //   };
             //   obj.key3 = value3;
+
+            // unverifiedrequest.message = notifygroup.message
+
           }
 
           // end Create an UnverifiedRequest document

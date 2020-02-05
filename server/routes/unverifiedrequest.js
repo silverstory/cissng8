@@ -28,7 +28,7 @@ router.post('/unverified', passport.authenticate('jwt',{session:false}), async (
   await unverifiedrequestService.postUnverifiedRequest(req, res, next);
 });
 
-router.put('/unverified/:profileid/:distinction/:usertype', passport.authenticate('jwt',{session:false}), async (req, res, next) => {
+router.put('/unverified/:id', passport.authenticate('jwt',{session:false}), async (req, res, next) => {
   await unverifiedrequestService.putUnverifiedRequest(req, res, next);
 });
 // heroes

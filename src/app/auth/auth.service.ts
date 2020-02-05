@@ -31,6 +31,8 @@ export class AuthService {
 
   public _userType = new BehaviorSubject<string>(''); // {1}
 
+  public _userName = new BehaviorSubject<string>(''); // {1}
+
   public collectFailedRequest(request): void {
     this.cachedRequests.push(request);
   }
@@ -43,6 +45,12 @@ export class AuthService {
     // this.loggedIn.next(tokenNotExpired('token'));
     this._userType.next(this.getUserType());
     return this._userType.asObservable(); // {2}
+  }
+
+  get userName() {
+    // this.loggedIn.next(tokenNotExpired('token'));
+    this._userName.next(this.getUserName());
+    return this._userName.asObservable(); // {2}
   }
 
   get isLoggedIn() {
@@ -115,7 +123,7 @@ export class AuthService {
     return localStorage.getItem('token');
   }
 
-  private getUserName(): string {
+  public getUserName(): string {
     return localStorage.getItem('userName');
   }
 

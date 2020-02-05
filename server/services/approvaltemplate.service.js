@@ -18,12 +18,12 @@ const getApprovaltemplateByUserDist = async (req, res, next) => {
   try {
     const _approvaltemplate = req.body;
     let approvaltemplate = null;
-    const cursor = await Approvaltemplate.Approvaltemplate.find({distinction: _approvaltemplate.distinction, usertype: _approvaltemplate.usertype}, { _id: 0 }).limit(1).cursor();
+    const cursor = await Approvaltemplate.Approvaltemplate.find({ distinction: _approvaltemplate.distinction, usertype: _approvaltemplate.usertype }, { _id: 0 }).limit(1).cursor();
     approvaltemplate = await cursor.next();
     if (approvaltemplate != null) {
-      return await res.json( approvaltemplate );
+      return await res.json(approvaltemplate);
     } else {
-      return await res.json( dummytemplate );
+      return await res.json(dummytemplate);
     }
   } catch (error) {
     console.log("Error: " + error);
@@ -31,19 +31,39 @@ const getApprovaltemplateByUserDist = async (req, res, next) => {
   }
 }
 
+// find user by step distinction
+const getApprovaltemplateByStepDist = async (req, res, next) => {
+  try {
+    const measure = req.body;
+    let approvaltemplate = null;
+    const cursor = await Approvaltemplate.Approvaltemplate.find({ step: measure.step, distinction: measure.distinction }, { _id: 0 }).limit(1).cursor();
+    approvaltemplate = await cursor.next();
+    if (approvaltemplate != null) {
+      return await res.json(approvaltemplate);
+    } else {
+      return await res.json(null);
+    }
+  } catch (error) {
+    console.log("Error: " + error);
+    return await res.json(null);
+  }
+}
+// end find user
+
 const findTemplatesByDistinction = async (req, res, next) => {
   try {
     const result = await
       Approvaltemplate
         .findTemplatesByDistinction(req.query.distinction, req.query.page, req.query.limit);
-    return await res.json( result );
+    return await res.json(result);
   } catch (error) {
     console.log("Error: " + error);
-    return res.send( "Error: " + error );
+    return res.send("Error: " + error);
   }
 }
 
 module.exports = {
   getApprovaltemplateByUserDist,
+  getApprovaltemplateByStepDist,
   findTemplatesByDistinction
 };

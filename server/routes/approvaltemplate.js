@@ -8,6 +8,11 @@ router.post('/approvaltemplate', passport.authenticate('jwt', { session: false }
   approvaltemplateService.getApprovaltemplateByUserDist(req, res, next);
 });
 
+// POST by Step, Distinction
+router.post('/approvaltemplate/usertype', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
+  approvaltemplateService.getApprovaltemplateByStepDist(req, res, next);
+});
+
 // GET by Distinction
 router.get('/findapprovaltemplates', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
   approvaltemplateService.findTemplatesByDistinction(req, res, next);

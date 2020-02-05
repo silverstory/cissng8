@@ -17,7 +17,7 @@ const allUnverifiedRequests = async (req, res, next) => {
   }
 }
 
-// distinct
+// for setInterval
 const getDistinctUserUnacted = async () => {
   try {
     let usertypes = [];
@@ -36,6 +36,7 @@ const getDistinctUserUnacted = async () => {
   }
 }
 
+// API for setInterval
 const getDistinctUserUnactedAPI = async (req, res, next) => {
   try {
     let usertypes = [];
@@ -52,6 +53,7 @@ const getDistinctUserUnactedAPI = async (req, res, next) => {
 }
 // end distinct
 
+// just to check if a user has obligations
 const getUserUnacted = async (usertype) => {
   try {
     let unverifiedrequest = null;
@@ -76,6 +78,7 @@ const getUserUnacted = async (usertype) => {
   }
 }
 
+// API just to check if a user has obligations
 const getUserUnactedAPI = async (req, res, next) => {
   try {
     let unverifiedrequest = null;
@@ -133,7 +136,7 @@ const findUnactedProfile = async (
           distinction: distinction,
           usertype: usertype,
           acted: 'No'
-        }, '_id') // include only _id property in result
+        })
         .limit(1).cursor();
     unverifiedrequest = await cursor.next();
     if (unverifiedrequest != null) {
@@ -149,13 +152,13 @@ const findUnactedProfile = async (
 
 const findUnactedProfileAPI = async (req, res, next) => {
   try {
-    const _unverifiedrequest = req.body;
+    const measure = req.body;
     let unverifiedrequest = null;
     unverifiedrequest = await
       findUnactedProfile(
-        _unverifiedrequest.profileid,
-        _unverifiedrequest.distinction,
-        _unverifiedrequest.usertype,
+        measure.profileid,
+        measure.distinction,
+        measure.usertype,
       );
     if (unverifiedrequest != null) {
       return await res.json(unverifiedrequest);
@@ -169,16 +172,16 @@ const findUnactedProfileAPI = async (req, res, next) => {
 }
 //
 
-const putUnverifiedRequest = async (req, res, next) => {
-  const _unverifiedrequest = req.body;
+const old_putUnverifiedRequest = async (req, res, next) => {
+  const measure = req.body;
   try {
     // find document first
     let find_unverifiedrequest = null;
     find_unverifiedrequest = await
       findUnactedProfile(
-        req.params.profileid,
-        req.params.distinction,
-        req.params.usertype);
+        measure.profileid,
+        measure.distinction,
+        measure.usertype);
     if (find_unverifiedrequest != null) {
       // simply update the record
       const updated_unverifiedrequest = await UnverifiedRequest
@@ -203,6 +206,30 @@ const putUnverifiedRequest = async (req, res, next) => {
     return await res.send("Error: " + error);
   }
 }
+
+// new PUT
+const putUnverifiedRequest = async (req, res, next) => {
+  const _unverifiedrequest = req.body;
+  try {
+    // simply update the record
+    const updated_unverifiedrequest = await UnverifiedRequest.UnverifiedRequest.findByIdAndUpdate({
+      _id: req.params.id
+    }, _unverifiedrequest, {
+      new: true
+    });
+    const unverifiedrequest = await UnverifiedRequest.UnverifiedRequest.findById({
+      _id: updated_unverifiedrequest._id
+    });
+    return await res.json(unverifiedrequest);
+  }
+  // don't forget to include error handling and
+  // if error, send an error response as well
+  catch (error) {
+    console.log("Error: " + error);
+    return await res.send("Error: " + error);
+  }
+}
+// end new PUT
 
 module.exports = {
   postUnverifiedRequest,
