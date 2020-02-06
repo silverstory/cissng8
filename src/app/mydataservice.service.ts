@@ -4,6 +4,7 @@ import { BehaviorSubject } from 'rxjs';
 import { Profile, ProfileObj } from './profile';
 import { ProfileAction, ProfileActionObj } from './profileaction';
 import { Approvaltemplate } from './approvaltemplate';
+import { UnverifiedRequest, UnverifiedRequestObj } from './unverifiedrequest';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -109,9 +110,9 @@ export class MydataserviceService {
     return this.http.post(url, typedist);
   }
 
-  saveUnverifiedRequest(profileaction: ProfileAction) {
-    const url = `${this.api}/profileaction`;
-    return this.http.post(url, new ProfileActionObj(profileaction));
+  saveUnverifiedRequest(unverifiedrequest: UnverifiedRequest) {
+    const url = `${this.api}/unverified`;
+    return this.http.post(url, new UnverifiedRequestObj(unverifiedrequest));
   }
 
   // push status data to vegas
@@ -323,7 +324,7 @@ export class MydataserviceService {
         timeofappointment: visitor.timeofappointment,
         visitstatus: visitor.visitstatus
       } : {},
-      event: event !== undefined ? Object.freeze({
+      event: event !== undefined ? {
         eventcode: event.eventcode,
         guestaffiliation: event.guestaffiliation,
         eventid: event.eventid,
@@ -331,7 +332,7 @@ export class MydataserviceService {
         eventdetails: event.eventdetails,
         eventcreator: event.eventcreator,
         timeofevent: event.timeofevent
-      }) : {},
+      } : {},
       datecreated: datecreated,
       dateupdated: dateupdated,
       two_factor_temp_secret: two_factor_temp_secret,

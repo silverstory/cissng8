@@ -253,6 +253,18 @@ export class AccessApprovalComponent implements OnInit {
       });
   }
 
+  saveUnverifiedRequest(u: UnverifiedRequest): void {
+    this.service.saveUnverifiedRequest(u)
+      .pipe(tap((res: any) => res))
+      .subscribe({
+        next: (res: any) => {
+        },
+        complete: () => {
+          // well, do something, just anything
+        }
+      });
+  }
+
   async changeStatColor() {
     // make prev color back to default
     const stat_prev_index = this.statuschips.findIndex(x => x.name === this.prev_stat);
@@ -685,7 +697,7 @@ export class AccessApprovalComponent implements OnInit {
       unverifiedrequest.acted = 'Yes';
       unverifiedrequest.dateacted = B;
       // save to document
-      const update_url = `${this.api}/unverified/update/:${unverifiedrequest._id}`;
+      const update_url = `${this.api}/unverified/:${unverifiedrequest._id}`;
       const put_unverifiedrequest: UnverifiedRequest = await this.http.put<UnverifiedRequest>(update_url, unverifiedrequest).toPromise();
     }
   }
@@ -715,13 +727,16 @@ export class AccessApprovalComponent implements OnInit {
         },
         complete: async () => {
 
+          // create reusable profile object
+          const _profile: Profile = this.service.createFreezedProfile(this.profile);
+
           // save profile action to db
           const user = this.authService.getUserType();
           const response = 'update_profile';
           const dateobj = new Date();
           const B = dateobj.toISOString();
 
-          const target = this.profile;
+          const target: any = this.service.unfreezeProfile(_profile);
           const source = {
             action: {
               user: user,
@@ -733,33 +748,46 @@ export class AccessApprovalComponent implements OnInit {
 
           // Create an UnverifiedRequest document
 
+          // first get next approver
+          // first get the usertype of the next approver using
+          // tosaveonprofilesnextstep property and consuming
+          // approval template API to find step and distinction
+          // use url: /approvaltemplate/usertype
+          // use tosaveonprofilesnextstep to find next approver
+          let nextusertype: String = '';
+          const nextstepdist = {
+            step: this.usertemplate.tosaveonprofilesnextstep,
+            distinction: this.usertemplate.distinction
+          };
+          const apurl = `${this.api}/approvaltemplate/usertype`;
+          const approvaltemplate: Approvaltemplate = await this.http.post<Approvaltemplate>(apurl, nextstepdist).toPromise();
+          if (approvaltemplate !== null) {
+            nextusertype = approvaltemplate.usertype;
+          }
+          // end get next approver
+
           // check if the next approver exists in the
           // notifygroup collection using NotifyGroup API
           const typedist = {
-            usertype: user,
-            distinction: target.distinction
+            usertype: nextusertype,
+            distinction: nextstepdist.distinction
           };
           const url = `${this.api}/notifygroup/bytypedist`;
           const notifygroup: NotifyGroup = await this.http.post<NotifyGroup>(url, typedist).toPromise();
-
           // save transformed profile to unverifiedrequest collection
           if (notifygroup !== null) {
-
             // Create an unverifiedrequest document
             // use POST (create) API
 
             // transform object to unverifiedrequest object
             // - adding new property to object
-            // - var obj = {
-            //     key1: value1,
-            //     key2: value2
-            //   };
-            //   obj.key3 = value3;
-
-            // unverifiedrequest.message = notifygroup.message
-
+            const unverifiedrequest: any = this.service.unfreezeProfile(_profile);
+            // delete unverifiedrequest.action;
+            unverifiedrequest.usertype = notifygroup.usertype;
+            unverifiedrequest.username = '';
+            unverifiedrequest.message = notifygroup.message;
+            this.saveUnverifiedRequest(unverifiedrequest);
           }
-
           // end Create an UnverifiedRequest document
 
           // refresh infin8 list

@@ -36,7 +36,12 @@ const getApprovaltemplateByStepDist = async (req, res, next) => {
   try {
     const measure = req.body;
     let approvaltemplate = null;
-    const cursor = await Approvaltemplate.Approvaltemplate.find({ step: measure.step, distinction: measure.distinction }, { _id: 0 }).limit(1).cursor();
+    const cursor = await Approvaltemplate.Approvaltemplate
+      .find({
+        step: measure.step,
+        distinction: measure.distinction,
+        showonstepper: 'Yes'
+      }, { _id: 0 }).limit(1).cursor();
     approvaltemplate = await cursor.next();
     if (approvaltemplate != null) {
       return await res.json(approvaltemplate);
