@@ -697,7 +697,7 @@ export class AccessApprovalComponent implements OnInit {
       unverifiedrequest.acted = 'Yes';
       unverifiedrequest.dateacted = B;
       // save to document
-      const update_url = `${this.api}/unverified/:${unverifiedrequest._id}`;
+      const update_url = `${this.api}/unverified/${unverifiedrequest._id}`;
       const put_unverifiedrequest: UnverifiedRequest = await this.http.put<UnverifiedRequest>(update_url, unverifiedrequest).toPromise();
     }
   }

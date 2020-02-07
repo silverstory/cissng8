@@ -10,6 +10,7 @@ ENV PATH=/home/node/.npm-global/bin:$PATH
 ENV NPM_CONFIG_PREFIX=/home/node/.npm-global
 RUN npm install --silent --no-progress -g yarn@latest
 RUN npm install --silent --no-progress -g @angular/cli@8.3.23
+RUN yarn config set network-timeout 300000
 WORKDIR /home/node/app
 COPY ["package.json", "./"]
 RUN yarn install --silent
@@ -21,6 +22,7 @@ RUN npm cache clean --force
 FROM node:13.7.0-alpine as node-server
 WORKDIR /usr/src/app
 COPY ["./server/package.json", "./"]
+RUN yarn config set network-timeout 300000
 RUN yarn install --production && mv node_modules ../
 COPY ./server /usr/src/app
 

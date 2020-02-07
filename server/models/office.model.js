@@ -3,43 +3,45 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 // create ninja schema & model
-const LocationSchema = new Schema({
-  id: {
+const OfficeSchema = new Schema({
+  code: {
     type: String,
-    required: [true, 'Location ID is required'],
+    required: [true, 'Code is required'],
     unique: true,
     index: true
   },
   name: {
     type: String,
-    required: [true, 'Location Name is required'],
+    required: [true, 'Name is required'],
     index: true
   },
-  datecreated: {
+  datemodified: {
     type: Date,
     default: Date.now
   }
 }, {
-  collection: 'locations',
+  collection: 'offices',
   read: 'nearest'
 });
-LocationSchema.index({
-  name: 'text'
+OfficeSchema.index({
+  name: 'text',
+  code: 'text'
 }, {
   weights: {
-    name: 1
+    name: 2,
+    code: 1
   }
 });
-LocationSchema.index({
-  id: 1,
+OfficeSchema.index({
+  code: 1,
   name: 1,
   _id: 1
 });
 
 // this will add paginate function.
-LocationSchema.plugin(mongoosePaginate);
+OfficeSchema.plugin(mongoosePaginate);
 
-const Location = mongoose.model('Location', LocationSchema);
+const Office = mongoose.model('Office', OfficeSchema);
 
 // Pagination Options
 
@@ -66,7 +68,7 @@ const Location = mongoose.model('Location', LocationSchema);
 //    -previous {String} The value to start querying previous page.
 // @param {Function} done Node errback style function.
 // exports.method = function() {};
-locationsPaginated = async (page, limit, newestFirst) => {
+officesPaginated = async (page, limit, newestFirst) => {
 
   let query = {};
 
@@ -75,7 +77,7 @@ locationsPaginated = async (page, limit, newestFirst) => {
   const sortOrder = isTrueSet === true ? -1 : 1;
   const options = {
     sort: {
-      datecreated: sortOrder
+      name: sortOrder
     },
     lean: true,
     leanWithId: true,
@@ -83,27 +85,7 @@ locationsPaginated = async (page, limit, newestFirst) => {
     limit: parseInt(limit)
   };
 
-  let result = await Location.paginate(query, options);
-  return result;
-}
-
-locationSearchByName = async (name, page, limit, newestFirst) => {
-  const query = {
-    name: name
-  };
-  const isTrueSet = (newestFirst === 'true');
-  const sortOrder = isTrueSet === true ? -1 : 1;
-  const options = {
-    sort: {
-      datecreated: sortOrder
-    },
-    lean: true,
-    leanWithId: true,
-    page: parseInt(page),
-    limit: parseInt(limit)
-  };
-
-  let result = await Location.paginate(query, options);
+  let result = await Office.paginate(query, options);
   return result;
 }
 
@@ -117,7 +99,6 @@ locationSearchByName = async (name, page, limit, newestFirst) => {
 // Update: For exact match, you should use the regex "name": /^Andrew$/i. Thanks to Yannick L.
 
 module.exports = {
-  Location,
-  locationsPaginated,
-  locationSearchByName
+  Office,
+  officesPaginated
 }
